@@ -9,6 +9,10 @@
 <html>
 <head>
     <title>Register</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link rel="icon" href="http://icons.iconarchive.com/icons/pixelkit/swanky-outlines/256/05-Bookmark-Book-icon.png"
+          type="image/png">
     <style>
         <%@include file="../../css/sign_up/registerPageStyle.css"%>
     </style>
@@ -16,14 +20,18 @@
 <body>
     <div align="center">
         <form action="/register" method="post">
-            <label>Username: <input type="text" name="username" id="username"></label><br>
-            <label>Password: <input type="password" name="password" id="password"></label><br>
-            <label>Firstname: <input type="text" name="firstname" id="firstname"></label><br>
-            <label>Lastname: <input type="text" name="lastname" id="lastname"></label><br>
-            <label>Date of birth: <input type="text" name="dateOfBirth" id="dateOfBirth"
-                                         placeholder="Example: 2018-06-29"></label><br>
-            <div id="errorDateText" style="${dateErrorStyle}"><p>Incorrect value. Please try again</p></div>
-            <input type="submit" value="Register">
+            <label>Username:</label>
+            <input type="text" name="username" id="username" value="${usernameAtr}" required><br>
+            <label>Password:</label>
+            <input type="password" name="password" id="password" value="${passwordAtr}" required><br>
+            <label>Firstname:</label>
+            <input type="text" name="firstname" id="firstname" value="${firstnameAtr}" required><br>
+            <label>Lastname:</label>
+            <input type="text" name="lastname" id="lastname" value="${lastnameAtr}" required><br>
+            <label>Birth date:</label>
+            <input type="text" name="dateOfBirth" id="dateOfBirth" placeholder="Example: 2018-06-29" required><br>
+            <div class="errorText" style="${dateErrorStyle}"><p>Birth date is incorrect. Please try again</p></div>
+            <input type="submit" id="submit" value="Register">
         </form>
     </div>
 </body>

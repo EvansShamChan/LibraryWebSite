@@ -1,4 +1,9 @@
-#errorDateText {
+.errorText {
     display: none;
     color: red;
 }
+
+body{
+    padding: 10%;
+}
+

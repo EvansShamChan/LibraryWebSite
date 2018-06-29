@@ -13,6 +13,9 @@ public class User {
   private String username;
   private String password;
 
+  public User() {
+  }
+
   public User(String firstName, String lastName, Date dateOfBirth, Date registrationDate, String username, String password) {
     this.firstName = firstName;
     this.lastName = lastName;
