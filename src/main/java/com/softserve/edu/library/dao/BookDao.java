@@ -17,10 +17,10 @@ public class BookDao {
             ResultSet resultSet = statement.getResultSet();
             result = new Book();
             while (resultSet.next()) {
-                result.setId(resultSet.getInt(1));
-                result.setName(resultSet.getString(2));
-                result.setPublicationDate(resultSet.getString(3));
-                result.setAvailable(resultSet.getInt(4));
+                result.setId(resultSet.getInt("id"));
+                result.setName(resultSet.getString("name"));
+                result.setPublicationDate(resultSet.getString("publication_date"));
+                result.setAvailable(resultSet.getInt("available"));
             }
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
