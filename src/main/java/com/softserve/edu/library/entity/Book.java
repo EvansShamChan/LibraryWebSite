@@ -1,5 +1,6 @@
 package com.softserve.edu.library.entity;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Book {
@@ -8,7 +9,7 @@ public class Book {
     private String name;
     private String publicationDate;
     private long available;
-
+    private List<Author> authors;
 
     public long getId() {
         return id;
@@ -18,7 +19,6 @@ public class Book {
         this.id = id;
     }
 
-
     public String getName() {
         return name;
     }
@@ -26,7 +26,6 @@ public class Book {
     public void setName(String name) {
         this.name = name;
     }
-
 
     public String getPublicationDate() {
         return publicationDate;
@@ -36,13 +35,31 @@ public class Book {
         this.publicationDate = publicationDate;
     }
 
-
     public long getAvailable() {
         return available;
     }
 
     public void setAvailable(long available) {
         this.available = available;
+    }
+
+    public List<Author> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(List<Author> authors) {
+        this.authors = authors;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", publicationDate='" + publicationDate + '\'' +
+                ", available=" + available +
+                ", authors=" + authors +
+                '}';
     }
 
     @Override
@@ -53,22 +70,13 @@ public class Book {
         return id == book.id &&
                 available == book.available &&
                 Objects.equals(name, book.name) &&
-                Objects.equals(publicationDate, book.publicationDate);
+                Objects.equals(publicationDate, book.publicationDate) &&
+                Objects.equals(authors, book.authors);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, name, publicationDate, available);
-    }
-
-    @Override
-    public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", publicationDate='" + publicationDate + '\'' +
-                ", available=" + available +
-                '}';
+        return Objects.hash(id, name, publicationDate, available, authors);
     }
 }

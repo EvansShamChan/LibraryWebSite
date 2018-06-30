@@ -5,14 +5,13 @@
          version="4.0">
 
     <servlet>
-    <servlet-name>Welcome</servlet-name>
-    <jsp-file>/WEB-INF/index.jsp</jsp-file>
+        <servlet-name>Welcome</servlet-name>
+        <servlet-class>com.softserve.edu.library.servlet.BookServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-    <servlet-name>Welcome</servlet-name>
-    <url-pattern>/</url-pattern>
+        <servlet-name>Welcome</servlet-name>
+        <url-pattern>/search</url-pattern>
     </servlet-mapping>
-
 
 </web-app>
