@@ -24,12 +24,19 @@ public class RegisterServlet extends HttpServlet {
         String lastname = req.getParameter("lastname");
         String password = req.getParameter("password");
         try {
+            userDao = new UserDao();
+            User checkUser = userDao.getCredentialsForLogin(username, password);
+            System.out.println(checkUser);
+            if(checkUser != null) {
+                req.setAttribute("userSameError", "display: block");
+                req.getRequestDispatcher("/pages/sign-up/registerPage.jsp").forward(req, resp);
+            }
+
             Date date_of_birth = DateService.parseStringToSqlDate(req.getParameter("dateOfBirth"));
             Date currentDate = DateService.getCurrentSqlDate();
 
             User user = new User(firstname, lastname, date_of_birth, currentDate, username, password);
 
-            userDao = new UserDao();
             userDao.addUser(user);
         } catch (ParseException e) {
             req.setAttribute("dateErrorStyle", "display: block");
