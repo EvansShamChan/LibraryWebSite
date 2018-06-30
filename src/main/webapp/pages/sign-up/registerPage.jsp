@@ -21,7 +21,8 @@
     <div align="center">
         <form action="/register" method="post">
             <label>Username:</label>
-            <input type="text" name="username" id="username" value="${usernameAtr}" required><br>
+            <input type="text" name="username" id="username" value="${usernameAtr}" required>
+            <div class="errorText" style="${userSameError}"><p>This user is already in use</p></div><br>
             <label>Password:</label>
             <input type="password" name="password" id="password" value="${passwordAtr}" required><br>
             <label>Firstname:</label>
