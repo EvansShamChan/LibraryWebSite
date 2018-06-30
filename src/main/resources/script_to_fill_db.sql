@@ -17,20 +17,20 @@ INSERT INTO books (name, publication_date, available) VALUES ('Код да Ві�
 INSERT INTO books (name, publication_date, available) VALUES ('Джерело', 2017, 3);
 INSERT INTO books (name, publication_date, available) VALUES ('Інферно', 2013, 2);
 
-INSERT INTO author (first_name, last_name) VALUES ('Стівен', 'Левітт');
-INSERT INTO author (first_name, last_name) VALUES ('Стівен', 'Дабнер');
-INSERT INTO author (first_name, last_name) VALUES ('Олександра', 'Орлова');
-INSERT INTO author (first_name, last_name) VALUES ('Віоліна', 'Ситник');
-INSERT INTO author (first_name, last_name) VALUES ('Ірина', 'Мацко');
-INSERT INTO author (first_name, last_name) VALUES ('Люсі', 'Гокінґ');
-INSERT INTO author (first_name, last_name) VALUES ('Стівен', 'Гокінґ');
-INSERT INTO author (first_name, last_name) VALUES ('Стівен', 'Кінг');
-INSERT INTO author (first_name, last_name) VALUES ('Річард', 'Чізмар');
-INSERT INTO author (first_name, last_name) VALUES ('Джеймс', 'Джойс');
-INSERT INTO author (first_name, last_name) VALUES ('Вільям', 'Шекспір');
-INSERT INTO author (first_name, last_name) VALUES ('Джордж', 'Орвелл');
-INSERT INTO author (first_name, last_name) VALUES ('Джоан', 'Роулінг');
-INSERT INTO author (first_name, last_name) VALUES ('Ден', 'Браун');
+INSERT INTO authors (first_name, last_name) VALUES ('Стівен', 'Левітт');
+INSERT INTO authors (first_name, last_name) VALUES ('Стівен', 'Дабнер');
+INSERT INTO authors (first_name, last_name) VALUES ('Олександра', 'Орлова');
+INSERT INTO authors (first_name, last_name) VALUES ('Віоліна', 'Ситник');
+INSERT INTO authors (first_name, last_name) VALUES ('Ірина', 'Мацко');
+INSERT INTO authors (first_name, last_name) VALUES ('Люсі', 'Гокінґ');
+INSERT INTO authors (first_name, last_name) VALUES ('Стівен', 'Гокінґ');
+INSERT INTO authors (first_name, last_name) VALUES ('Стівен', 'Кінг');
+INSERT INTO authors (first_name, last_name) VALUES ('Річард', 'Чізмар');
+INSERT INTO authors (first_name, last_name) VALUES ('Джеймс', 'Джойс');
+INSERT INTO authors (first_name, last_name) VALUES ('Вільям', 'Шекспір');
+INSERT INTO authors (first_name, last_name) VALUES ('Джордж', 'Орвелл');
+INSERT INTO authors (first_name, last_name) VALUES ('Джоан', 'Роулінг');
+INSERT INTO authors (first_name, last_name) VALUES ('Ден', 'Браун');
 
 INSERT INTO authors_to_books (id_book, id_author) VALUES (1,1);
 INSERT INTO authors_to_books (id_book, id_author) VALUES (1,2);

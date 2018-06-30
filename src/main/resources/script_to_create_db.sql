@@ -29,9 +29,9 @@ CREATE TABLE IF NOT EXISTS `library`.`books` (
 
 
 -- -----------------------------------------------------
--- Table `library`.`author`
+-- Table `library`.`authors`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `library`.`author` (
+CREATE TABLE IF NOT EXISTS `library`.`authors` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `first_name` VARCHAR(50) NOT NULL,
   `last_name` VARCHAR(50) NOT NULL,
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `library`.`authors_to_books` (
     ON UPDATE NO ACTION,
   CONSTRAINT `to_author`
     FOREIGN KEY (`id_author`)
-    REFERENCES `library`.`author` (`id`)
+    REFERENCES `library`.`authors` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
