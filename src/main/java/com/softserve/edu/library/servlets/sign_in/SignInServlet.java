@@ -24,7 +24,7 @@ public class SignInServlet extends HttpServlet {
 
         if (!(user.getUsername() == null && user.getPassword() == null)) {
             if (user.getUsername().equals(userName) && user.getPassword().equals(password)) {
-                //URL for page after SignIN
+                request.getRequestDispatcher("/search").forward(request, response);
             }
         } else {
             request.setAttribute("errorStyle", "display: block");
