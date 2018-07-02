@@ -7,10 +7,6 @@ import java.sql.*;
 
 public class UserDao {
 
-    private final String CONNECTION_URL = "jdbc:mysql://localhost:3306/library";
-    private final String USERNAME = "root";
-    private final String PASSWORD = "root";
-
     private static final String ADD_USER = "insert into " +
             "users(first_name, last_name, date_of_birth, registration_date, username, password) " +
             "values (?, ?, ? ,?, ?, ?)";

@@ -16,7 +16,6 @@ import java.text.ParseException;
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
     UserDao userDao = null;
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("username");
@@ -26,8 +25,8 @@ public class RegisterServlet extends HttpServlet {
         try {
             userDao = new UserDao();
             User checkUser = userDao.getCredentialsForLogin(username, password);
-            System.out.println(checkUser);
-            if(checkUser != null) {
+            System.out.println(checkUser.getUsername());
+            if(checkUser == null) {
                 req.setAttribute("userSameError", "display: block");
                 req.getRequestDispatcher("/pages/sign-up/registerPage.jsp").forward(req, resp);
             }

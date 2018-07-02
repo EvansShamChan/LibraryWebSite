@@ -11,6 +11,13 @@
 <html>
 <head>
     <title>Books Store Application</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link rel="icon" href="http://icons.iconarchive.com/icons/pixelkit/swanky-outlines/256/05-Bookmark-Book-icon.png"
+          type="image/png">
+    <style>
+        <%@include file="../css/searchPageStyle.css"%>
+    </style>
 </head>
 <body>
 
@@ -21,7 +28,6 @@
             <input type="submit" value="Search">
             <label>Rows per page</label>
             <select name="rowsPerPage" id="rowsPerPage">
-                <option value="1">1</option>
                 <option value="5">5</option>
                 <option value="10" selected>10</option>
                 <option value="15">15</option>
@@ -48,34 +54,30 @@
                 </tr>
             </c:forEach>
         </table>
+        <br>
 
         <nav aria-label="Navigation for countries">
             <ul class="pagination">
                 <c:if test="${currentPage != 1}">
-                    <li class="page-item"><a class="page-link"
-                                             href="search?rowsPerPage=${rowsPerPage}&currentPage=${currentPage-1}&checkBy=<%= request.getParameter("checkBy")%>&searchKey=<%= request.getParameter("searchKey")%>">Previous</a>
-                    </li>
+                    <a class="page-link"
+                       href="search?rowsPerPage=${rowsPerPage}&currentPage=${currentPage-1}&checkBy=<%= request.getParameter("checkBy")%>&searchKey=<%= request.getParameter("searchKey")%>">Previous</a>
                 </c:if>
 
                 <c:forEach begin="1" end="${nOfPages}" var="i">
                     <c:choose>
-                        <c:when test="${currentPage eq i}">
-                            <li class="page-item active"><a class="page-link">
-                                    ${i} <span class="sr-only">(current)</span></a>
-                            </li>
+                        <c:when test="${currentPage eq i}"><a class="page-link">
+                                ${i} <span class="sr-only">(current)</span></a>
                         </c:when>
                         <c:otherwise>
-                            <li class="page-item"><a class="page-link"
-                                                     href="search?rowsPerPage=${rowsPerPage}&currentPage=${i}&checkBy=<%= request.getParameter("checkBy")%>&searchKey=<%= request.getParameter("searchKey")%>">${i}</a>
-                            </li>
+                            <a class="page-link"
+                               href="search?rowsPerPage=${rowsPerPage}&currentPage=${i}&checkBy=<%= request.getParameter("checkBy")%>&searchKey=<%= request.getParameter("searchKey")%>">${i}</a>
                         </c:otherwise>
                     </c:choose>
                 </c:forEach>
 
                 <c:if test="${currentPage lt nOfPages}">
-                    <li class="page-item"><a class="page-link"
-                                             href="search?rowsPerPage=${rowsPerPage}&currentPage=${currentPage+1}&checkBy=<%= request.getParameter("checkBy")%>&searchKey=<%= request.getParameter("searchKey")%>">Next</a>
-                    </li>
+                    <a class="page-link"
+                       href="search?rowsPerPage=${rowsPerPage}&currentPage=${currentPage+1}&checkBy=<%= request.getParameter("checkBy")%>&searchKey=<%= request.getParameter("searchKey")%>">Next</a>
                 </c:if>
             </ul>
         </nav>

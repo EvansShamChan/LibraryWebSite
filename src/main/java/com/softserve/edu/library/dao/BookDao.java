@@ -15,8 +15,8 @@ public class BookDao {
     private AuthorToBookDao authorToBookDao = new AuthorToBookDao();
     PreparedStatement preparedStatement = null;
 
-    private final String GET_NUMBER_OF_BOOKS = "select count(*) as number from books";
     private final String GET_BOOKS_BY_BOOK_NAME = "select * from books where name like ? limit ?, ?;";
+    private final String GET_NUMBER_OF_BOOKS = "select count(*) as number from books where name like ?;";
 
     public Book getById(String id) {
         Statement statement = null;
@@ -84,10 +84,11 @@ public class BookDao {
         return result;
     }
 
-    public int getNumberOfBooks(){
+    public int getNumberOfBooks(String searchKey){
         int numberOfRows = 0;
         try {
             preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(GET_NUMBER_OF_BOOKS);
+            preparedStatement.setString(1, "%" + searchKey + "%");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 numberOfRows = resultSet.getInt("number");
@@ -117,7 +118,6 @@ public class BookDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println(bookList);
         return bookList;
     }
 }

@@ -1,7 +1,6 @@
 package com.softserve.edu.library.servlet;
 
 import com.softserve.edu.library.dto.BookDto;
-import com.softserve.edu.library.entity.Book;
 import com.softserve.edu.library.service.BookService;
 
 import javax.servlet.ServletException;
@@ -16,10 +15,22 @@ public class BookServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        //todo: delete hardcode
+        //List<BookDto> books = bookService.executeBookSearch("", "bookName", 1, 10);
         List<BookDto> books = bookService.getBooks();
+//        int numberOfRows = bookService.getNumberOfBooks(searchKey);
+//        int nOfPages = numberOfRows / 10;
+//
+//        if (nOfPages % 10 > 0) {
+//            nOfPages++;
+//        }
 
         request.setAttribute("listBook", books);
+//        request.setAttribute("searchKey", "");
+//        request.setAttribute("nOfPages", nOfPages);
+//        request.setAttribute("currentPage", 1);
+//        request.setAttribute("rowsPerPage", 10);
+
 
         request.getRequestDispatcher("/pages/search.jsp").forward(request, response);
     }
@@ -33,8 +44,13 @@ public class BookServlet extends HttpServlet {
 
         List<BookDto> bookList = bookService.executeBookSearch(searchKey, checkBy, currentPage, rowsPerPage);
 
-        int numberOfRows = bookService.getNumberOfBooks();
+        //todo:rewrite getNumberOfBooks to get number of search books
+        int numberOfRows = bookService.getNumberOfBooks(searchKey);
         int nOfPages = numberOfRows / rowsPerPage;
+
+        if (nOfPages % rowsPerPage > 0) {
+            nOfPages++;
+        }
 
         req.setAttribute("listBook", bookList);
         req.setAttribute("searchKey", searchKey);

@@ -35,8 +35,8 @@ public class BookService {
         return new BookDto(book.getName(), authors, book.getPublicationDate(), String.valueOf(book.getAvailable()));
     }
 
-    public int getNumberOfBooks(){
-        return bookDao.getNumberOfBooks();
+    public int getNumberOfBooks(String searchKey){
+        return bookDao.getNumberOfBooks(searchKey);
     }
 
     public List<BookDto> executeBookSearch(String searchKey, String checkBy, int currentPage, int rowsPerPage) {
