@@ -2,10 +2,11 @@ package com.softserve.edu.library.entity;
 
 
 import java.sql.Date;
+import java.util.Objects;
 
 public class User {
 
-  private long id;
+  private Long id;
   private String firstName;
   private String lastName;
   private java.sql.Date dateOfBirth;
@@ -25,11 +26,11 @@ public class User {
     this.password = password;
   }
 
-  public long getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
@@ -86,5 +87,6 @@ public class User {
   public void setPassword(String password) {
     this.password = password;
   }
+
 
 }

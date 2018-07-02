@@ -17,7 +17,7 @@ public class SignInDao {
             ResultSet resultSet = statement.getResultSet();
             result = new User();
             while (resultSet.next()) {
-                result.setId(resultSet.getInt("id"));
+                result.setId(resultSet.getLong("id"));
                 result.setFirstName(resultSet.getString("first_name"));
                 result.setLastName(resultSet.getString("last_name"));
                 result.setDateOfBirth(resultSet.getDate("date_of_birth"));

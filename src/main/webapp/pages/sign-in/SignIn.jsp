@@ -20,9 +20,17 @@
 </head>
 <body>
     <div align="center">
-        <form method="post" action="SignIn">
+        <form method="GET" action="SignIn">
             User name <input type="text" name="username" required><br>
             Password <input type="password" name="password" required><br>
+
+            id <input type="text" name="id"><br>
+
+            First name <input type="text" name="firstname"><br>
+            Last name <input type="text" name="lastname"><br>
+            Date of birth <input type="text" name="dateofbirth"><br>
+            Date of registr <input type="text" name="dateofregistr"><br>
+
             <input type="submit" value="Sign in">
             <div class="errorText" style="${errorStyle}"><p>Wrong user name or password</p></div>
             <br>
