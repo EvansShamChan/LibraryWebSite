@@ -22,6 +22,8 @@ public final class DataSourceRepository {
             throw new RuntimeException(FAILED_JDBC_DRIVER);
         }
         return new DataSource(sqlDriver, //"jdbc:mysql://localhost:3306/library", "khrystyna", "123456");
-                "jdbc:mysql://localhost:3306/library", "root", "root");
+                "jdbc:mysql://localhost:3306/library" +
+                        "?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&" +
+                        "useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "root");
     }
 }

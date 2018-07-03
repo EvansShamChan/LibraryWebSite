@@ -11,6 +11,17 @@ public class Book {
     private long available;
     private List<Author> authors;
 
+    public Book(long id, String name, String publicationDate, long available, List<Author> authors) {
+        this.id = id;
+        this.name = name;
+        this.publicationDate = publicationDate;
+        this.available = available;
+        this.authors = authors;
+    }
+
+    public Book() {
+    }
+
     public long getId() {
         return id;
     }

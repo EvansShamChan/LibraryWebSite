@@ -20,17 +20,32 @@
 <body>
     <div align="center">
         <form action="/register" method="post">
-            <label>Username:</label>
-            <input type="text" name="username" id="username" value="${usernameAtr}" required><br>
-            <label>Password:</label>
-            <input type="password" name="password" id="password" value="${passwordAtr}" required><br>
-            <label>Firstname:</label>
-            <input type="text" name="firstname" id="firstname" value="${firstnameAtr}" required><br>
-            <label>Lastname:</label>
-            <input type="text" name="lastname" id="lastname" value="${lastnameAtr}" required><br>
-            <label>Birth date:</label>
-            <input type="text" name="dateOfBirth" id="dateOfBirth" placeholder="Example: 2018-06-29" required><br>
+            <div class="errorText" style="${userSameError}"><p>This user is already in use</p></div>
             <div class="errorText" style="${dateErrorStyle}"><p>Birth date is incorrect. Please try again</p></div>
+            <table>
+                <tr>
+                    <td><label>Username:</label></td>
+                    <td><input type="text" name="username" id="username" value="${usernameAtr}" required></td>
+                </tr>
+
+                <tr>
+                    <td><label>Password:</label></td>
+                    <td><input type="password" name="password" id="password" value="${passwordAtr}" required></td>
+                </tr>
+                <tr>
+                    <td><label>Firstname:</label></td>
+                    <td><input type="text" name="firstname" id="firstname" value="${firstnameAtr}" required></td>
+                </tr>
+                <tr>
+                    <td><label>Lastname:</label></td>
+                    <td><input type="text" name="lastname" id="lastname" value="${lastnameAtr}" required></td>
+                </tr>
+                <tr>
+                    <td><label>Birth date:</label></td>
+                    <td><input type="text" name="dateOfBirth" id="dateOfBirth" placeholder="Example: 2018-06-29" required></td>
+                </tr>
+            </table>
+
             <input type="submit" id="submit" value="Register">
         </form>
     </div>
