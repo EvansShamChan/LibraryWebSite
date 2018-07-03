@@ -1,8 +1,11 @@
 package com.softserve.edu.library.servlets.sign_up;
 
 import com.softserve.edu.library.dao.UserDao;
+import com.softserve.edu.library.dto.LoginDto;
+import com.softserve.edu.library.dto.RegisterDto;
 import com.softserve.edu.library.entity.User;
 import com.softserve.edu.library.service.DateService;
+import com.softserve.edu.library.service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,36 +18,38 @@ import java.text.ParseException;
 
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
-    UserDao userDao = null;
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String username = req.getParameter("username");
-        String firstname = req.getParameter("firstname");
-        String lastname = req.getParameter("lastname");
-        String password = req.getParameter("password");
+        String dateString = req.getParameter("dateOfBirth");
+        RegisterDto registerDto = new RegisterDto();
+        UserService userService = new UserService();
         try {
-            userDao = new UserDao();
-            User checkUser = userDao.getCredentialsForLogin(username, password);
-            System.out.println(checkUser.getUsername());
-            if(checkUser == null) {
-                req.setAttribute("userSameError", "display: block");
-                req.getRequestDispatcher("/pages/sign-up/registerPage.jsp").forward(req, resp);
-            }
-
-            Date date_of_birth = DateService.parseStringToSqlDate(req.getParameter("dateOfBirth"));
-            Date currentDate = DateService.getCurrentSqlDate();
-
-            User user = new User(firstname, lastname, date_of_birth, currentDate, username, password);
-
-            userDao.addUser(user);
+            registerDto.setUsername(req.getParameter("username"));
+            registerDto.setPassword(req.getParameter("password"));
+            registerDto.setFirstName(req.getParameter("firstname"));
+            registerDto.setLastName(req.getParameter("lastname"));
+            registerDto.setDate(DateService.parseStringToSqlDate(dateString));
         } catch (ParseException e) {
-            req.setAttribute("dateErrorStyle", "display: block");
-            req.setAttribute("usernameAtr", username);
-            req.setAttribute("passwordAtr", password);
-            req.setAttribute("firstnameAtr", firstname);
-            req.setAttribute("lastnameAtr", lastname);
+            prepareDataToReturn("dateErrorStyle", req, registerDto);
             req.getRequestDispatcher("/pages/sign-up/registerPage.jsp").forward(req, resp);
+            return;
         }
+        boolean isUserPresent = userService.isUserPresent(registerDto);
+        if(isUserPresent) {
+            userService.addNewUser(registerDto);
+        } else {
+            prepareDataToReturn("userSameError", req, registerDto);
+            req.getRequestDispatcher("/pages/sign-up/registerPage.jsp").forward(req, resp);
+            return;
+        }
+        req.getRequestDispatcher("/pages/sign-in/SignIn.jsp").forward(req, resp);
+    }
 
+    private void prepareDataToReturn(String errorName, HttpServletRequest req, RegisterDto registerDto) {
+        req.setAttribute(errorName, "display: block");
+        req.setAttribute("usernameAtr", registerDto.getUsername());
+        req.setAttribute("passwordAtr", registerDto.getPassword());
+        req.setAttribute("firstnameAtr", registerDto.getFirstName());
+        req.setAttribute("lastnameAtr", registerDto.getLastName());
     }
 }

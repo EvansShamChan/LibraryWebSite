@@ -36,7 +36,6 @@
             <input type="radio" value="author" name="checkBy">By Author
             <input type="radio" value="bookName" name="checkBy" checked>By Book name
             <input type="hidden" name="currentPage" value="1">
-
             <tr>
                 <th>Title</th>
                 <th>Authors</th>

@@ -1,6 +1,7 @@
 package com.softserve.edu.library.dao;
 
 import com.softserve.edu.library.db.ConnectionManager;
+import com.softserve.edu.library.dto.LoginDto;
 import com.softserve.edu.library.entity.User;
 
 import java.sql.*;
@@ -29,23 +30,23 @@ public class UserDao {
         }
     }
 
-    public User getCredentialsForLogin(String userName, String password) {
+    public User getUser(String username, String password) {
         Statement statement = null;
-        User result = null;
+        User resultUser;
         try {
             statement = ConnectionManager.getInstance().getConnection().createStatement();
-            statement.executeQuery("SELECT * FROM users WHERE username = '" + userName + "' AND password = '" +
+            statement.executeQuery("SELECT * FROM users WHERE username = '" + username + "' AND password = '" +
                     password + "';");
             ResultSet resultSet = statement.getResultSet();
-            result = new User();
+            resultUser = new User();
             while (resultSet.next()) {
-                result.setId(resultSet.getInt("id"));
-                result.setFirstName(resultSet.getString("first_name"));
-                result.setLastName(resultSet.getString("last_name"));
-                result.setDateOfBirth(resultSet.getDate("date_of_birth"));
-                result.setRegistrationDate(resultSet.getDate("registration_date"));
-                result.setUsername(resultSet.getString("username"));
-                result.setPassword(resultSet.getString("password"));
+                resultUser.setId(resultSet.getInt("id"));
+                resultUser.setFirstName(resultSet.getString("first_name"));
+                resultUser.setLastName(resultSet.getString("last_name"));
+                resultUser.setDateOfBirth(resultSet.getDate("date_of_birth"));
+                resultUser.setRegistrationDate(resultSet.getDate("registration_date"));
+                resultUser.setUsername(resultSet.getString("username"));
+                resultUser.setPassword(resultSet.getString("password"));
             }
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
@@ -58,6 +59,6 @@ public class UserDao {
                 }
             }
         }
-        return result;
+        return resultUser;
     }
 }

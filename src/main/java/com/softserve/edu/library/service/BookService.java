@@ -41,14 +41,16 @@ public class BookService {
 
     public List<BookDto> executeBookSearch(String searchKey, String checkBy, int currentPage, int rowsPerPage) {
         List<BookDto> bookList = null;
+        int start = currentPage * rowsPerPage - rowsPerPage;
         if(checkBy.equals("bookName")) {
-            bookList = searchByBookName(searchKey, currentPage, rowsPerPage);
+            bookList = searchByBookName(searchKey, start, rowsPerPage);
+        } else if (checkBy.equals("author")) {
+
         }
         return bookList;
     }
 
-    private List<BookDto> searchByBookName (String searchKey, int currentPage, int rowsPerPage) {
-        int start = currentPage * rowsPerPage - rowsPerPage;
+    private List<BookDto> searchByBookName (String searchKey, int start, int rowsPerPage) {
         List<Book> bookByKey = bookDao.getBookByKey(searchKey, start, rowsPerPage);
         List<BookDto> dtoList = new ArrayList<>();
         for (Book book : bookByKey) {
@@ -56,4 +58,8 @@ public class BookService {
         }
         return dtoList;
     }
+
+//    private List<BookDto> searchByAuthor(String searchKey, int currentPage, int rowsPerPage) {
+//
+//    }
 }
