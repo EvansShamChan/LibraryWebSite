@@ -4,59 +4,59 @@ import java.util.Objects;
 
 public class Author {
 
-  private long id;
-  private String firstName;
-  private String lastName;
+    private long id;
+    private String firstName;
+    private String lastName;
 
 
-  public long getId() {
-    return id;
-  }
+    public long getId() {
+        return id;
+    }
 
-  public void setId(long id) {
-    this.id = id;
-  }
-
-
-  public String getFirstName() {
-    return firstName;
-  }
-
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
+    public void setId(long id) {
+        this.id = id;
+    }
 
 
-  public String getLastName() {
-    return lastName;
-  }
+    public String getFirstName() {
+        return firstName;
+    }
 
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    Author authors = (Author) o;
-    return id == authors.id &&
-            Objects.equals(firstName, authors.firstName) &&
-            Objects.equals(lastName, authors.lastName);
-  }
 
-  @Override
-  public int hashCode() {
+    public String getLastName() {
+        return lastName;
+    }
 
-    return Objects.hash(id, firstName, lastName);
-  }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-  @Override
-  public String toString() {
-    return "Author{" +
-            "id=" + id +
-            ", firstName='" + firstName + '\'' +
-            ", lastName='" + lastName + '\'' +
-            '}';
-  }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Author authors = (Author) o;
+        return id == authors.id &&
+                Objects.equals(firstName, authors.firstName) &&
+                Objects.equals(lastName, authors.lastName);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, firstName, lastName);
+    }
+
+    @Override
+    public String toString() {
+        return "Author{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
+    }
 }
