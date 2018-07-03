@@ -3,16 +3,24 @@ package com.softserve.edu.library.dto;
 import java.util.Objects;
 
 public class BookDto {
-    private String title;
+    private String name;
     private String author;
     private String publicationDate;
     private String availability;
 
-    public BookDto(String title, String author, String publicationDate, String availability) {
-        this.title = title;
+    public BookDto(String name, String author, String publicationDate, String availability) {
+        this.name = name;
         this.author = author;
         this.publicationDate = publicationDate;
         this.availability = availability;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAuthor() {
@@ -21,14 +29,6 @@ public class BookDto {
 
     public void setAuthor(String author) {
         this.author = author;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getPublicationDate() {
@@ -52,7 +52,7 @@ public class BookDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BookDto bookDto = (BookDto) o;
-        return Objects.equals(title, bookDto.title) &&
+        return Objects.equals(name, bookDto.name) &&
                 Objects.equals(author, bookDto.author) &&
                 Objects.equals(publicationDate, bookDto.publicationDate) &&
                 Objects.equals(availability, bookDto.availability);
@@ -61,16 +61,17 @@ public class BookDto {
     @Override
     public int hashCode() {
 
-        return Objects.hash(title, author, publicationDate, availability);
+        return Objects.hash(name, author, publicationDate, availability);
     }
 
     @Override
     public String toString() {
         return "BookDto{" +
-                "title='" + title + '\'' +
+                "name='" + name + '\'' +
                 ", author='" + author + '\'' +
                 ", publicationDate='" + publicationDate + '\'' +
                 ", availability='" + availability + '\'' +
                 '}';
     }
 }
+

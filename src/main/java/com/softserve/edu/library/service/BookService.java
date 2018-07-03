@@ -19,7 +19,6 @@ public class BookService {
         for (Book book : list) {
             dtoList.add(convert(book));
         }
-
         return dtoList;
     }
 
@@ -31,7 +30,6 @@ public class BookService {
             }
             authors += author.getFirstName() + " " + author.getLastName();
         }
-
         return new BookDto(book.getName(), authors, book.getPublicationDate(), String.valueOf(book.getAvailable()));
     }
 
@@ -59,7 +57,34 @@ public class BookService {
         return dtoList;
     }
 
-//    private List<BookDto> searchByAuthor(String searchKey, int currentPage, int rowsPerPage) {
-//
-//    }
+    public Book getByName(String name) {
+        return bookDao.getByName(name);
+    }
+
+    public boolean insertBook(Book book) {
+        try {
+            return bookDao.insertBook(book);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateBook(Book book) {
+        try {
+            return bookDao.updateBook(book);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean deleteBook(String name) {
+        try {
+            return bookDao.deleteBook(name);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
