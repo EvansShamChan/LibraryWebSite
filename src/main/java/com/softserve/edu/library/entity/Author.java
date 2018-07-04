@@ -8,7 +8,6 @@ public class Author {
     private String firstName;
     private String lastName;
 
-
     public long getId() {
         return id;
     }
@@ -17,7 +16,6 @@ public class Author {
         this.id = id;
     }
 
-
     public String getFirstName() {
         return firstName;
     }
@@ -25,7 +23,6 @@ public class Author {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-
 
     public String getLastName() {
         return lastName;

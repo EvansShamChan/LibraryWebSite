@@ -10,22 +10,7 @@
           type="image/png">
 </head>
 <style>
-
-    h2 {
-        padding-top: 100px;
-    }
-
-    tbody {
-        padding-top: 200px;
-    }
-
-    body {
-        background-image: url("http://topcleaning.info/wp-content/uploads/2018/04/book-powerpoint-background-powerpoint-background-book-books-and-apple-powerpoint-templates-download.jpg");
-        background-repeat: no-repeat;
-        background-position: right bottom;
-    }
-
-
+    <%@include file="../css/bookFormStyle.css"%>
 </style>
 <body>
 <div align="center">
@@ -36,7 +21,6 @@
         <form action="insert" method="post">
             </c:if>
             <table border="1" cellpadding="5">
-
                 <h2>
                     <c:if test="${book == null}">
                         Add New Book

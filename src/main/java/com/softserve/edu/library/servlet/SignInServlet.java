@@ -1,8 +1,6 @@
 package com.softserve.edu.library.servlet;
 
-import com.softserve.edu.library.dao.UserDao;
 import com.softserve.edu.library.dto.LoginDto;
-import com.softserve.edu.library.entity.User;
 import com.softserve.edu.library.service.UserService;
 
 import javax.servlet.ServletException;

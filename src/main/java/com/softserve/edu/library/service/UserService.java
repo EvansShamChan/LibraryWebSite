@@ -9,7 +9,7 @@ public class UserService {
     public boolean isUserPresent(LoginDto loginDto) {
         UserDao userDao = new UserDao();
         User user = userDao.getUser(loginDto.getUsername(), loginDto.getPassword());
-        if(user.getUsername() == null || !(user.getUsername()).equals(loginDto.getUsername())) {
+        if (user.getUsername() == null || !(user.getUsername()).equals(loginDto.getUsername())) {
             return false;
         } else {
             return true;
@@ -20,7 +20,7 @@ public class UserService {
     public boolean isUserPresent(RegisterDto registerDto) {
         UserDao userDao = new UserDao();
         User user = userDao.getUser(registerDto.getUsername(), registerDto.getPassword());
-        if(user.getUsername() == null || !(user.getUsername()).equals(registerDto.getUsername())) {
+        if (user.getUsername() == null || !(user.getUsername()).equals(registerDto.getUsername())) {
             return false;
         } else {
             return true;

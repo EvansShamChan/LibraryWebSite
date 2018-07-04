@@ -50,7 +50,6 @@
                     <th>Action</th>
                 </tr>
             </c:if>
-
             <c:forEach var="book" items="${listBook}">
                 <tr>
                     <td><c:out value="${book.name}"/></td>
@@ -66,13 +65,12 @@
             </c:forEach>
         </table>
         <br>
-
         <c:if test="${listBook != null}">
             <nav aria-label="Navigation for countries">
                 <ul class="pagination">
                     <c:if test="${currentPage != 1}">
-                        <a  method="post" class="page-link"
-                            href="searchPag?rowsPerPage=${rowsPerPage}&currentPage=${currentPage-1}&checkBy=<%= request.getParameter("checkBy")%>&searchKey=<%= request.getParameter("searchKey")%>">Previous</a>
+                        <a method="post" class="page-link"
+                           href="searchPag?rowsPerPage=${rowsPerPage}&currentPage=${currentPage-1}&checkBy=<%= request.getParameter("checkBy")%>&searchKey=<%= request.getParameter("searchKey")%>">Previous</a>
                     </c:if>
 
                     <c:forEach begin="1" end="${nOfPages}" var="i">
@@ -86,7 +84,6 @@
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>
-
                     <c:if test="${currentPage lt nOfPages}">
                         <a method="post" class="page-link"
                            href="searchPag?rowsPerPage=${rowsPerPage}&currentPage=${currentPage+1}&checkBy=<%= request.getParameter("checkBy")%>&searchKey=<%= request.getParameter("searchKey")%>">Next</a>

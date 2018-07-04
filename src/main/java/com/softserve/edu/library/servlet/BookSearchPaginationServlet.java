@@ -16,7 +16,7 @@ public class BookSearchPaginationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        if(req.getParameter("rowsPerPage") == null) {
+        if (req.getParameter("rowsPerPage") == null) {
             req.getRequestDispatcher("/pages/search.jsp").forward(req, resp);
         }
 
