@@ -27,7 +27,7 @@
     </h2>
 </div>
 <div align="center">
-    <form action="/searchPag" method="get">
+    <form action="/searchPag" method="post">
         <table border="1" cellpadding="5">
             <input type="text" name="searchKey" placeholder="Search" value="${searchKey}">
             <input type="submit" value="Search"><br><br>
