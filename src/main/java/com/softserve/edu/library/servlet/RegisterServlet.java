@@ -1,9 +1,6 @@
 package com.softserve.edu.library.servlet;
 
-import com.softserve.edu.library.dao.UserDao;
-import com.softserve.edu.library.dto.LoginDto;
 import com.softserve.edu.library.dto.RegisterDto;
-import com.softserve.edu.library.entity.User;
 import com.softserve.edu.library.service.DateService;
 import com.softserve.edu.library.service.UserService;
 
@@ -13,36 +10,35 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Date;
 import java.text.ParseException;
 
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String dateString = req.getParameter("dateOfBirth");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String dateString = request.getParameter("dateOfBirth");
         RegisterDto registerDto = new RegisterDto();
         UserService userService = new UserService();
         try {
-            registerDto.setUsername(req.getParameter("username"));
-            registerDto.setPassword(req.getParameter("password"));
-            registerDto.setFirstName(req.getParameter("firstname"));
-            registerDto.setLastName(req.getParameter("lastname"));
+            registerDto.setUsername(request.getParameter("username"));
+            registerDto.setPassword(request.getParameter("password"));
+            registerDto.setFirstName(request.getParameter("firstname"));
+            registerDto.setLastName(request.getParameter("lastname"));
             registerDto.setDate(DateService.parseStringToSqlDate(dateString));
         } catch (ParseException e) {
-            prepareDataToReturn("dateErrorStyle", req, registerDto);
-            req.getRequestDispatcher("/pages/sign-up/registerPage.jsp").forward(req, resp);
+            prepareDataToReturn("dateErrorStyle", request, registerDto);
+            request.getRequestDispatcher("/pages/sign-up/registerPage.jsp").forward(request, response);
             return;
         }
         boolean isUserPresent = userService.isUserPresent(registerDto);
-        if(isUserPresent) {
+        if (isUserPresent) {
             userService.addNewUser(registerDto);
         } else {
-            prepareDataToReturn("userSameError", req, registerDto);
-            req.getRequestDispatcher("/pages/sign-up/registerPage.jsp").forward(req, resp);
+            prepareDataToReturn("userSameError", request, registerDto);
+            request.getRequestDispatcher("/pages/sign-up/registerPage.jsp").forward(request, response);
             return;
         }
-        req.getRequestDispatcher("/pages/sign-in/SignIn.jsp").forward(req, resp);
+        request.getRequestDispatcher("/pages/sign-in/SignIn.jsp").forward(request, response);
     }
 
     private void prepareDataToReturn(String errorName, HttpServletRequest req, RegisterDto registerDto) {

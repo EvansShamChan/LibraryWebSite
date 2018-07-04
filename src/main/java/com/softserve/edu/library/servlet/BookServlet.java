@@ -16,7 +16,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class BookServlet extends HttpServlet {
-    private BookService bookService = new BookService();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -46,6 +45,7 @@ public class BookServlet extends HttpServlet {
 
     private void listBook(HttpServletRequest request, HttpServletResponse response) throws
             IOException, ServletException {
+        BookService bookService = new BookService();
         List<BookDto> books = bookService.getBooks();
         request.setAttribute("listBook", books);
         request.getRequestDispatcher("/pages/search.jsp").forward(request, response);
@@ -59,6 +59,7 @@ public class BookServlet extends HttpServlet {
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        BookService bookService = new BookService();
         request.setCharacterEncoding("UTF-8");
         String name = request.getParameter("name");
         Book existingBook = bookService.getByName(name);
@@ -69,6 +70,7 @@ public class BookServlet extends HttpServlet {
 
     private void insertBook(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
+        BookService bookService = new BookService();
         request.setCharacterEncoding("UTF-8");
         String name = request.getParameter("name");
         String publicationDate = request.getParameter("publicationDate");
@@ -86,6 +88,7 @@ public class BookServlet extends HttpServlet {
 
     private void updateBook(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
+        BookService bookService = new BookService();
         request.setCharacterEncoding("UTF-8");
         String name = request.getParameter("name");
         String publicationDate = request.getParameter("publicationDate");
@@ -101,6 +104,7 @@ public class BookServlet extends HttpServlet {
 
     private void deleteBook(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
+        BookService bookService = new BookService();
         String name = request.getParameter("name");
         bookService.deleteBook(name);
         try {

@@ -145,13 +145,13 @@ public class BookDao {
         return result;
     }
 
-    public int getNumberOfBooks(String searchKey){
+    public int getNumberOfBooks(String searchKey) {
         int numberOfRows = 0;
         try {
             preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(GET_NUMBER_OF_BOOKS);
             preparedStatement.setString(1, "%" + searchKey + "%");
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 numberOfRows = resultSet.getInt("number");
             }
         } catch (SQLException e) {
@@ -168,7 +168,7 @@ public class BookDao {
             preparedStatement.setInt(2, start);
             preparedStatement.setInt(3, rowsPerPage);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 String publication_date = resultSet.getString("publication_date");

@@ -45,7 +45,6 @@ public class AuthorToBookDao {
             Author author = authorDao.getById(String.valueOf(authorToBook.getIdAuthor()));
             result.add(author);
         }
-
         return result;
 
     }

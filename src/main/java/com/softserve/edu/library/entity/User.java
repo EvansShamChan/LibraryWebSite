@@ -1,6 +1,5 @@
 package com.softserve.edu.library.entity;
 
-
 import com.softserve.edu.library.dto.RegisterDto;
 import com.softserve.edu.library.service.DateService;
 
@@ -45,7 +44,6 @@ public class User {
         this.id = id;
     }
 
-
     public String getFirstName() {
         return firstName;
     }
@@ -53,7 +51,6 @@ public class User {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-
 
     public String getLastName() {
         return lastName;
@@ -63,7 +60,6 @@ public class User {
         this.lastName = lastName;
     }
 
-
     public java.sql.Date getDateOfBirth() {
         return dateOfBirth;
     }
@@ -71,7 +67,6 @@ public class User {
     public void setDateOfBirth(java.sql.Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
-
 
     public java.sql.Date getRegistrationDate() {
         return registrationDate;
@@ -81,7 +76,6 @@ public class User {
         this.registrationDate = registrationDate;
     }
 
-
     public String getUsername() {
         return username;
     }
@@ -89,7 +83,6 @@ public class User {
     public void setUsername(String username) {
         this.username = username;
     }
-
 
     public String getPassword() {
         return password;

@@ -5,7 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class DateService {
-    public static Date getCurrentSqlDate(){
+    public static Date getCurrentSqlDate() {
         java.util.Date utilDate = new java.util.Date();
         Date sqlDate = new Date(utilDate.getTime());
         return sqlDate;
