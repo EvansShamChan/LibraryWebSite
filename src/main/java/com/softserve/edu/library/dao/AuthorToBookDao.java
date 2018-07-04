@@ -36,7 +36,6 @@ public class AuthorToBookDao {
             }
         }
         return result;
-
     }
 
     public List<Author> getAuthorsByBookId(String bookId) {

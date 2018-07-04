@@ -11,6 +11,29 @@ public class Book {
     private long available;
     private List<Author> authors;
 
+    public Book() {
+    }
+
+    public Book(int id) {
+        this.id = id;
+    }
+
+    public Book(String name) {
+        this.name = name;
+    }
+
+    public Book(int id, String name, String publicationDate, long available) {
+        this(name, publicationDate, available);
+        this.id = id;
+    }
+
+    public Book(String name, String publicationDate, long available) {
+        this.name = name;
+        this.publicationDate = publicationDate;
+        this.available = available;
+    }
+
+
     public long getId() {
         return id;
     }
