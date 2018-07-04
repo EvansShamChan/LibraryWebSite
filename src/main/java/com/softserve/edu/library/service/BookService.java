@@ -43,7 +43,7 @@ public class BookService {
         if (checkBy.equals("bookName")) {
             bookList = searchByBookName(searchKey, start, rowsPerPage);
         } else if (checkBy.equals("author")) {
-
+            bookList = searchByAuthor(searchKey, start, rowsPerPage);
         }
         return bookList;
     }
@@ -51,6 +51,25 @@ public class BookService {
     private List<BookDto> searchByBookName(String searchKey, int start, int rowsPerPage) {
         List<Book> bookByKey = bookDao.getBookByKey(searchKey, start, rowsPerPage);
         List<BookDto> dtoList = new ArrayList<>();
+        for (Book book : bookByKey) {
+            dtoList.add(convert(book));
+        }
+        return dtoList;
+    }
+
+    private List<BookDto> searchByAuthor(String author, int start, int rowsPerPage) {
+        List<BookDto> dtoList = new ArrayList<>();
+        String[] split;
+        if(author.equals("")){
+            dtoList = searchByBookName("", start, rowsPerPage);
+            return dtoList;
+        } else {
+            split = author.split(" ");
+        }
+
+        System.out.println(split[0] + " " + split[1]);
+
+        List<Book> bookByKey = bookDao.getBooksByAuthor(split[0], split[1], start, rowsPerPage);
         for (Book book : bookByKey) {
             dtoList.add(convert(book));
         }

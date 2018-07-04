@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import java.sql.SQLException;
@@ -76,6 +77,7 @@ public class BookServlet extends HttpServlet {
     private void updateBook(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         BookService bookService = new BookService();
+        HttpSession session = request.getSession();
         request.setCharacterEncoding("UTF-8");
         String name = request.getParameter("name");
         String publicationDate = request.getParameter("publicationDate");
@@ -83,7 +85,7 @@ public class BookServlet extends HttpServlet {
         Book book = new Book(name, publicationDate, available);
         bookService.updateBook(book);
         try {
-            request.getRequestDispatcher("/searchPag").forward(request, response);
+            request.getRequestDispatcher(String.valueOf(session.getAttribute("lastSearchUrl"))).forward(request, response);
         } catch (ServletException e) {
             e.printStackTrace();
         }
