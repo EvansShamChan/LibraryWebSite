@@ -21,9 +21,11 @@ public final class DataSourceRepository {
             // TODO Develop Custom Exceptions
             throw new RuntimeException(FAILED_JDBC_DRIVER);
         }
-        return new DataSource(sqlDriver, //"jdbc:mysql://localhost:3306/library", "khrystyna", "123456");
+        return new DataSource(sqlDriver,
                 "jdbc:mysql://localhost:3306/library" +
                         "?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&" +
-                        "useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "root");
+                        "characterEncoding=UTF-8&useLegacyDatetimeCode=false&serverTimezone=UTC",
+                       "root", "root");
+        //"khrystyna", "123456");
     }
 }
