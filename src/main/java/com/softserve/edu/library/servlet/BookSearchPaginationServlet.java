@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -35,11 +36,18 @@ public class BookSearchPaginationServlet extends HttpServlet {
             nOfPages++;
         }
 
+        HttpSession session = req.getSession();
+
         req.setAttribute("listBook", bookList);
         req.setAttribute("searchKey", searchKey);
         req.setAttribute("nOfPages", nOfPages);
         req.setAttribute("currentPage", currentPage);
         req.setAttribute("rowsPerPage", rowsPerPage);
+
+        session.setAttribute("searchKey", searchKey);
+        session.setAttribute("nOfPages", nOfPages);
+        session.setAttribute("currentPage", currentPage);
+        session.setAttribute("rowsPerPage", rowsPerPage);
 
         req.getRequestDispatcher("/pages/search.jsp").forward(req, resp);
     }
