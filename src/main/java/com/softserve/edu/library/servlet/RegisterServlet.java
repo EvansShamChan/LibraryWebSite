@@ -27,18 +27,18 @@ public class RegisterServlet extends HttpServlet {
             registerDto.setDate(DateService.parseStringToSqlDate(dateString));
         } catch (ParseException e) {
             prepareDataToReturn("dateErrorStyle", request, registerDto);
-            request.getRequestDispatcher("/pages/registerPage.jsp").forward(request, response);
+            request.getRequestDispatcher("/pages/sign-up/registerPage.jsp").forward(request, response);
             return;
         }
         boolean isUserPresent = userService.isUserPresent(registerDto);
-        if (!isUserPresent) {
+        if (isUserPresent) {
             userService.addNewUser(registerDto);
         } else {
             prepareDataToReturn("userSameError", request, registerDto);
-            request.getRequestDispatcher("/pages/registerPage.jsp").forward(request, response);
+            request.getRequestDispatcher("/pages/sign-up/registerPage.jsp").forward(request, response);
             return;
         }
-        request.getRequestDispatcher("/pages/SignIn.jsp").forward(request, response);
+        request.getRequestDispatcher("/pages/sign-in/SignIn.jsp").forward(request, response);
     }
 
     private void prepareDataToReturn(String errorName, HttpServletRequest req, RegisterDto registerDto) {
@@ -47,10 +47,5 @@ public class RegisterServlet extends HttpServlet {
         req.setAttribute("passwordAtr", registerDto.getPassword());
         req.setAttribute("firstnameAtr", registerDto.getFirstName());
         req.setAttribute("lastnameAtr", registerDto.getLastName());
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req, resp);
     }
 }
