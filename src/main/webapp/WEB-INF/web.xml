@@ -21,7 +21,7 @@
     </servlet-mapping>
 
     <welcome-file-list>
-        <welcome-file>/pages/sign-in/SignIn.jsp</welcome-file>
+        <welcome-file>/pages/SignIn.jsp</welcome-file>
     </welcome-file-list>
 
 </web-app>

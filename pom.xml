@@ -8,8 +8,7 @@
     <artifactId>library-website</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
-
-    <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+    
     <dependencies>
         <dependency>
             <groupId>mysql</groupId>

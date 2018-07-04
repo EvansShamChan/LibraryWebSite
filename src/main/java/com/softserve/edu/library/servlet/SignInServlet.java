@@ -1,30 +1,30 @@
-package com.softserve.edu.library.servlets.sign_in;
+package com.softserve.edu.library.servlet;
 
-import com.softserve.edu.library.dao.SignInDao;
+import com.softserve.edu.library.dao.UserDao;
+import com.softserve.edu.library.dto.LoginDto;
 import com.softserve.edu.library.entity.User;
+import com.softserve.edu.library.service.UserService;
 
-import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 
 @WebServlet("/SignIn")
 public class SignInServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String userName = request.getParameter("username");
-        String password = request.getParameter("password");
+        LoginDto loginDto = new LoginDto(request.getParameter("username"), request.getParameter("password"));
+        UserService userService = new UserService();
 
-        SignInDao signInDao = new SignInDao();
-        User user = signInDao.getUserByUserName(userName, password);
+        boolean isLoginValid = userService.isUserPresent(loginDto);
 
-        if (!(user.getUsername() == null && user.getPassword() == null)) {
-            if (user.getUsername().equals(userName) && user.getPassword().equals(password)) {
-                //URL for page after SignIN
-            }
+        if (isLoginValid) {
+            request.getRequestDispatcher("/searchPag").forward(request, response);
         } else {
             request.setAttribute("errorStyle", "display: block");
             request.getRequestDispatcher("pages/sign-in/SignIn.jsp").forward(request, response);

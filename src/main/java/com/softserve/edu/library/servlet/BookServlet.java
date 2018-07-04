@@ -38,18 +38,10 @@ public class BookServlet extends HttpServlet {
                 case "/search/delete":
                     deleteBook(request, response);
                     break;
-                default:
-                    listBook(request, response);
-                    break;
             }
         } catch (SQLException ex) {
             throw new ServletException(ex);
         }
-    }
-
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        doGet(request, response);
     }
 
     private void listBook(HttpServletRequest request, HttpServletResponse response) throws
@@ -85,7 +77,11 @@ public class BookServlet extends HttpServlet {
         Book newBook = new Book(name, publicationDate, available);
         boolean result = bookService.insertBook(newBook);
         request.setAttribute("success", result);//TODO add message on frontend
-        response.sendRedirect("list");
+        try {
+            request.getRequestDispatcher("/searchPag").forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        }
     }
 
     private void updateBook(HttpServletRequest request, HttpServletResponse response)
@@ -96,15 +92,29 @@ public class BookServlet extends HttpServlet {
         Long available = Long.parseLong(request.getParameter("available"));
         Book book = new Book(name, publicationDate, available);
         bookService.updateBook(book);
-        response.sendRedirect("list");
+        try {
+            request.getRequestDispatcher("/searchPag").forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        }
     }
 
     private void deleteBook(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
         String name = request.getParameter("name");
         bookService.deleteBook(name);
-        response.sendRedirect("list");
+        try {
+            request.getRequestDispatcher("/searchPag").forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        }
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doGet(req, resp);
+    }
+
 }
 
 

@@ -1,6 +1,7 @@
 package com.softserve.edu.library.dao;
 
 import com.softserve.edu.library.db.ConnectionManager;
+import com.softserve.edu.library.entity.Author;
 import com.softserve.edu.library.entity.Book;
 
 import java.sql.PreparedStatement;
@@ -12,6 +13,10 @@ import java.util.List;
 
 public class BookDao {
     private AuthorToBookDao authorToBookDao = new AuthorToBookDao();
+    PreparedStatement preparedStatement = null;
+
+    private final String GET_BOOKS_BY_BOOK_NAME = "select * from books where name like ? limit ?, ?;";
+    private final String GET_NUMBER_OF_BOOKS = "select count(*) as number from books where name like ?;";
 
     public Book getByName(String name) {
         PreparedStatement statement = null;
@@ -138,6 +143,43 @@ public class BookDao {
         result.setAuthors(authorToBookDao.getAuthorsByBookId(String.valueOf(resultSet.getInt("id"))));
 
         return result;
+    }
+
+    public int getNumberOfBooks(String searchKey){
+        int numberOfRows = 0;
+        try {
+            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(GET_NUMBER_OF_BOOKS);
+            preparedStatement.setString(1, "%" + searchKey + "%");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                numberOfRows = resultSet.getInt("number");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return numberOfRows;
+    }
+
+    public List<Book> getBookByKey(String searchKey, int start, int rowsPerPage) {
+        List<Book> bookList = new ArrayList<>();
+        try {
+            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(GET_BOOKS_BY_BOOK_NAME);
+            preparedStatement.setString(1, "%" + searchKey + "%");
+            preparedStatement.setInt(2, start);
+            preparedStatement.setInt(3, rowsPerPage);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String publication_date = resultSet.getString("publication_date");
+                int available = resultSet.getInt("available");
+                List<Author> authorList = authorToBookDao.getAuthorsByBookId(String.valueOf(id));
+                bookList.add(new Book(id, name, publication_date, available, authorList));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return bookList;
     }
 }
 

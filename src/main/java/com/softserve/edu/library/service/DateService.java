@@ -12,7 +12,7 @@ public class DateService {
     }
 
     public static Date parseStringToSqlDate(String stringDate) throws ParseException {
-        Date sqlDate = null;
+        Date sqlDate;
         java.util.Date utilDate = new SimpleDateFormat("yyy-MM-dd").parse(stringDate);
         sqlDate = new Date(utilDate.getTime());
         return sqlDate;

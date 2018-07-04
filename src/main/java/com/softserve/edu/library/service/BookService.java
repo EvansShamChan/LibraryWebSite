@@ -33,6 +33,30 @@ public class BookService {
         return new BookDto(book.getName(), authors, book.getPublicationDate(), String.valueOf(book.getAvailable()));
     }
 
+    public int getNumberOfBooks(String searchKey){
+        return bookDao.getNumberOfBooks(searchKey);
+    }
+
+    public List<BookDto> executeBookSearch(String searchKey, String checkBy, int currentPage, int rowsPerPage) {
+        List<BookDto> bookList = null;
+        int start = currentPage * rowsPerPage - rowsPerPage;
+        if(checkBy.equals("bookName")) {
+            bookList = searchByBookName(searchKey, start, rowsPerPage);
+        } else if (checkBy.equals("author")) {
+
+        }
+        return bookList;
+    }
+
+    private List<BookDto> searchByBookName (String searchKey, int start, int rowsPerPage) {
+        List<Book> bookByKey = bookDao.getBookByKey(searchKey, start, rowsPerPage);
+        List<BookDto> dtoList = new ArrayList<>();
+        for (Book book : bookByKey) {
+            dtoList.add(convert(book));
+        }
+        return dtoList;
+    }
+
     public Book getByName(String name) {
         return bookDao.getByName(name);
     }
