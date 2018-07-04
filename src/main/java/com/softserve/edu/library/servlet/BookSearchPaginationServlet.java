@@ -21,6 +21,8 @@ public class BookSearchPaginationServlet extends HttpServlet {
         }
 
         BookService bookService = new BookService();
+
+
         int rowsPerPage = Integer.parseInt(req.getParameter("rowsPerPage"));
         String checkBy = req.getParameter("checkBy");
         String searchKey = req.getParameter("searchKey");
@@ -40,6 +42,10 @@ public class BookSearchPaginationServlet extends HttpServlet {
         req.setAttribute("nOfPages", nOfPages);
         req.setAttribute("currentPage", currentPage);
         req.setAttribute("rowsPerPage", rowsPerPage);
+
+
+        String URL = req.getRequestURI() + "?" + req.getQueryString();
+        session.setAttribute("lastSearchUrl", URL);
 
         req.getRequestDispatcher("/pages/search.jsp").forward(req, resp);
     }

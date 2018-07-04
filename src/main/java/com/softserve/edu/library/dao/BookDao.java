@@ -8,14 +8,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class BookDao {
     private AuthorToBookDao authorToBookDao = new AuthorToBookDao();
     PreparedStatement preparedStatement = null;
 
     private final String GET_BOOKS_BY_BOOK_NAME = "select * from books where name like ? limit ?, ?;";
+    private final String GET_BOOKS_BY_AUTHOR =
+            "select * from books where id in(select id_book from authors_to_books where id_author " +
+                    "in(select id from authors where first_name = ? and last_name = ?)) limit ?, ?;";
     private final String GET_NUMBER_OF_BOOKS = "select count(*) as number from books where name like ?;";
 
     public Book getByName(String name) {
@@ -169,6 +171,30 @@ public class BookDao {
             preparedStatement.setInt(3, rowsPerPage);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String publication_date = resultSet.getString("publication_date");
+                int available = resultSet.getInt("available");
+                List<Author> authorList = authorToBookDao.getAuthorsByBookId(String.valueOf(id));
+                bookList.add(new Book(id, name, publication_date, available, authorList));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return bookList;
+    }
+
+    public List<Book> getBooksByAuthor(String firstname, String lastname, int start, int rowsPerPage) {
+        List<Book> bookList = new ArrayList<>();
+        try {
+            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(GET_BOOKS_BY_AUTHOR);
+            preparedStatement.setString(1, firstname);
+            preparedStatement.setString(2, lastname);
+            preparedStatement.setInt(3, start);
+            preparedStatement.setInt(4, rowsPerPage);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            //todo: delete dublicate code
+            while(resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 String publication_date = resultSet.getString("publication_date");
