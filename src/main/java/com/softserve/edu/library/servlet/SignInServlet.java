@@ -25,7 +25,7 @@ public class SignInServlet extends HttpServlet {
             request.getRequestDispatcher("/searchPag").forward(request, response);
         } else {
             request.setAttribute("errorStyle", "display: block");
-            request.getRequestDispatcher("pages/SignIn.jsp").forward(request, response);
+            request.getRequestDispatcher("pages/sign-in/SignIn.jsp").forward(request, response);
         }
     }
 }

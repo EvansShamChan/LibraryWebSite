@@ -1,5 +1,6 @@
 package com.softserve.edu.library.servlet;
 
+import com.softserve.edu.library.dto.BookDto;
 import com.softserve.edu.library.entity.Book;
 import com.softserve.edu.library.service.BookService;
 
@@ -13,31 +14,43 @@ import java.io.IOException;
 
 import java.sql.SQLException;
 
+import java.util.List;
 
 public class BookServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String action = request.getRequestURI();
-        switch (action) {
-            case "/search/new":
-                showNewForm(request, response);
-                break;
-            case "/search/edit":
-                showEditForm(request, response);
-                break;
-            case "/search/insert":
-                insertBook(request, response);
-                break;
-            case "/search/update":
-                updateBook(request, response);
-                break;
-            case "/search/delete":
-                deleteBook(request, response);
-                break;
+        try {
+            switch (action) {
+                case "/search/new":
+                    showNewForm(request, response);
+                    break;
+                case "/search/edit":
+                    showEditForm(request, response);
+                    break;
+                case "/search/insert":
+                    insertBook(request, response);
+                    break;
+                case "/search/update":
+                    updateBook(request, response);
+                    break;
+                case "/search/delete":
+                    deleteBook(request, response);
+                    break;
+            }
+        } catch (SQLException ex) {
+            throw new ServletException(ex);
         }
     }
 
+    private void listBook(HttpServletRequest request, HttpServletResponse response) throws
+            IOException, ServletException {
+        BookService bookService = new BookService();
+        List<BookDto> books = bookService.getBooks();
+        request.setAttribute("listBook", books);
+        request.getRequestDispatcher("/pages/search.jsp").forward(request, response);
+    }
 
     private void showNewForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -92,7 +105,7 @@ public class BookServlet extends HttpServlet {
     }
 
     private void deleteBook(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+            throws SQLException, IOException {
         BookService bookService = new BookService();
         String name = request.getParameter("name");
         bookService.deleteBook(name);
