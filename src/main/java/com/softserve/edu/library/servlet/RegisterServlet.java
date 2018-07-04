@@ -1,4 +1,4 @@
-package com.softserve.edu.library.servlets.sign_up;
+package com.softserve.edu.library.servlet;
 
 import com.softserve.edu.library.dao.UserDao;
 import com.softserve.edu.library.dto.LoginDto;

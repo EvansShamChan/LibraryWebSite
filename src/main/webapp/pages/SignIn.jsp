@@ -15,7 +15,7 @@
     <link rel="icon" href="http://icons.iconarchive.com/icons/pixelkit/swanky-outlines/256/05-Bookmark-Book-icon.png"
           type="image/png">
     <style>
-        <%@include file="../../css/sign_up/registerPageStyle.css"%>
+        <%@include file="../css/registerPageStyle.css"%>
     </style>
 </head>
 <body>
@@ -34,7 +34,7 @@
             <input type="submit" value="Sign in">
             <div class="errorText" style="${errorStyle}"><p>Wrong user name or password</p></div>
             <br>
-            <a href="/pages/sign-up/registerPage.jsp">Register</a>
+            <a href="/pages/registerPage.jsp">Register</a>
         </form>
     </div>
 </body>

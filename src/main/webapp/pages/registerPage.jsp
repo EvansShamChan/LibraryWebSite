@@ -14,7 +14,7 @@
     <link rel="icon" href="http://icons.iconarchive.com/icons/pixelkit/swanky-outlines/256/05-Bookmark-Book-icon.png"
           type="image/png">
     <style>
-        <%@include file="../../css/sign_up/registerPageStyle.css"%>
+        <%@include file="../css/registerPageStyle.css"%>
     </style>
 </head>
 <body>

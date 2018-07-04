@@ -30,7 +30,7 @@
     <form action="/searchPag" method="post">
         <table border="1" cellpadding="5">
             <input type="text" name="searchKey" placeholder="Search" value="${searchKey}">
-            <input type="submit" value="Search">
+            <input type="submit" value="Search"><br><br>
             <label>Rows per page</label>
             <select name="rowsPerPage" id="rowsPerPage">
                 <option value="5">5</option>
@@ -41,13 +41,15 @@
             <input type="radio" value="author" name="checkBy">By Author
             <input type="radio" value="bookName" name="checkBy" checked>By Book name
             <input type="hidden" name="currentPage" value="1">
-            <tr>
-                <th>Title</th>
-                <th>Authors</th>
-                <th>Publication date</th>
-                <th>Availability</th>
-                <th>Action</th>
-            </tr>
+            <c:if test="${listBook != null}">
+                <tr>
+                    <th>Title</th>
+                    <th>Authors</th>
+                    <th>Publication date</th>
+                    <th>Availability</th>
+                    <th>Action</th>
+                </tr>
+            </c:if>
 
             <c:forEach var="book" items="${listBook}">
                 <tr>
@@ -65,31 +67,33 @@
         </table>
         <br>
 
-        <nav aria-label="Navigation for countries">
-            <ul class="pagination">
-                <c:if test="${currentPage != 1}">
-                    <a  method="post" class="page-link"
-                       href="searchPag?rowsPerPage=${rowsPerPage}&currentPage=${currentPage-1}&checkBy=<%= request.getParameter("checkBy")%>&searchKey=<%= request.getParameter("searchKey")%>">Previous</a>
-                </c:if>
+        <c:if test="${listBook != null}">
+            <nav aria-label="Navigation for countries">
+                <ul class="pagination">
+                    <c:if test="${currentPage != 1}">
+                        <a  method="post" class="page-link"
+                            href="searchPag?rowsPerPage=${rowsPerPage}&currentPage=${currentPage-1}&checkBy=<%= request.getParameter("checkBy")%>&searchKey=<%= request.getParameter("searchKey")%>">Previous</a>
+                    </c:if>
 
-                <c:forEach begin="1" end="${nOfPages}" var="i">
-                    <c:choose>
-                        <c:when test="${currentPage eq i}"><a class="page-link">
-                                ${i} <span class="sr-only">(current)</span></a>
-                        </c:when>
-                        <c:otherwise>
-                            <a method="post" class="page-link"
-                               href="searchPag?rowsPerPage=${rowsPerPage}&currentPage=${i}&checkBy=<%= request.getParameter("checkBy")%>&searchKey=<%= request.getParameter("searchKey")%>">${i}</a>
-                        </c:otherwise>
-                    </c:choose>
-                </c:forEach>
+                    <c:forEach begin="1" end="${nOfPages}" var="i">
+                        <c:choose>
+                            <c:when test="${currentPage eq i}"><a class="page-link">
+                                    ${i} <span class="sr-only">(current)</span></a>
+                            </c:when>
+                            <c:otherwise>
+                                <a method="post" class="page-link"
+                                   href="searchPag?rowsPerPage=${rowsPerPage}&currentPage=${i}&checkBy=<%= request.getParameter("checkBy")%>&searchKey=<%= request.getParameter("searchKey")%>">${i}</a>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
 
-                <c:if test="${currentPage lt nOfPages}">
-                    <a method="post" class="page-link"
-                       href="searchPag?rowsPerPage=${rowsPerPage}&currentPage=${currentPage+1}&checkBy=<%= request.getParameter("checkBy")%>&searchKey=<%= request.getParameter("searchKey")%>">Next</a>
-                </c:if>
-            </ul>
-        </nav>
+                    <c:if test="${currentPage lt nOfPages}">
+                        <a method="post" class="page-link"
+                           href="searchPag?rowsPerPage=${rowsPerPage}&currentPage=${currentPage+1}&checkBy=<%= request.getParameter("checkBy")%>&searchKey=<%= request.getParameter("searchKey")%>">Next</a>
+                    </c:if>
+                </ul>
+            </nav>
+        </c:if>
     </form>
 </div>
 </body>
