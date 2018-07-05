@@ -17,7 +17,7 @@ public class BookDao {
     private final String GET_BOOKS_BY_BOOK_NAME = "select * from books where name like ? limit ?, ?;";
     private final String GET_BOOKS_BY_AUTHOR =
             "select * from books where id in(select id_book from authors_to_books where id_author " +
-                    "in(select id from authors where first_name = ? and last_name = ?)) limit ?, ?;";
+                    "in(select id from authors where first_name = ? or last_name = ?)) limit ?, ?;";
     private final String GET_NUMBER_OF_BOOKS = "select count(*) as number from books where name like ?;";
 
     public Book getByName(String name) {
