@@ -1,5 +1,6 @@
 package com.softserve.edu.library.servlet;
 
+import com.softserve.edu.library.dto.BookDto;
 import com.softserve.edu.library.entity.Book;
 import com.softserve.edu.library.service.BookService;
 
@@ -10,8 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-
-import java.sql.SQLException;
 
 
 public class BookServlet extends HttpServlet {
@@ -50,7 +49,7 @@ public class BookServlet extends HttpServlet {
         BookService bookService = new BookService();
         request.setCharacterEncoding("UTF-8");
         String name = request.getParameter("name");
-        Book existingBook = bookService.getByName(name);
+        BookDto existingBook = bookService.getByName(name);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/bookForm.jsp");
         request.setAttribute("book", existingBook);
         dispatcher.forward(request, response);
