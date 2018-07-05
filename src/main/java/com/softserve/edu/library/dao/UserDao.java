@@ -45,6 +45,7 @@ public class UserDao {
                 resultUser.setRegistrationDate(resultSet.getDate("registration_date"));
                 resultUser.setUsername(resultSet.getString("username"));
                 resultUser.setPassword(resultSet.getString("password"));
+                resultUser.setIsAdmin(resultSet.getLong("is_admin"));
             }
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());

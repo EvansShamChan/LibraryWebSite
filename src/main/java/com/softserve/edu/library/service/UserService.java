@@ -6,17 +6,22 @@ import com.softserve.edu.library.dto.RegisterDto;
 import com.softserve.edu.library.entity.User;
 
 public class UserService {
-    public boolean isUserPresent(LoginDto loginDto) {
+    public String isUserPresent(LoginDto loginDto) {
         UserDao userDao = new UserDao();
         User user = userDao.getUser(loginDto.getUsername(), loginDto.getPassword());
         if (user.getUsername() == null || !(user.getUsername()).equals(loginDto.getUsername())) {
-            return false;
+            return "";
         } else {
-            return true;
+            if (user.getIsAdmin() == 0) {
+                return "user";
+            } else if (user.getIsAdmin() == 1) {
+                return "admin";
+            } else {
+                throw new RuntimeException("User not found");
+            }
         }
     }
 
-    //todo: delete this shit when merge with vitalik superdao
     public boolean isUserPresent(RegisterDto registerDto) {
         UserDao userDao = new UserDao();
         User user = userDao.getUser(registerDto.getUsername(), registerDto.getPassword());
