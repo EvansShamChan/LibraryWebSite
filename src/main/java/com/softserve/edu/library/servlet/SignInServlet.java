@@ -19,13 +19,17 @@ public class SignInServlet extends HttpServlet {
         LoginDto loginDto = new LoginDto(request.getParameter("username"), request.getParameter("password"));
         UserService userService = new UserService();
 
-        boolean isLoginValid = userService.isUserPresent(loginDto);
+        String isLoginValid = userService.isUserPresent(loginDto);
 
-        if (isLoginValid) {
-            request.getRequestDispatcher("/searchPag").forward(request, response);
-        } else {
-            request.setAttribute("errorStyle", "display: block");
-            request.getRequestDispatcher("pages/SignIn.jsp").forward(request, response);
+        if (isLoginValid != null) {
+            if (isLoginValid.equals("user")) {
+                //todo URL for user page after log in
+            } else if (isLoginValid.equals("admin")) {
+                request.getRequestDispatcher("/searchPag").forward(request, response);
+            } else {
+                request.setAttribute("errorStyle", "display: block");
+                request.getRequestDispatcher("pages/SignIn.jsp").forward(request, response);
+            }
         }
     }
 }
