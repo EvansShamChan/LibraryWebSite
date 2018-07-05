@@ -18,7 +18,7 @@ public class BookSearchPaginationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         if (req.getParameter("rowsPerPage") == null) {
-            req.getRequestDispatcher("/pages/search.jsp").forward(req, resp);
+            req.getRequestDispatcher("/searchPag?searchKey=&rowsPerPage=10&checkBy=bookName&currentPage=1").forward(req, resp);
         }
 
         BookService bookService = new BookService();
@@ -34,12 +34,11 @@ public class BookSearchPaginationServlet extends HttpServlet {
         int numberOfRows = bookService.getNumberOfBooks(searchKey);
         int nOfPages = numberOfRows / rowsPerPage;
 
-        if (nOfPages % rowsPerPage > 0) {
-            nOfPages++;
+        if (nOfPages % rowsPerPage > 1) {
+            ++nOfPages;
         }
 
         HttpSession session = req.getSession();
-
         req.setAttribute("listBook", bookList);
         req.setAttribute("searchKey", searchKey);
         req.setAttribute("nOfPages", nOfPages);

@@ -6,7 +6,9 @@ import com.softserve.edu.library.entity.Author;
 import com.softserve.edu.library.entity.Book;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class BookService {
 
@@ -67,13 +69,28 @@ public class BookService {
             split = author.split(" ");
         }
 
-        System.out.println(split[0] + " " + split[1]);
+        List<Book> bookByKey;
+        if (split.length == 1) {
+            //todo: methods return empty list
+            List<Book> firstNameList = bookDao.getBooksByAuthor(split[0], "", start, rowsPerPage);
+            List<Book> lastNameList = bookDao.getBooksByAuthor("", split[0], start, rowsPerPage);
+            bookByKey = mergeListBooks(firstNameList, lastNameList);
+        } else {
+            bookByKey = bookDao.getBooksByAuthor(split[0], split[1], start, rowsPerPage);
+        }
 
-        List<Book> bookByKey = bookDao.getBooksByAuthor(split[0], split[1], start, rowsPerPage);
         for (Book book : bookByKey) {
             dtoList.add(convert(book));
         }
         return dtoList;
+    }
+
+    private List<Book> mergeListBooks(List<Book> firstNameList, List<Book> lastNameList) {
+        List<Book> fullList = new ArrayList<>(firstNameList);
+        for (Book book : lastNameList) {
+            fullList.add(book);
+        }
+        return fullList;
     }
 
     public Book getByName(String name) {

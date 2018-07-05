@@ -40,6 +40,7 @@
             </select><br>
             <input type="radio" value="author" name="checkBy">By Author
             <input type="radio" value="bookName" name="checkBy" checked>By Book name
+            <input type="radio" value="datePeriod" name="checkBy">By Publication date period
             <input type="hidden" name="currentPage" value="1">
             <c:if test="${listBook != null}">
                 <tr>

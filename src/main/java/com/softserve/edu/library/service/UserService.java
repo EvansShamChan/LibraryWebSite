@@ -16,7 +16,6 @@ public class UserService {
         }
     }
 
-    //todo: delete this shit when merge with vitalik superdao
     public boolean isUserPresent(RegisterDto registerDto) {
         UserDao userDao = new UserDao();
         User user = userDao.getUser(registerDto.getUsername(), registerDto.getPassword());
