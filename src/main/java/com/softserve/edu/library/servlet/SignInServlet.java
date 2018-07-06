@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 
@@ -23,10 +24,12 @@ public class SignInServlet extends HttpServlet {
 
         if (isLoginValid != null) {
             if (isLoginValid.equals("user")) {
-                request.setAttribute("userOrAdmin", isLoginValid);
+                HttpSession session = request.getSession();
+                session.setAttribute("userOrAdmin", isLoginValid);
                 request.getRequestDispatcher("/searchPag").forward(request, response);
             } else if (isLoginValid.equals("admin")) {
-                request.setAttribute("userOrAdmin", isLoginValid);
+                HttpSession session = request.getSession();
+                session.setAttribute("userOrAdmin", isLoginValid);
                 request.getRequestDispatcher("/searchPag").forward(request, response);
             } else {
                 request.setAttribute("errorStyle", "display: block");

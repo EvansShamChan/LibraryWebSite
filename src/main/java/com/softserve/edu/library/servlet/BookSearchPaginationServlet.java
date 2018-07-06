@@ -17,9 +17,15 @@ public class BookSearchPaginationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
+        //todo: check when vitalik fix nullpointer
         if (req.getParameter("rowsPerPage") == null) {
+            req.setAttribute("searchPag", "");
+            req.setAttribute("rowsPerPage", "10");
+            req.setAttribute("checkBy", "bookName");
+            req.setAttribute("currentPage", "1");
             req.getRequestDispatcher("/searchPag?searchKey=&rowsPerPage=10&checkBy=bookName&currentPage=1").forward(req, resp);
         }
+        //todo:--------------------------------------
 
         BookService bookService = new BookService();
 
@@ -34,7 +40,9 @@ public class BookSearchPaginationServlet extends HttpServlet {
         int numberOfRows = bookService.getNumberOfBooks(searchKey);
         int nOfPages = numberOfRows / rowsPerPage;
 
-        if (nOfPages % rowsPerPage > 1) {
+        if(numberOfRows == 10) {
+            //nop
+        } else if (nOfPages % rowsPerPage > 0) {
             ++nOfPages;
         }
 
@@ -49,9 +57,9 @@ public class BookSearchPaginationServlet extends HttpServlet {
         String URL = req.getRequestURI() + "?" + req.getQueryString();
         session.setAttribute("lastSearchUrl", URL);
 
-        if (req.getAttribute("userOrAdmin").equals("user")) {
+        if (session.getAttribute("userOrAdmin").equals("user")) {
             req.getRequestDispatcher("/pages/userSearchBookPage.jsp").forward(req, resp);
-        } else if (req.getAttribute("userOrAdmin").equals("admin")) {
+        } else if (session.getAttribute("userOrAdmin").equals("admin")) {
             req.getRequestDispatcher("/pages/adminSearchBookPage.jsp").forward(req, resp);
         }
     }

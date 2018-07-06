@@ -48,6 +48,8 @@ public class BookService {
             bookList = searchByBookName(searchKey, start, rowsPerPage);
         } else if (checkBy.equals("author")) {
             bookList = searchByAuthor(searchKey, start, rowsPerPage);
+        } else if(checkBy.equals("publicationDate")) {
+            bookList = searchByPublicationDate(searchKey, start, rowsPerPage);
         }
         return bookList;
     }
@@ -73,7 +75,6 @@ public class BookService {
 
         List<Book> bookByKey;
         if (split.length == 1) {
-            //todo: methods return empty list
             List<Book> firstNameList = bookDao.getBooksByAuthor(split[0], "", start, rowsPerPage);
             List<Book> lastNameList = bookDao.getBooksByAuthor("", split[0], start, rowsPerPage);
             bookByKey = mergeListBooks(firstNameList, lastNameList);
@@ -82,6 +83,16 @@ public class BookService {
         }
 
         for (Book book : bookByKey) {
+            dtoList.add(convert(book));
+        }
+        return dtoList;
+    }
+
+    private List<BookDto> searchByPublicationDate(String key, int start, int rowsPerPage) {
+        List<BookDto> dtoList = new ArrayList<>();
+        String[] dates = key.split("-");
+        List<Book> bookList = bookDao.getBooksByDatePeriod(Integer.parseInt(dates[0]), Integer.parseInt(dates[1]), start, rowsPerPage);
+        for (Book book : bookList) {
             dtoList.add(convert(book));
         }
         return dtoList;
