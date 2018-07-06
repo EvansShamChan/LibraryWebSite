@@ -28,13 +28,12 @@ public class UserDao {
         }
     }
 
-    public User getUser(String username, String password) {
+    public User getUser(String username) {
         Statement statement = null;
         User resultUser;
         try {
             statement = ConnectionManager.getInstance().getConnection().createStatement();
-            statement.executeQuery("SELECT * FROM users WHERE username = '" + username + "' AND password = '" +
-                    password + "';");
+            statement.executeQuery("SELECT * FROM users WHERE username = '" + username + "';");
             ResultSet resultSet = statement.getResultSet();
             resultUser = new User();
             while (resultSet.next()) {

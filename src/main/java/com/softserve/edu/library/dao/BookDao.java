@@ -19,6 +19,7 @@ public class BookDao {
             "select * from books where id in(select id_book from authors_to_books where id_author " +
                     "in(select id from authors where first_name = ? or last_name = ?)) limit ?, ?;";
     private final String GET_NUMBER_OF_BOOKS = "select count(*) as number from books where name like ?;";
+    private final String GET_ALL_BOOKS = "select * from books where publication_date between ? and ? limit ?, ?;";
 
     public Book getByName(String name) {
         PreparedStatement statement = null;
@@ -170,14 +171,7 @@ public class BookDao {
             preparedStatement.setInt(2, start);
             preparedStatement.setInt(3, rowsPerPage);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String name = resultSet.getString("name");
-                String publication_date = resultSet.getString("publication_date");
-                int available = resultSet.getInt("available");
-                List<Author> authorList = authorToBookDao.getAuthorsByBookId(String.valueOf(id));
-                bookList.add(new Book(id, name, publication_date, available, authorList));
-            }
+            bookList = putValuesFromRSToBookEntity(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -193,17 +187,41 @@ public class BookDao {
             preparedStatement.setInt(3, start);
             preparedStatement.setInt(4, rowsPerPage);
             ResultSet resultSet = preparedStatement.executeQuery();
-            //todo: delete dublicate code
-            while(resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String name = resultSet.getString("name");
-                String publication_date = resultSet.getString("publication_date");
-                int available = resultSet.getInt("available");
-                List<Author> authorList = authorToBookDao.getAuthorsByBookId(String.valueOf(id));
-                bookList.add(new Book(id, name, publication_date, available, authorList));
-            }
+            bookList = putValuesFromRSToBookEntity(resultSet);
+
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+        return bookList;
+    }
+
+    //get all books and filter by dates
+    public List<Book> getBooksByDatePeriod(int startYear, int endYear, int start, int rowsPerPage) {
+        //todo: change publication date in bd
+        List<Book> bookList = new ArrayList<>();
+        try {
+            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(GET_ALL_BOOKS);
+            preparedStatement.setInt(1, startYear);
+            preparedStatement.setInt(2, endYear);
+            preparedStatement.setInt(3, start);
+            preparedStatement.setInt(4, rowsPerPage);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            bookList = putValuesFromRSToBookEntity(resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return bookList;
+    }
+
+    private List<Book> putValuesFromRSToBookEntity(ResultSet resultSet) throws SQLException {
+        List<Book> bookList = new ArrayList<>();
+        while(resultSet.next()) {
+            int id = resultSet.getInt("id");
+            String name = resultSet.getString("name");
+            String publication_date = resultSet.getString("publication_date");
+            int available = resultSet.getInt("available");
+            List<Author> authorList = authorToBookDao.getAuthorsByBookId(String.valueOf(id));
+            bookList.add(new Book(id, name, publication_date, available, authorList));
         }
         return bookList;
     }

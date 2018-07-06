@@ -87,11 +87,7 @@ public class BookServlet extends HttpServlet {
         Long available = Long.parseLong(request.getParameter("available"));
         Book book = new Book(name, publicationDate, available);
         bookService.updateBook(book);
-        try {
-            request.getRequestDispatcher(String.valueOf(session.getAttribute("lastSearchUrl"))).forward(request, response);
-        } catch (ServletException e) {
-            e.printStackTrace();
-        }
+        response.sendRedirect(String.valueOf(session.getAttribute("lastSearchUrl")));
     }
 
     private void deleteBook(HttpServletRequest request, HttpServletResponse response)
