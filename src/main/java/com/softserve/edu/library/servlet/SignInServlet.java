@@ -23,11 +23,7 @@ public class SignInServlet extends HttpServlet {
         String isLoginValid = userService.isUserPresent(loginDto);
 
         if (isLoginValid != null) {
-            if (isLoginValid.equals("user")) {
-                HttpSession session = request.getSession();
-                session.setAttribute("userOrAdmin", isLoginValid);
-                request.getRequestDispatcher("/searchPag").forward(request, response);
-            } else if (isLoginValid.equals("admin")) {
+            if (isLoginValid.equals("user") || isLoginValid.equals("admin")) {
                 HttpSession session = request.getSession();
                 session.setAttribute("userOrAdmin", isLoginValid);
                 request.getRequestDispatcher("/searchPag").forward(request, response);
