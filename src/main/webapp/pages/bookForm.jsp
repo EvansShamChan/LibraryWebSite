@@ -54,10 +54,24 @@
                 <tr>
                     <th>Authors:</th>
                     <td>
-                        <input style="border:none" type="text" name="publicationDate" size="45" placeholder=""
-                               value="<c:out value='${book.authors}' />"/>
+
                     </td>
                 </tr>
+
+
+                <c:forEach var="author" items="${book.authors}">
+                    <tr>
+
+                        <td><c:out value="${author.firstName}"/></td>
+                        <td><c:out value="${author.lastName}"/></td>
+                        <td>
+                            <a href="/author/delete?firstName=<c:out value='${author.firstName}' />&lastName=<c:out value='${author.lastName}' />&bookName=<c:out value='${book.name}'/>">Delete</a>
+                        </td>
+
+                    </tr>
+                </c:forEach>
+
+
                 <tr>
                     <td colspan="2" align="center">
                         <input type="submit" value="Save"/>

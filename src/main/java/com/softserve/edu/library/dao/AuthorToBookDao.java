@@ -4,7 +4,9 @@ import com.softserve.edu.library.db.ConnectionManager;
 import com.softserve.edu.library.entity.Author;
 import com.softserve.edu.library.entity.AuthorToBook;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,4 +58,17 @@ public class AuthorToBookDao {
         result.setIdBook(resultSet.getInt("id_book"));
         return result;
     }
+
+    public boolean deleteAuthorToBook(long idBook, long idAuthor) throws SQLException {
+        String sql = "DELETE FROM authors_to_books WHERE id_book = ? AND id_author =?;";
+        PreparedStatement statement = ConnectionManager.getInstance().getConnection().prepareStatement(sql);
+
+        statement.setLong(1, idBook);
+        statement.setLong(2, idAuthor);
+        boolean rowDeleted = statement.executeUpdate() > 0;
+        statement.close();
+
+        return rowDeleted;
+    }
+
 }
