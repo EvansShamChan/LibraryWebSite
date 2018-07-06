@@ -52,6 +52,13 @@
                     </td>
                 </tr>
                 <tr>
+                    <th>Authors:</th>
+                    <td>
+                        <input style="border:none" type="text" name="publicationDate" size="45" placeholder=""
+                               value="<c:out value='${book.authors}' />"/>
+                    </td>
+                </tr>
+                <tr>
                     <td colspan="2" align="center">
                         <input type="submit" value="Save"/>
                     </td>

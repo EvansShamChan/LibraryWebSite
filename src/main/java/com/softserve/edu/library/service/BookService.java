@@ -1,6 +1,7 @@
 package com.softserve.edu.library.service;
 
 import com.softserve.edu.library.dao.BookDao;
+import com.softserve.edu.library.dto.AuthorDto;
 import com.softserve.edu.library.dto.BookDto;
 import com.softserve.edu.library.entity.Author;
 import com.softserve.edu.library.entity.Book;
@@ -25,14 +26,15 @@ public class BookService {
     }
 
     private BookDto convert(Book book) {
-        String authors = "";
+        List<AuthorDto> authorDtos = new ArrayList<>();
         for (Author author : book.getAuthors()) {
-            if (!authors.isEmpty()) {
-                authors += ", ";
-            }
-            authors += author.getFirstName() + " " + author.getLastName();
+            AuthorDto authorDto = new AuthorDto();
+            authorDto.setFirstName(author.getFirstName());
+            authorDto.setLastName(author.getLastName());
+
+            authorDtos.add(authorDto);
         }
-        return new BookDto(book.getName(), authors, book.getPublicationDate(), String.valueOf(book.getAvailable()));
+        return new BookDto(book.getName(), authorDtos, book.getPublicationDate(), String.valueOf(book.getAvailable()));
     }
 
     public int getNumberOfBooks(String searchKey) {
@@ -93,8 +95,10 @@ public class BookService {
         return fullList;
     }
 
-    public Book getByName(String name) {
-        return bookDao.getByName(name);
+    public BookDto getByName(String name) {
+        Book book = bookDao.getByName(name);
+        BookDto bookDto = convert(book);
+        return bookDto;
     }
 
     public boolean insertBook(Book book) {
