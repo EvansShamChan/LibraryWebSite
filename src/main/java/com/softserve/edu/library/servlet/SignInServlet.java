@@ -23,8 +23,10 @@ public class SignInServlet extends HttpServlet {
 
         if (isLoginValid != null) {
             if (isLoginValid.equals("user")) {
-                //todo URL for user page after log in
+                request.setAttribute("userOrAdmin", isLoginValid);
+                request.getRequestDispatcher("/searchPag").forward(request, response);
             } else if (isLoginValid.equals("admin")) {
+                request.setAttribute("userOrAdmin", isLoginValid);
                 request.getRequestDispatcher("/searchPag").forward(request, response);
             } else {
                 request.setAttribute("errorStyle", "display: block");

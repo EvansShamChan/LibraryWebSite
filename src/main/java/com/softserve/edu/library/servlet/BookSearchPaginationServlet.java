@@ -49,7 +49,11 @@ public class BookSearchPaginationServlet extends HttpServlet {
         String URL = req.getRequestURI() + "?" + req.getQueryString();
         session.setAttribute("lastSearchUrl", URL);
 
-        req.getRequestDispatcher("/pages/search.jsp").forward(req, resp);
+        if (req.getAttribute("userOrAdmin").equals("user")) {
+            req.getRequestDispatcher("/pages/userSearchBookPage.jsp").forward(req, resp);
+        } else if (req.getAttribute("userOrAdmin").equals("admin")) {
+            req.getRequestDispatcher("/pages/adminSearchBookPage.jsp").forward(req, resp);
+        }
     }
 
     @Override
