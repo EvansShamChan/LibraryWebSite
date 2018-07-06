@@ -1,18 +1,23 @@
 package com.softserve.edu.library.dto;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class BookDto {
     private String name;
-    private String author;
+    private List<AuthorDto> authors = new ArrayList<>(); // avoid NullPE
     private String publicationDate;
-    private String availability;
+    private String available;
 
-    public BookDto(String name, String author, String publicationDate, String availability) {
+    public BookDto() {
+    }
+
+    public BookDto(String name, List<AuthorDto> authors, String publicationDate, String available) {
         this.name = name;
-        this.author = author;
+        this.authors = authors;
         this.publicationDate = publicationDate;
-        this.availability = availability;
+        this.available = available;
     }
 
     public String getName() {
@@ -23,12 +28,12 @@ public class BookDto {
         this.name = name;
     }
 
-    public String getAuthor() {
-        return author;
+    public List<AuthorDto> getAuthors() {
+        return authors;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setAuthors(List<AuthorDto> authors) {
+        this.authors = authors;
     }
 
     public String getPublicationDate() {
@@ -39,12 +44,12 @@ public class BookDto {
         this.publicationDate = publicationDate;
     }
 
-    public String getAvailability() {
-        return availability;
+    public String getAvailable() {
+        return available;
     }
 
-    public void setAvailability(String availability) {
-        this.availability = availability;
+    public void setAvailable(String available) {
+        this.available = available;
     }
 
     @Override
@@ -53,24 +58,24 @@ public class BookDto {
         if (o == null || getClass() != o.getClass()) return false;
         BookDto bookDto = (BookDto) o;
         return Objects.equals(name, bookDto.name) &&
-                Objects.equals(author, bookDto.author) &&
+                Objects.equals(authors, bookDto.authors) &&
                 Objects.equals(publicationDate, bookDto.publicationDate) &&
-                Objects.equals(availability, bookDto.availability);
+                Objects.equals(available, bookDto.available);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(name, author, publicationDate, availability);
+        return Objects.hash(name, authors, publicationDate, available);
     }
 
     @Override
     public String toString() {
         return "BookDto{" +
                 "name='" + name + '\'' +
-                ", author='" + author + '\'' +
+                ", authors='" + authors + '\'' +
                 ", publicationDate='" + publicationDate + '\'' +
-                ", availability='" + availability + '\'' +
+                ", available='" + available + '\'' +
                 '}';
     }
 }

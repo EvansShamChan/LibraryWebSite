@@ -38,7 +38,7 @@
                 <option value="15">15</option>
                 <option value="20">20</option>
             </select><br>
-            <input type="radio" value="author" name="checkBy">By Author
+            <input type="radio" value="authors" name="checkBy">By Author
             <input type="radio" value="bookName" name="checkBy" checked>By Book name
             <input type="hidden" name="currentPage" value="1">
             <c:if test="${listBook != null}">
@@ -53,9 +53,9 @@
             <c:forEach var="book" items="${listBook}">
                 <tr>
                     <td><c:out value="${book.name}"/></td>
-                    <td><c:out value="${book.author}"/></td>
+                    <td><c:out value="${book.authors}"/></td>
                     <td><c:out value="${book.publicationDate}"/></td>
-                    <td><c:out value="${book.availability}"/></td>
+                    <td><c:out value="${book.available}"/></td>
                     <td>
                         <a href="/search/edit?name=<c:out value='${book.name}' />">Edit</a>
                         &nbsp;&nbsp;&nbsp;&nbsp;
