@@ -19,6 +19,10 @@ public class BookServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String action = request.getRequestURI();
+        chooseActionForNecessaryPage(request, response, action);
+    }
+
+    private void chooseActionForNecessaryPage(HttpServletRequest request, HttpServletResponse response, String action) throws ServletException, IOException {
         switch (action) {
             case "/search/new":
                 showNewForm(request, response);
