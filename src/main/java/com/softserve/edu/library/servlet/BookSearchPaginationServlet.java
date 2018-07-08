@@ -1,6 +1,7 @@
 package com.softserve.edu.library.servlet;
 
 import com.softserve.edu.library.dto.BookDto;
+import com.softserve.edu.library.dto.BookSearchDto;
 import com.softserve.edu.library.service.BookService;
 
 import javax.servlet.ServletException;
@@ -15,58 +16,59 @@ import java.util.List;
 @WebServlet("/searchPag")
 public class BookSearchPaginationServlet extends HttpServlet {
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         req.setCharacterEncoding("UTF-8");
-        //todo: check when vitalik fix nullpointer
+        HttpSession session = req.getSession();
+
         if (req.getParameter("rowsPerPage") == null) {
-            req.setAttribute("searchPag", "");
-            req.setAttribute("rowsPerPage", "10");
-            req.setAttribute("checkBy", "bookName");
-            req.setAttribute("currentPage", "1");
             req.getRequestDispatcher("/searchPag?searchKey=&rowsPerPage=10&checkBy=bookName&currentPage=1").forward(req, resp);
         }
-        //todo:--------------------------------------
-
         BookService bookService = new BookService();
 
+        BookSearchDto bookSearchDto = new BookSearchDto(
+                Integer.parseInt(req.getParameter("rowsPerPage")),
+                req.getParameter("checkBy"), req.getParameter("searchKey"),
+                Integer.parseInt(req.getParameter("currentPage")));
 
-        int rowsPerPage = Integer.parseInt(req.getParameter("rowsPerPage"));
-        String checkBy = req.getParameter("checkBy");
-        String searchKey = req.getParameter("searchKey");
-        int currentPage = Integer.parseInt(req.getParameter("currentPage"));
+        List<BookDto> bookList = bookService.executeBookSearch(bookSearchDto);
 
-        List<BookDto> bookList = bookService.executeBookSearch(searchKey, checkBy, currentPage, rowsPerPage);
-
-        int numberOfRows = bookService.getNumberOfBooks(searchKey);
-        int nOfPages = numberOfRows / rowsPerPage;
-
+        int numberOfRows = bookService.getNumberOfBooks(bookSearchDto);
+        int nOfPages = numberOfRows / bookSearchDto.getRowsPerPage();
         if(numberOfRows == 10) {
             //nop
-        } else if (nOfPages % rowsPerPage > 0) {
+        } else if (nOfPages % bookSearchDto.getRowsPerPage() > 0) {
             ++nOfPages;
         }
-
-        HttpSession session = req.getSession();
-        req.setAttribute("listBook", bookList);
-        req.setAttribute("searchKey", searchKey);
-        req.setAttribute("nOfPages", nOfPages);
-        req.setAttribute("currentPage", currentPage);
-        req.setAttribute("rowsPerPage", rowsPerPage);
-
-
-        String URL = req.getRequestURI() + "?" + req.getQueryString();
-        session.setAttribute("lastSearchUrl", URL);
-
-        if (session.getAttribute("userOrAdmin").equals("user")) {
-            req.getRequestDispatcher("/pages/userSearchBookPage.jsp").forward(req, resp);
-        } else if (session.getAttribute("userOrAdmin").equals("admin")) {
-            req.getRequestDispatcher("/pages/adminSearchBookPage.jsp").forward(req, resp);
-        }
+        setResultSearchInRequestAttributes(req, bookSearchDto, nOfPages, bookList);
+        putInSessionLastSearchURL(req, session);
+        redirectByRole(req, resp, session);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req, resp);
+    }
+
+    private void setResultSearchInRequestAttributes(HttpServletRequest req, BookSearchDto bookSearchDto, int nOfPages, List<BookDto> bookList) {
+        req.setAttribute("listBook", bookList);
+        req.setAttribute("searchKey", bookSearchDto.getSearchKey());
+        req.setAttribute("nOfPages", nOfPages);
+        req.setAttribute("currentPage", bookSearchDto.getCurrentPage());
+        req.setAttribute("rowsPerPage", bookSearchDto.getRowsPerPage());
+        req.setAttribute("checkBy", bookSearchDto.getCheckBy());
+    }
+
+    private void putInSessionLastSearchURL(HttpServletRequest req, HttpSession session) {
+        String URL = req.getRequestURI() + "?" + req.getQueryString();
+        session.setAttribute("lastSearchUrl", URL);
+    }
+
+    private void redirectByRole(HttpServletRequest req, HttpServletResponse resp, HttpSession session) throws ServletException, IOException {
+        if (session.getAttribute("userOrAdmin").equals("user")) {
+            req.getRequestDispatcher("/pages/userSearchBookPage.jsp").forward(req, resp);
+        } else if (session.getAttribute("userOrAdmin").equals("admin")) {
+            req.getRequestDispatcher("/pages/adminSearchBookPage.jsp").forward(req, resp);
+        }
     }
 }
 

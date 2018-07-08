@@ -87,6 +87,7 @@ public class BookServlet extends HttpServlet {
         Long available = Long.parseLong(request.getParameter("available"));
         Book book = new Book(name, publicationDate, available);
         bookService.updateBook(book);
+        System.out.println(session.getAttribute("lastSearchUrl"));
         response.sendRedirect(String.valueOf(session.getAttribute("lastSearchUrl")));
     }
 
