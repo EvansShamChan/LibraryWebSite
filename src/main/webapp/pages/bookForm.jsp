@@ -15,7 +15,7 @@
 <body>
 <div align="center">
     <c:if test="${book != null}">
-    <form action="update" method="post">
+    <form action="/search/update" method="post">
         </c:if>
         <c:if test="${book == null}">
         <form action="insert" method="post">
