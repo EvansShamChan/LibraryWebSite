@@ -25,4 +25,22 @@ public class AuthorService {
         }
         return false;
     }
+
+    public boolean addAuthorToBook(String bookName, String firstName, String lastName) throws SQLException {
+        Book book = bookDao.getByName(bookName);
+        if (book == null) {
+            return false;
+        }
+        Author author = authorDao.getByName(firstName, lastName);
+        long authorId;
+        if (author != null) {
+            authorId = author.getId();
+        } else {
+            author = new Author(firstName, lastName);
+            authorId = authorDao.addAuthor(author);
+        }
+        authorToBookDao.addAuthorToBook(book.getId(), authorId);
+
+        return true;
+    }
 }

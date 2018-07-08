@@ -3,6 +3,7 @@ package com.softserve.edu.library.dao;
 import com.softserve.edu.library.db.ConnectionManager;
 import com.softserve.edu.library.entity.Author;
 import com.softserve.edu.library.entity.AuthorToBook;
+import com.softserve.edu.library.entity.Book;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -71,4 +72,15 @@ public class AuthorToBookDao {
         return rowDeleted;
     }
 
+    public boolean addAuthorToBook(long bookId, long authorId) throws SQLException {
+        String sql = "INSERT INTO authors_to_books (id_book, id_author) VALUES (?, ?);";
+        PreparedStatement statement = ConnectionManager.getInstance().getConnection().prepareStatement(sql);
+
+        statement.setLong(1, bookId);
+        statement.setLong(2, authorId);
+
+        boolean rowInserted = statement.executeUpdate() > 0;
+        statement.close();
+        return rowInserted;
+    }
 }
