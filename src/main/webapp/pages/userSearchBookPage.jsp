@@ -29,15 +29,29 @@
             <input type="text" name="searchKey" placeholder="Search" value="${searchKey}">
             <input type="submit" value="Search"><br><br>
             <label>Rows per page</label>
+            <c:choose>
+                <c:when test="${checkBy == 'bookName'}"><c:set var="checkByBook" value="checked"/></c:when>
+                <c:when test="${checkBy == 'author'}"><c:set var="checkByAuthor" value="checked"/></c:when>
+                <c:when test="${checkBy == 'publicationDate'}"><c:set var="checkByDate" value="checked"/></c:when>
+            </c:choose>
+
+            <c:choose>
+                <c:when test="${rowsPerPage == 5}"><c:set var="rows5" value="selected"/></c:when>
+                <c:when test="${rowsPerPage == 10}"><c:set var="rows10" value="selected"/></c:when>
+                <c:when test="${rowsPerPage == 15}"><c:set var="rows15" value="selected"/></c:when>
+                <c:when test="${rowsPerPage == 20}"><c:set var="rows20" value="selected"/></c:when>
+            </c:choose>
+
             <select name="rowsPerPage" id="rowsPerPage">
-                <option value="5">5</option>
-                <option value="10" selected>10</option>
-                <option value="15">15</option>
-                <option value="20">20</option>
+                <option value="5" ${rows5}>5</option>
+                <option value="10" ${rows10}>10</option>
+                <option value="15" ${rows15}>15</option>
+                <option value="20" ${rows20}>20</option>
             </select><br>
-            <input type="radio" value="author" name="checkBy">By Author
-            <input type="radio" value="bookName" name="checkBy" checked>By Book name
-            <input type="radio" value="publicationDate" name="checkBy">By publication date
+
+            <input type="radio" value="author" name="checkBy" ${checkByAuthor}>By Author
+            <input type="radio" value="bookName" name="checkBy" ${checkByBook}>By Book name
+            <input type="radio" value="publicationDate" name="checkBy" ${checkByDate}>By publication date
             <input type="hidden" name="currentPage" value="1">
             <c:if test="${listBook != null}">
                 <tr>

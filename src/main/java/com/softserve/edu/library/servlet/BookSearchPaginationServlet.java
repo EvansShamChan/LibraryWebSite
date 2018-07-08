@@ -24,7 +24,9 @@ public class BookSearchPaginationServlet extends HttpServlet {
             req.getRequestDispatcher("/searchPag?searchKey=&rowsPerPage=10&checkBy=bookName&currentPage=1").forward(req, resp);
         }
         BookService bookService = new BookService();
-        BookSearchDto bookSearchDto = new BookSearchDto(Integer.parseInt(req.getParameter("rowsPerPage")),
+
+        BookSearchDto bookSearchDto = new BookSearchDto(
+                Integer.parseInt(req.getParameter("rowsPerPage")),
                 req.getParameter("checkBy"), req.getParameter("searchKey"),
                 Integer.parseInt(req.getParameter("currentPage")));
 
@@ -38,9 +40,7 @@ public class BookSearchPaginationServlet extends HttpServlet {
             ++nOfPages;
         }
         setResultSearchInRequestAttributes(req, bookSearchDto, nOfPages, bookList);
-
         putInSessionLastSearchURL(req, session);
-
         redirectByRole(req, resp, session);
     }
 
@@ -55,6 +55,7 @@ public class BookSearchPaginationServlet extends HttpServlet {
         req.setAttribute("nOfPages", nOfPages);
         req.setAttribute("currentPage", bookSearchDto.getCurrentPage());
         req.setAttribute("rowsPerPage", bookSearchDto.getRowsPerPage());
+        req.setAttribute("checkBy", bookSearchDto.getCheckBy());
     }
 
     private void putInSessionLastSearchURL(HttpServletRequest req, HttpSession session) {
