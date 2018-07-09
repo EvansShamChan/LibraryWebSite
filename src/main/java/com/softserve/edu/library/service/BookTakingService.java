@@ -12,7 +12,10 @@ public class BookTakingService {
         long available = bookTakingDto.getAvailable();
 
         RecordsDao recordsDao = new RecordsDao();
-        if (recordsDao.takeBook(idUser,idBook,takeDate) && recordsDao.decrementAvailable(idBook,available)) {
+        if(!recordsDao.isDecrementAvailable(idBook)) {
+            return "This book cannot be taken";
+        }
+        if (recordsDao.doDecrement(idBook,available) && recordsDao.takeBook(idUser,idBook,takeDate)) {
             return "book was successfully added";
         } else {
             throw new RuntimeException("query did not work");
