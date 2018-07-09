@@ -62,6 +62,7 @@ public class BookServlet extends HttpServlet {
     private void insertBook(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         BookService bookService = new BookService();
+        HttpSession session = request.getSession();
         request.setCharacterEncoding("UTF-8");
         String name = request.getParameter("name");
         String publicationDate = request.getParameter("publicationDate");
@@ -70,11 +71,7 @@ public class BookServlet extends HttpServlet {
         Book newBook = new Book(name, publicationDate, available);
         boolean result = bookService.insertBook(newBook);
         request.setAttribute("success", result);//TODO add message on frontend
-        try {
-            request.getRequestDispatcher("/searchPag").forward(request, response);
-        } catch (ServletException e) {
-            e.printStackTrace();
-        }
+            response.sendRedirect(String.valueOf(session.getAttribute("lastSearchUrl")));
     }
 
     private void updateBook(HttpServletRequest request, HttpServletResponse response)
@@ -87,20 +84,16 @@ public class BookServlet extends HttpServlet {
         Long available = Long.parseLong(request.getParameter("available"));
         Book book = new Book(name, publicationDate, available);
         bookService.updateBook(book);
-        System.out.println(session.getAttribute("lastSearchUrl"));
         response.sendRedirect(String.valueOf(session.getAttribute("lastSearchUrl")));
     }
 
     private void deleteBook(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         BookService bookService = new BookService();
+        HttpSession session = request.getSession();
         String name = request.getParameter("name");
         bookService.deleteBook(name);
-        try {
-            request.getRequestDispatcher("/searchPag").forward(request, response);
-        } catch (ServletException e) {
-            e.printStackTrace();
-        }
+        response.sendRedirect(String.valueOf(session.getAttribute("lastSearchUrl")));
     }
 
     @Override
