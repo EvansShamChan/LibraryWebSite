@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet("/takeTheBook")
@@ -21,6 +22,19 @@ public class BookTakingServlet extends HttpServlet {
                 Long.valueOf(req.getParameter("available")));
         BookTakingService bookTakingService = new BookTakingService();
         bookTakingService.takeBook(bookTakingDto);
+//        req.setAttribute("bookWasSuccessfullyAdded", "display: block");
+//        req.getRequestDispatcher("/pages/userSearchBookPage.jsp").forward(req, resp);
+
+
+        HttpSession session = req.getSession();
+        req.setAttribute("bookWasSuccessfullyAdded", "display: block");
+
+
+        req.getRequestDispatcher(String.valueOf(session.getAttribute("lastSearchUrl"))).forward(req, resp);
+
+
+//        resp.sendRedirect(String.valueOf(session.getAttribute("lastSearchUrl")));
+
     }
 
 }
