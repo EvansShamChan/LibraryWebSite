@@ -15,17 +15,17 @@ import java.io.IOException;
 @WebServlet("/SignIn")
 public class SignInServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         LoginDto loginDto = new LoginDto(request.getParameter("username"), request.getParameter("password"));
         UserService userService = new UserService();
 
-        String isLoginValid = userService.isUserPresent(loginDto);
+        String[] isLoginValid = userService.isUserPresent(loginDto);
 
         if (isLoginValid != null) {
-            if (isLoginValid.equals("user") || isLoginValid.equals("admin")) {
+            if (/*isLoginValid.equals("user") || isLoginValid.equals("admin")*/ isLoginValid[0].equals("user") || isLoginValid[0].equals("admin")) {
                 HttpSession session = request.getSession();
-                session.setAttribute("userOrAdmin", isLoginValid);
+                session.setAttribute("userOrAdmin", isLoginValid[0]);
+                session.setAttribute("userID", Long.valueOf(isLoginValid[1]));
                 request.getRequestDispatcher("/searchPag").forward(request, response);
             } else {
                 request.setAttribute("errorStyle", "display: block");

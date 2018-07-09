@@ -1,5 +1,8 @@
 package com.softserve.edu.library.servlet;
 
+import com.softserve.edu.library.dto.BookTakingDto;
+import com.softserve.edu.library.service.BookTakingService;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +15,12 @@ public class BookTakingServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        BookTakingDto bookTakingDto = new BookTakingDto(
+                Long.valueOf(req.getParameter("userID")),
+                Long.valueOf(req.getParameter("bookId")),
+                Long.valueOf(req.getParameter("available")));
+        BookTakingService bookTakingService = new BookTakingService();
+        bookTakingService.takeBook(bookTakingDto);
     }
 
 }

@@ -35,7 +35,7 @@ public class BookService {
 
             authorDtos.add(authorDto);
         }
-        return new BookDto(book.getName(), authorDtos, book.getPublicationDate(), String.valueOf(book.getAvailable()));
+        return new BookDto(book.getId() ,book.getName(), authorDtos, book.getPublicationDate(), String.valueOf(book.getAvailable()));
     }
 
     public int getNumberOfBooks(BookSearchDto bookSearchDto) {

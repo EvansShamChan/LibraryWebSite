@@ -55,6 +55,7 @@
             <input type="hidden" name="currentPage" value="1">
             <c:if test="${listBook != null}">
                 <tr>
+                    <th>Id</th>
                     <th>Title</th>
                     <th>Authors</th>
                     <th>Publication date</th>
@@ -64,12 +65,14 @@
             </c:if>
             <c:forEach var="book" items="${listBook}">
                 <tr>
+                    <td><c:out value="${book.id}"/></td>
                     <td><c:out value="${book.name}"/></td>
                     <td><c:out value="${book.authors}"/></td>
                     <td><c:out value="${book.publicationDate}"/></td>
                     <td><c:out value="${book.available}"/></td>
                     <td>
-                        <a href="/takeTheBook?name=<c:out value='${book.name}' />">Take</a>
+                        <a method="get"
+                           href="/takeTheBook?bookId=${book.id}&userID=${sessionScope.userID}&available=${book.available}">Take</a>
                         &nbsp;&nbsp;&nbsp;&nbsp;
                     </td>
                 </tr>
