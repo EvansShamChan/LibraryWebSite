@@ -17,6 +17,7 @@
           type="image/png">
     <style>
         <%@include file="../css/searchPageStyle.css"%>
+        <%@include file="../css/userSearchBookPageStyle.css"%>
     </style>
 </head>
 <body>
@@ -27,6 +28,7 @@
     <form action="/searchPag" method="get">
         <table border="1" cellpadding="5">
             <input type="text" name="searchKey" placeholder="Search" value="${searchKey}">
+            <div class="successText" style="${bookWasSuccessfullyAdded}"><p>Book was successfully added</p></div>
             <input type="submit" value="Search"><br><br>
             <label>Rows per page</label>
             <c:choose>

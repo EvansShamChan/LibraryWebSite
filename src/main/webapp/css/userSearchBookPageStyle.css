@@ -1,0 +1,6 @@
+.successText {
+    display: none;
+    color: green;
+    alignment: right;
+    /*padding-left: 300px;*/
+}

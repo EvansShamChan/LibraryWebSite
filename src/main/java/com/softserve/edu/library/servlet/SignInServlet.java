@@ -22,7 +22,7 @@ public class SignInServlet extends HttpServlet {
         String[] isLoginValid = userService.isUserPresent(loginDto);
 
         if (isLoginValid != null) {
-            if (/*isLoginValid.equals("user") || isLoginValid.equals("admin")*/ isLoginValid[0].equals("user") || isLoginValid[0].equals("admin")) {
+            if (isLoginValid[0].equals("user") || isLoginValid[0].equals("admin")) {
                 HttpSession session = request.getSession();
                 session.setAttribute("userOrAdmin", isLoginValid[0]);
                 session.setAttribute("userID", Long.valueOf(isLoginValid[1]));
