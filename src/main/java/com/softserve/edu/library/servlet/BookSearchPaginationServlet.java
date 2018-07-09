@@ -44,11 +44,6 @@ public class BookSearchPaginationServlet extends HttpServlet {
         redirectByRole(req, resp, session);
     }
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req, resp);
-    }
-
     private void setResultSearchInRequestAttributes(HttpServletRequest req, BookSearchDto bookSearchDto, int nOfPages, List<BookDto> bookList) {
         req.setAttribute("listBook", bookList);
         req.setAttribute("searchKey", bookSearchDto.getSearchKey());
@@ -69,6 +64,11 @@ public class BookSearchPaginationServlet extends HttpServlet {
         } else if (session.getAttribute("userOrAdmin").equals("admin")) {
             req.getRequestDispatcher("/pages/adminSearchBookPage.jsp").forward(req, resp);
         }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doPost(req, resp);
     }
 }
 

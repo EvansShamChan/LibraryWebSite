@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class BookDto {
+    private long id;
     private String name;
     private List<AuthorDto> authors = new ArrayList<>(); // avoid NullPE
     private String publicationDate;
@@ -13,11 +14,20 @@ public class BookDto {
     public BookDto() {
     }
 
-    public BookDto(String name, List<AuthorDto> authors, String publicationDate, String available) {
+    public BookDto(long id ,String name, List<AuthorDto> authors, String publicationDate, String available) {
+        this.id = id;
         this.name = name;
         this.authors = authors;
         this.publicationDate = publicationDate;
         this.available = available;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {

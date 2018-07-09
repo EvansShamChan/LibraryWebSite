@@ -8,15 +8,22 @@ import java.util.Objects;
 public class BookTakingDto {
     private long idUser;
     private long idBook;
-    private java.sql.Date takingBookDate;
+    private long available;
+    private java.sql.Date takeDate;
 
-    public BookTakingDto(long idUser, long idBook) {
+    public BookTakingDto(long idUser, long idBook, long available) {
         this.idUser = idUser;
         this.idBook = idBook;
-        this.takingBookDate = DateService.getCurrentSqlDate();;
+        this.available = available;
+        this.takeDate = DateService.getCurrentSqlDate();
     }
 
-    public BookTakingDto() {
+    public long getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(long available) {
+        this.available = available;
     }
 
     public long getIdUser() {
@@ -36,7 +43,7 @@ public class BookTakingDto {
     }
 
     public Date getTakingBookDate() {
-        return takingBookDate;
+        return takeDate;
     }
 
     @Override
@@ -46,12 +53,12 @@ public class BookTakingDto {
         BookTakingDto that = (BookTakingDto) o;
         return idUser == that.idUser &&
                 idBook == that.idBook &&
-                Objects.equals(takingBookDate, that.takingBookDate);
+                Objects.equals(takeDate, that.takeDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idUser, idBook, takingBookDate);
+        return Objects.hash(idUser, idBook, takeDate);
     }
 
     @Override
@@ -59,7 +66,7 @@ public class BookTakingDto {
         return "BookTakingDto{" +
                 "idUser=" + idUser +
                 ", idBook=" + idBook +
-                ", takingBookDate=" + takingBookDate +
+                ", takingBookDate=" + takeDate +
                 '}';
     }
 }

@@ -4,7 +4,7 @@ package com.softserve.edu.library.entity;
 import java.sql.Date;
 import java.util.Objects;
 
-public class Records {
+public class Record {
 
   private long id;
   private long idUser;
@@ -66,13 +66,13 @@ public class Records {
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
-    Records records = (Records) o;
-    return id == records.id &&
-            idUser == records.idUser &&
-            idBook == records.idBook &&
-            returned == records.returned &&
-            Objects.equals(takeDate, records.takeDate) &&
-            Objects.equals(returnDate, records.returnDate);
+    Record record = (Record) o;
+    return id == record.id &&
+            idUser == record.idUser &&
+            idBook == record.idBook &&
+            returned == record.returned &&
+            Objects.equals(takeDate, record.takeDate) &&
+            Objects.equals(returnDate, record.returnDate);
   }
 
   @Override
@@ -83,7 +83,7 @@ public class Records {
 
   @Override
   public String toString() {
-    return "Records{" +
+    return "Record{" +
             "id=" + id +
             ", idUser=" + idUser +
             ", idBook=" + idBook +
