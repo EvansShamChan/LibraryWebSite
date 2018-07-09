@@ -8,10 +8,22 @@
           integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link rel="icon" href="http://icons.iconarchive.com/icons/pixelkit/swanky-outlines/256/05-Bookmark-Book-icon.png"
           type="image/png">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <style>
     <%@include file="../css/bookFormStyle.css"%>
 </style>
+<script>
+    $(document).ready(function () {
+        $(".add-author").keyup(function () {
+            var path = "/author/add?bookName=" + $("#BookName").text().trim();
+            $(".add-author").each(function () {
+                path += "&" + $(this).attr("name") + "=" + $(this).val()
+            })
+            $('#AddBook').attr("href", path);
+        });
+    });
+</script>
 <body>
 <div align="center">
     <c:if test="${book != null}">
@@ -33,8 +45,8 @@
                 <tr>
                     <th>Name:</th>
                     <td>
-                        <input style="border:none" type="text" name="name" size="45"
-                               value="<c:out value='${book.name}'/>"/>
+                        <h6 id="BookName" style="border:none" type="text" name="name" size="45">
+                            <c:out value='${book.name}'/></h6>
                     </td>
                 </tr>
                 <tr>
@@ -54,24 +66,30 @@
                 <tr>
                     <th>Authors:</th>
                     <td>
-
                     </td>
                 </tr>
-
-
                 <c:forEach var="author" items="${book.authors}">
-                    <tr>
-
+                    <tr class="classname">
                         <td><c:out value="${author.firstName}"/></td>
                         <td><c:out value="${author.lastName}"/></td>
                         <td>
                             <a href="/author/delete?firstName=<c:out value='${author.firstName}' />&lastName=<c:out value='${author.lastName}' />&bookName=<c:out value='${book.name}'/>">Delete</a>
                         </td>
-
                     </tr>
                 </c:forEach>
-
-
+                <tr>
+                    <td>
+                        <input id="firstName" class="add-author" style="border:none" type="text" name="firstName"
+                               size="25"/>
+                    </td>
+                    <td>
+                        <input id="lastName" class="add-author" style="border:none" type="text" name="lastName"
+                               size="25"/>
+                    </td>
+                    <td>
+                        <a href="" id="AddBook">Add</a>
+                    </td>
+                </tr>
                 <tr>
                     <td colspan="2" align="center">
                         <input type="submit" value="Save"/>
@@ -79,7 +97,6 @@
                 </tr>
                 </tbody>
             </table>
-        </form>
 </div>
 </body>
 </html>

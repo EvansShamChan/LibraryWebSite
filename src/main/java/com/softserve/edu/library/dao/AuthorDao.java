@@ -71,4 +71,21 @@ public class AuthorDao {
         result.setLastName(resultSet.getString("last_name"));
         return result;
     }
+
+    public long addAuthor(Author author) throws SQLException {
+        String sql = "INSERT INTO authors (first_name, last_name) VALUES (?, ?);";
+        PreparedStatement statement = ConnectionManager.getInstance().getConnection().prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+
+        statement.setString(1, author.getFirstName());
+        statement.setString(2, author.getLastName());
+        statement.executeUpdate();
+
+        ResultSet resultSet = statement.getGeneratedKeys();
+        long last_inserted_id = 0;
+        if (resultSet.next()) {
+            last_inserted_id = resultSet.getLong(1);
+        }
+        statement.close();
+        return last_inserted_id;
+    }
 }
