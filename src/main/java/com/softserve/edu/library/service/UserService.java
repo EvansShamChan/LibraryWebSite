@@ -11,7 +11,7 @@ import java.util.List;
 public class UserService {
     public String[] isUserPresent(LoginDto loginDto) {
         UserDao userDao = new UserDao();
-        User user = userDao.getUser(loginDto.getUsername());
+        User user = userDao.getUser(loginDto.getUsername(), loginDto.getPassword());
         String[] roleAndId = new String[2];
         if (user.getUsername() == null || !(user.getUsername()).equals(loginDto.getUsername())) {
             roleAndId[0] = "";
