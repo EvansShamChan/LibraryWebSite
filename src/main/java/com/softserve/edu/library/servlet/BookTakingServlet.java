@@ -21,7 +21,7 @@ public class BookTakingServlet extends HttpServlet {
                 Long.valueOf(req.getParameter("bookId")),
                 Long.valueOf(req.getParameter("available")));
         BookTakingService bookTakingService = new BookTakingService();
-        bookTakingService.takeBook(bookTakingDto);
+        String resultString = bookTakingService.takeBook(bookTakingDto);
 //        req.setAttribute("bookWasSuccessfullyAdded", "display: block");
 //        req.getRequestDispatcher("/pages/userSearchBookPage.jsp").forward(req, resp);
 
