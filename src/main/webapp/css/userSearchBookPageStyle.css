@@ -1,6 +1,19 @@
 .successText {
     display: none;
     color: green;
-    alignment: right;
-    /*padding-left: 300px;*/
+    float: right;
+    padding-right: 300px;
+}
+.inputClass {
+
+}
+.alreadyTakenBooks {
+    float: right;
+    padding-right: 300px;
+}
+.errorTextMessage {
+    display: none;
+    color: red;
+    float: right;
+    padding-right: 300px;
 }

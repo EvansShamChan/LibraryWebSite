@@ -27,8 +27,11 @@
 <div align="center">
     <form action="/searchPag" method="get">
         <table border="1" cellpadding="5">
-            <input type="text" name="searchKey" placeholder="Search" value="${searchKey}">
+            <input class="inputClass" style="${searchFieldWithMessage}" type="text" name="searchKey" placeholder="Search" value="${searchKey}">
+            <a class="alreadyTakenBooks" method="get"
+               href="/takenBooks?userID=${sessionScope.userID}">Already taken books</a>
             <div class="successText" style="${bookWasSuccessfullyAdded}"><p>Book was successfully added</p></div>
+            <div class="errorTextMessage" style="${thisBookCannotBeTaken}"><p>This book cannot be taken</p></div>
             <input type="submit" value="Search"><br><br>
             <label>Rows per page</label>
             <c:choose>
