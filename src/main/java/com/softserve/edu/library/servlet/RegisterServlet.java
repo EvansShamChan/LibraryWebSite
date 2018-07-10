@@ -16,20 +16,11 @@ import java.text.ParseException;
 public class RegisterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String dateString = request.getParameter("dateOfBirth");
         RegisterDto registerDto = new RegisterDto();
         UserService userService = new UserService();
-        try {
-            registerDto.setUsername(request.getParameter("username"));
-            registerDto.setPassword(request.getParameter("password"));
-            registerDto.setFirstName(request.getParameter("firstname"));
-            registerDto.setLastName(request.getParameter("lastname"));
-            registerDto.setDate(DateService.parseStringToSqlDate(dateString));
-        } catch (ParseException e) {
-            prepareDataToReturn("dateErrorStyle", request, registerDto);
-            request.getRequestDispatcher("/pages/registerPage.jsp").forward(request, response);
-            return;
-        }
+
+        fillUpRegisterDto(request, registerDto);
+
         boolean isUserPresent = userService.isUserPresent(registerDto);
         if (!isUserPresent) {
             userService.addNewUser(registerDto);
@@ -39,6 +30,15 @@ public class RegisterServlet extends HttpServlet {
             return;
         }
         request.getRequestDispatcher("/pages/SignIn.jsp").forward(request, response);
+    }
+
+    private void fillUpRegisterDto(HttpServletRequest request, RegisterDto registerDto) {
+        String dateString = request.getParameter("dateOfBirth");
+        registerDto.setUsername(request.getParameter("username"));
+        registerDto.setPassword(request.getParameter("password"));
+        registerDto.setFirstName(request.getParameter("firstname"));
+        registerDto.setLastName(request.getParameter("lastname"));
+        registerDto.setDate(DateService.parseStringToSqlDate(dateString));
     }
 
     private void prepareDataToReturn(String errorName, HttpServletRequest req, RegisterDto registerDto) {

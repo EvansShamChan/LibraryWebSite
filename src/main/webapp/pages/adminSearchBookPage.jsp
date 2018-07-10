@@ -29,7 +29,7 @@
 <div align="center">
     <form action="/searchPag" method="get">
         <table border="1" cellpadding="5">
-            <input type="text" name="searchKey" placeholder="Search" value="${searchKey}">
+            <input type="text" id="searchKey" name="searchKey" placeholder="Search" value="${searchKey}">
             <input type="submit" value="Search"><br><br>
             <label>Rows per page</label>
             
@@ -53,9 +53,9 @@
                 <option value="20" ${rows20}>20</option>
             </select><br>
 
-            <input type="radio" value="author" name="checkBy" ${checkByAuthor}>By Author
-            <input type="radio" value="bookName" name="checkBy" ${checkByBook}>By Book name
-            <input type="radio" value="publicationDate" name="checkBy" ${checkByDate}>By publication date
+            <input type="radio" id= "author" value="author" name="checkBy" ${checkByAuthor}>By Author
+            <input type="radio" id="bookName" value="bookName" name="checkBy" ${checkByBook}>By Book name
+            <input type="radio" id="publicationDate" value="publicationDate" name="checkBy" ${checkByDate}>By publication date
             <input type="hidden" name="currentPage" value="1">
             <c:if test="${listBook != null}">
                 <tr>
@@ -84,7 +84,7 @@
         </table>
         <br>
         <c:if test="${listBook != null}">
-            <nav aria-label="Navigation for countries">
+            <nav aria-label="Navigation">
                 <ul class="pagination">
                     <c:if test="${currentPage != 1}">
                         <a method="post" class="page-link"
@@ -111,5 +111,8 @@
         </c:if>
     </form>
 </div>
+<script src="../js/bookSearchScript.js" charset="utf-8">
+    <%@include file="../js/bookSearchScript.js"%>
+</script>
 </body>
 </html>

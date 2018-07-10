@@ -21,7 +21,6 @@
 <div align="center">
     <form action="/register" method="post">
         <div class="errorText" style="${userSameError}"><p>This user is already in use</p></div>
-        <div class="errorText" style="${dateErrorStyle}"><p>Birth date is incorrect. Please try again</p></div>
         <table>
             <tr>
                 <td><label>Username:</label></td>
@@ -41,7 +40,7 @@
             </tr>
             <tr>
                 <td><label>Birth date:</label></td>
-                <td><input type="text" name="dateOfBirth" id="dateOfBirth" placeholder="Example: 2018-06-29" required>
+                <td><input type="date" name="dateOfBirth" id="dateOfBirth" placeholder="Example: 2018-06-29" required>
                 </td>
             </tr>
         </table>

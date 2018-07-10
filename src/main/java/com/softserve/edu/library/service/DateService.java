@@ -11,10 +11,15 @@ public class DateService {
         return sqlDate;
     }
 
-    public static Date parseStringToSqlDate(String stringDate) throws ParseException {
-        Date sqlDate;
-        java.util.Date utilDate = new SimpleDateFormat("yyy-MM-dd").parse(stringDate);
-        sqlDate = new Date(utilDate.getTime());
-        return sqlDate;
+    public static Date parseStringToSqlDate(String stringDate){
+        try {
+            Date sqlDate;
+            java.util.Date utilDate = new SimpleDateFormat("yyy-MM-dd").parse(stringDate);
+            sqlDate = new Date(utilDate.getTime());
+            return sqlDate;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

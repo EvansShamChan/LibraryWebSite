@@ -112,7 +112,9 @@ public class BookService {
         List<BookDto> dtoList = new ArrayList<>();
         List<Book> bookList = new ArrayList<>();
         String[] dates = key.split("-");
-        if(dates.length == 1 && !key.contains("-")) {
+        if(key.isEmpty()) {
+            bookList = bookDao.getAllBooks(start, rowsPerPage);
+        } else if(dates.length == 1 && !key.contains("-")) {
             bookList = bookDao.getBooksByDate(key, start, rowsPerPage);
         } else if(dates.length == 1 && key.contains("-")) {
             dates = new String[]{dates[0], ""};
