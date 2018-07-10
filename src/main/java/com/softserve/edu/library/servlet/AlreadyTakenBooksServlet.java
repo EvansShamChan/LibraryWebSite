@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/takeTheBook")
-public class BookTakingServlet extends HttpServlet {
+@WebServlet("/takenBooks")
+public class AlreadyTakenBooksServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -21,17 +21,13 @@ public class BookTakingServlet extends HttpServlet {
                 Long.valueOf(req.getParameter("bookId")),
                 Long.valueOf(req.getParameter("available")));
         BookTakingService bookTakingService = new BookTakingService();
-        String resultString = bookTakingService.takeBook(bookTakingDto);
+        bookTakingService.takeBook(bookTakingDto);
 //        req.setAttribute("bookWasSuccessfullyAdded", "display: block");
 //        req.getRequestDispatcher("/pages/userSearchBookPage.jsp").forward(req, resp);
 
 
         HttpSession session = req.getSession();
-        if (resultString.equals("This book cannot be taken")) {
-            req.setAttribute("thisBookCannotBeTaken", "display: block");
-        } else if (resultString.equals("book was successfully added")) {
-            req.setAttribute("bookWasSuccessfullyAdded", "display: block");
-        }
+        req.setAttribute("bookWasSuccessfullyAdded", "display: block");
         req.setAttribute("searchFieldWithMessage", "margin-left: 500px;");
         req.getRequestDispatcher(String.valueOf(session.getAttribute("lastSearchUrl"))).forward(req, resp);
 
