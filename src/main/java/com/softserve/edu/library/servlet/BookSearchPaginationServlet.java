@@ -20,9 +20,6 @@ public class BookSearchPaginationServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         HttpSession session = req.getSession();
 
-        if (req.getParameter("rowsPerPage") == null) {
-            req.getRequestDispatcher("/searchPag?searchKey=&rowsPerPage=10&checkBy=bookName&currentPage=1").forward(req, resp);
-        }
         BookService bookService = new BookService();
 
         BookSearchDto bookSearchDto = new BookSearchDto(

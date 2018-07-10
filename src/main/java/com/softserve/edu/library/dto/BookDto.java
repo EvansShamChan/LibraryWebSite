@@ -10,16 +10,18 @@ public class BookDto {
     private List<AuthorDto> authors = new ArrayList<>(); // avoid NullPE
     private String publicationDate;
     private String available;
+    private int numberOfTaken;
 
     public BookDto() {
     }
 
-    public BookDto(long id ,String name, List<AuthorDto> authors, String publicationDate, String available) {
+    public BookDto(long id ,String name, List<AuthorDto> authors, String publicationDate, String available, int numberOfTaken) {
         this.id = id;
         this.name = name;
         this.authors = authors;
         this.publicationDate = publicationDate;
         this.available = available;
+        this.numberOfTaken = numberOfTaken;
     }
 
     public long getId() {
@@ -60,6 +62,14 @@ public class BookDto {
 
     public void setAvailable(String available) {
         this.available = available;
+    }
+
+    public int getNumberOfTaken() {
+        return numberOfTaken;
+    }
+
+    public void setNumberOfTaken(int numberOfTaken) {
+        this.numberOfTaken = numberOfTaken;
     }
 
     @Override

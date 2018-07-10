@@ -35,7 +35,12 @@ public class BookService {
 
             authorDtos.add(authorDto);
         }
-        return new BookDto(book.getId() ,book.getName(), authorDtos, book.getPublicationDate(), String.valueOf(book.getAvailable()));
+        return new BookDto(book.getId(),
+                book.getName(),
+                authorDtos,
+                book.getPublicationDate(),
+                String.valueOf(book.getAvailable()),
+                book.getNumberOfTaken());
     }
 
     public int getNumberOfBooks(BookSearchDto bookSearchDto) {
@@ -52,11 +57,13 @@ public class BookService {
 
     public List<BookDto> executeBookSearch(BookSearchDto bookSearchDto) {
         List<BookDto> bookList = null;
+
         String checkBy = bookSearchDto.getCheckBy();
         String searchKey = bookSearchDto.getSearchKey();
         int rowsPerPage = bookSearchDto.getRowsPerPage();
         int currentPage = bookSearchDto.getCurrentPage();
         int start = currentPage * rowsPerPage - rowsPerPage;
+
         if (checkBy.equals("bookName")) {
             bookList = searchByBookName(searchKey, start, rowsPerPage);
         } else if (checkBy.equals("author")) {

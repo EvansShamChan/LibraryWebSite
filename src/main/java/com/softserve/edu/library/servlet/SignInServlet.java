@@ -26,11 +26,16 @@ public class SignInServlet extends HttpServlet {
                 HttpSession session = request.getSession();
                 session.setAttribute("userOrAdmin", isLoginValid[0]);
                 session.setAttribute("userID", Long.valueOf(isLoginValid[1]));
-                request.getRequestDispatcher("/searchPag").forward(request, response);
+                response.sendRedirect("/searchPag?searchKey=&rowsPerPage=10&checkBy=bookName&currentPage=1");
             } else {
                 request.setAttribute("errorStyle", "display: block");
                 request.getRequestDispatcher("pages/SignIn.jsp").forward(request, response);
             }
         }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doPost(req, resp);
     }
 }

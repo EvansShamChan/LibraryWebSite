@@ -65,6 +65,7 @@
                     <th>Authors</th>
                     <th>Publication date</th>
                     <th>Availability</th>
+                    <th>Number of taken</th>
                     <th>Action</th>
                 </tr>
             </c:if>
@@ -75,6 +76,7 @@
                     <td><c:out value="${book.authors}"/></td>
                     <td><c:out value="${book.publicationDate}"/></td>
                     <td><c:out value="${book.available}"/></td>
+                    <td><c:out value="${book.numberOfTaken}"/></td>
                     <td>
                         <a method="get"
                            href="/takeTheBook?bookId=${book.id}&userID=${sessionScope.userID}&available=${book.available}">Take</a>

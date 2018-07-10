@@ -10,6 +10,7 @@ public class Book {
     private String publicationDate;
     private long available;
     private List<Author> authors;
+    private int numberOfTaken;
 
     public Book(long id, String name, String publicationDate, long available, List<Author> authors) {
         this.id = id;
@@ -81,6 +82,14 @@ public class Book {
         this.authors = authors;
     }
 
+    public int getNumberOfTaken() {
+        return numberOfTaken;
+    }
+
+    public void setNumberOfTaken(int numberOfTaken) {
+        this.numberOfTaken = numberOfTaken;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
@@ -89,6 +98,7 @@ public class Book {
                 ", publicationDate='" + publicationDate + '\'' +
                 ", available=" + available +
                 ", authors=" + authors +
+                ", numberOfTaken=" + numberOfTaken +
                 '}';
     }
 
