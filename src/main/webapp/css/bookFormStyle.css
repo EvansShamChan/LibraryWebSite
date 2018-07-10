@@ -1,3 +1,6 @@
+h1{
+    padding-top: 100px;
+}
 h2 {
     padding-top: 100px;
 }
@@ -10,4 +13,7 @@ body {
     background-image: url("http://topcleaning.info/wp-content/uploads/2018/04/book-powerpoint-background-powerpoint-background-book-books-and-apple-powerpoint-templates-download.jpg");
     background-repeat: no-repeat;
     background-position: right bottom;
+}
+tr{
+    height: 37px;
 }
