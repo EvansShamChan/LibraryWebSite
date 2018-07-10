@@ -24,6 +24,7 @@ public class BookDao {
     private final String GET_BOOKS_LESS_THAN_DATE = "select * from books where publication_date <= ? limit ?, ?;";
     private final String GET_BOOKS_BIGGER_THAN_DATE = "select * from books where publication_date >= ? limit ?, ?;";
     private final String GET_BOOKS_BY_DATE = "select * from books where publication_date = ? limit ?, ?;";
+    private final String GET_BOOK_NUMBER_OF_TAKEN = "select count(*) as number from records where id_book in(select id from books where name = ?);";
 
     public Book getByName(String name) {
         PreparedStatement statement = null;
@@ -196,10 +197,26 @@ public class BookDao {
             preparedStatement.setInt(3, rowsPerPage);
             ResultSet resultSet = preparedStatement.executeQuery();
             bookList = putValuesFromRSToBookEntity(resultSet);
+            getBookNumberOfTaken(bookList);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return bookList;
+    }
+
+    public void getBookNumberOfTaken(List<Book> bookList) {
+        try {
+            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(GET_BOOK_NUMBER_OF_TAKEN);
+            for (Book book : bookList) {
+                preparedStatement.setString(1, book.getName());
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    book.setNumberOfTaken(resultSet.getInt("number"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public List<Book> getBooksByAuthor(String firstname, String lastname, int start, int rowsPerPage) {
@@ -212,7 +229,7 @@ public class BookDao {
             preparedStatement.setInt(4, rowsPerPage);
             ResultSet resultSet = preparedStatement.executeQuery();
             bookList = putValuesFromRSToBookEntity(resultSet);
-
+            getBookNumberOfTaken(bookList);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -226,6 +243,7 @@ public class BookDao {
             prepareBeforeBookDatePeriodSearch(startYear, endYear, start, rowsPerPage);
             ResultSet resultSet = preparedStatement.executeQuery();
             bookList = putValuesFromRSToBookEntity(resultSet);
+            getBookNumberOfTaken(bookList);
         } catch (SQLException e) {
             e.printStackTrace();
         }
