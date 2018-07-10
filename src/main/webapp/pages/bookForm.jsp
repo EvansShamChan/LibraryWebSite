@@ -9,9 +9,14 @@
     <link rel="icon" href="http://icons.iconarchive.com/icons/pixelkit/swanky-outlines/256/05-Bookmark-Book-icon.png"
           type="image/png">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+          rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 </head>
 <style>
     <%@include file="../css/bookFormStyle.css"%>
+    <%@include file="../css/custom-theme/jquery-ui-1.10.0.custom.css"%>
 </style>
 <script>
     $(document).ready(function () {
@@ -20,7 +25,25 @@
             $(".add-author").each(function () {
                 path += "&" + $(this).attr("name") + "=" + $(this).val()
             })
+
             $('#AddBook').attr("href", path);
+        });
+        // console.log("success" + resp)
+        // $("#lastName").val("text from resp")
+        $(function () {
+            $("#firstName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/auto",
+                        data: {query: request.term},
+                        dataType: "json",
+                        success: response,
+                        error: function () {
+                            response([]);
+                        }
+                    });
+                }
+            });
         });
     });
 </script>
@@ -45,8 +68,14 @@
                 <tr>
                     <th>Name:</th>
                     <td>
-                        <h6 id="BookName" style="border:none" type="text" name="name" size="45">
-                            <c:out value='${book.name}'/></h6>
+                        <c:if test="${book == null}">
+                            <input style="border:none" type="text" name="name" size="45"
+                                   value="<c:out value='${book.name}'/>"/>
+                        </c:if>
+                        <c:if test="${book != null}">
+                            <h6 id="BookName" style="border:none" type="text" name="name" size="45">
+                                <c:out value='${book.name}'/></h6>
+                        </c:if>
                     </td>
                 </tr>
                 <tr>
@@ -63,36 +92,38 @@
                                value="<c:out value='${book.available}' />"/>
                     </td>
                 </tr>
-                <tr>
-                    <th>Authors:</th>
-                    <td>
-                    </td>
-                </tr>
-                <c:forEach var="author" items="${book.authors}">
-                    <tr class="classname">
-                        <td><c:out value="${author.firstName}"/></td>
-                        <td><c:out value="${author.lastName}"/></td>
+                <c:if test="${book != null}">
+                    <tr>
+                        <th>Authors:</th>
                         <td>
-                            <a href="/author/delete?firstName=<c:out value='${author.firstName}' />&lastName=<c:out value='${author.lastName}' />&bookName=<c:out value='${book.name}'/>">Delete</a>
                         </td>
                     </tr>
-                </c:forEach>
+                    <c:forEach var="author" items="${book.authors}">
+                        <tr class="classname">
+                            <td><c:out value="${author.firstName}"/></td>
+                            <td><c:out value="${author.lastName}"/></td>
+                            <td>
+                                <a href="/author/delete?firstName=<c:out value='${author.firstName}' />&lastName=<c:out value='${author.lastName}' />&bookName=<c:out value='${book.name}'/>">Delete</a>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    <tr>
+                        <td>
+                            <input id="firstName" class="add-author" style="border:none" type="text" name="firstName"
+                                   size="25"/>
+                        </td>
+                        <td>
+                            <input id="lastName" class="add-author" style="border:none" type="text" name="lastName"
+                                   size="45"/>
+                        </td>
+                        <td>
+                            <a href="" id="AddBook">Add</a>
+                        </td>
+                    </tr>
+                </c:if>
                 <tr>
-                    <td>
-                        <input id="firstName" class="add-author" style="border:none" type="text" name="firstName"
-                               size="25"/>
-                    </td>
-                    <td>
-                        <input id="lastName" class="add-author" style="border:none" type="text" name="lastName"
-                               size="25"/>
-                    </td>
-                    <td>
-                        <a href="" id="AddBook">Add</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" align="center">
-                        <input type="submit" value="Save"/>
+                    <td colspan="4" align="center">
+                        <input class="btn btn-lg btn-primary btn-block " type="submit" value="Save"/>
                     </td>
                 </tr>
                 </tbody>

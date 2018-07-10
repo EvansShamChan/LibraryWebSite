@@ -2,11 +2,14 @@ package com.softserve.edu.library.dao;
 
 import com.softserve.edu.library.db.ConnectionManager;
 import com.softserve.edu.library.entity.Author;
+import org.omg.PortableInterceptor.ServerRequestInfo;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class AuthorDao {
 
@@ -87,5 +90,31 @@ public class AuthorDao {
         }
         statement.close();
         return last_inserted_id;
+    }
+
+    public Set<String> getAllByFirstName(String query) throws Exception {
+        Set<String> authors = new TreeSet<>();
+        String sql = "SELECT first_name FROM authors WHERE first_name like ?;";
+        PreparedStatement statement = ConnectionManager.getInstance().getConnection().prepareStatement(sql);
+        try {
+            statement.setString(1, query + "%");
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                authors.add(resultSet.getString("first_name"));
+            }
+            statement.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex.getMessage());
+                }
+            }
+        }
+        return authors;
     }
 }
