@@ -25,6 +25,7 @@ public class BookDao {
     private final String GET_BOOKS_BIGGER_THAN_DATE = "select * from books where publication_date >= ? limit ?, ?;";
     private final String GET_BOOKS_BY_DATE = "select * from books where publication_date = ? limit ?, ?;";
     private final String GET_BOOK_NUMBER_OF_TAKEN = "select count(*) as number from records where id_book in(select id from books where name = ?);";
+    private final String GET_ALL_BOOKS = "select * from books limit ?, ?";
 
     public Book getByName(String name) {
         PreparedStatement statement = null;
@@ -259,6 +260,22 @@ public class BookDao {
             preparedStatement.setInt(3, rowsPerPage);
             ResultSet resultSet = preparedStatement.executeQuery();
             bookList = putValuesFromRSToBookEntity(resultSet);
+            getBookNumberOfTaken(bookList);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return bookList;
+    }
+
+    public List<Book> getAllBooks(int start, int rowsPerPage) {
+        List<Book> bookList = new ArrayList<>();
+        try {
+            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(GET_ALL_BOOKS);
+            preparedStatement.setInt(1, start);
+            preparedStatement.setInt(2, rowsPerPage);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            bookList = putValuesFromRSToBookEntity(resultSet);
+            getBookNumberOfTaken(bookList);
         } catch (SQLException e) {
             e.printStackTrace();
         }
