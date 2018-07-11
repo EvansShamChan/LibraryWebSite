@@ -26,7 +26,7 @@ public class SignInServlet extends HttpServlet {
                 HttpSession session = request.getSession();
                 session.setAttribute("userOrAdmin", isLoginValid[0]);
                 session.setAttribute("userID", Long.valueOf(isLoginValid[1]));
-                response.sendRedirect("/searchPag?searchKey=&rowsPerPage=10&checkBy=bookName&currentPage=1");
+                response.sendRedirect("/searchPag?searchKey=&rowsPerPage=10&checkBy=bookName&currentPage=1&sort=desc");
             } else {
                 request.setAttribute("errorStyle", "display: block");
                 request.getRequestDispatcher("pages/SignIn.jsp").forward(request, response);

@@ -14,18 +14,16 @@ public class BookDao {
     private AuthorToBookDao authorToBookDao = new AuthorToBookDao();
     PreparedStatement preparedStatement = null;
 
-    private final String GET_BOOKS_BY_BOOK_NAME = "select * from books where name like ? limit ?, ?;";
+    private String GET_BOOKS_BY_BOOK_NAME = "select books.*, count(*) as number from books, records where name like ? and books.id = records.id_book group by books.name order by number %s limit ?, ?;";
     private final String GET_BOOKS_BY_AUTHOR =
-            "select * from books where id in(select id_book from authors_to_books where id_author " +
-                    "in(select id from authors where first_name like ? and last_name like ?)) limit ?, ?;";
+            "select b.*, count(*) as number from authors_to_books ab join books b join authors a on b.id = ab.id_book and a.id = ab.id_author join records r on b.id = r.id_book where first_name like ? and last_name like ? group by b.name order by number %s limit ?, ?;";
     private final String GET_NUMBER_OF_BOOKS_BY_NAME = "select count(*) as number from books where name like ?;";
     private final String GET_NUMBER_OF_BOOKS_BY_DATE = "select count(*) as number from books where publication_date between ? and ?;;";
-    private final String GET_BOOKS_BETWEEN_DATE = "select * from books where publication_date between ? and ? limit ?, ?;";
-    private final String GET_BOOKS_LESS_THAN_DATE = "select * from books where publication_date <= ? limit ?, ?;";
-    private final String GET_BOOKS_BIGGER_THAN_DATE = "select * from books where publication_date >= ? limit ?, ?;";
-    private final String GET_BOOKS_BY_DATE = "select * from books where publication_date = ? limit ?, ?;";
-    private final String GET_BOOK_NUMBER_OF_TAKEN = "select count(*) as number from records where id_book in(select id from books where name = ?);";
-    private final String GET_ALL_BOOKS = "select * from books limit ?, ?";
+    private final String GET_BOOKS_BETWEEN_DATE = "select b.*, count(*) as number from books b join records r on b.id = r.id_book where publication_date between ? and ? group by b.name order by number %s limit ?, ?;";
+    private final String GET_BOOKS_LESS_THAN_DATE = "select b.*, count(*) as number from books b join records r on b.id = r.id_book where publication_date <= ?  group by b.name order by number %s limit ?, ?;";
+    private final String GET_BOOKS_BIGGER_THAN_DATE = "select b.*, count(*) as number from books b join records r on b.id = r.id_book where publication_date >= ?  group by b.name order by number %s limit ?, ?;";
+    private final String GET_BOOKS_BY_DATE = "select b.*, count(*) as number from books b join records r on b.id = r.id_book where publication_date = ? group by b.name order by number %s limit ?, ?;";
+    private final String GET_ALL_BOOKS = "select b.*, count(*) as number from books b join records r on b.id = r.id_book group by b.name order by number %s limit ?, ?;";
 
     public Book getByName(String name) {
         PreparedStatement statement = null;
@@ -65,32 +63,6 @@ public class BookDao {
             while (resultSet.next()) {
                 result = parseBooks(resultSet);
             }
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (Exception ex) {
-                    throw new RuntimeException(ex.getMessage());
-                }
-            }
-        }
-        return result;
-    }
-
-    public List<Book> getAllBooks() {
-        Statement statement = null;
-        List<Book> result = new ArrayList<>();
-        try {
-            statement = ConnectionManager.getInstance().getConnection().createStatement();
-            // TODO CHECK!
-            statement.executeQuery("SELECT * FROM books");
-            ResultSet resultSet = statement.getResultSet();
-            while (resultSet.next()) {
-                result.add(parseBooks(resultSet));
-            }
-
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         } finally {
@@ -189,48 +161,31 @@ public class BookDao {
         return resultNumber;
     }
 
-    public List<Book> getBookByKey(String searchKey, int start, int rowsPerPage) {
+    public List<Book> getBookByKey(String searchKey, String sort, int start, int rowsPerPage) {
         List<Book> bookList = new ArrayList<>();
         try {
-            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(GET_BOOKS_BY_BOOK_NAME);
+            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(String.format(GET_BOOKS_BY_BOOK_NAME, sort));
             preparedStatement.setString(1, "%" + searchKey + "%");
             preparedStatement.setInt(2, start);
             preparedStatement.setInt(3, rowsPerPage);
             ResultSet resultSet = preparedStatement.executeQuery();
             bookList = putValuesFromRSToBookEntity(resultSet);
-            getBookNumberOfTaken(bookList);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return bookList;
     }
 
-    public void getBookNumberOfTaken(List<Book> bookList) {
-        try {
-            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(GET_BOOK_NUMBER_OF_TAKEN);
-            for (Book book : bookList) {
-                preparedStatement.setString(1, book.getName());
-                ResultSet resultSet = preparedStatement.executeQuery();
-                while (resultSet.next()) {
-                    book.setNumberOfTaken(resultSet.getInt("number"));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public List<Book> getBooksByAuthor(String firstname, String lastname, int start, int rowsPerPage) {
+    public List<Book> getBooksByAuthor(String firstname, String lastname, String sort, int start, int rowsPerPage) {
         List<Book> bookList = new ArrayList<>();
         try {
-            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(GET_BOOKS_BY_AUTHOR);
+            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(String.format(GET_BOOKS_BY_AUTHOR, sort));
             preparedStatement.setString(1, "%" + firstname + "%");
             preparedStatement.setString(2, "%" + lastname + "%");
             preparedStatement.setInt(3, start);
             preparedStatement.setInt(4, rowsPerPage);
             ResultSet resultSet = preparedStatement.executeQuery();
             bookList = putValuesFromRSToBookEntity(resultSet);
-            getBookNumberOfTaken(bookList);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -238,64 +193,61 @@ public class BookDao {
     }
 
     //get all books and filter by dates
-    public List<Book> getBooksByDatePeriod(String startYear, String endYear, int start, int rowsPerPage) {
+    public List<Book> getBooksByDatePeriod(String startYear, String endYear, String sort, int start, int rowsPerPage) {
         List<Book> bookList = new ArrayList<>();
         try {
-            prepareBeforeBookDatePeriodSearch(startYear, endYear, start, rowsPerPage);
+            prepareBeforeBookDatePeriodSearch(startYear, endYear, sort, start, rowsPerPage);
             ResultSet resultSet = preparedStatement.executeQuery();
             bookList = putValuesFromRSToBookEntity(resultSet);
-            getBookNumberOfTaken(bookList);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return bookList;
     }
 
-    public List<Book> getBooksByDate(String date, int start, int rowsPerPage) {
+    public List<Book> getBooksByDate(String date, String sort, int start, int rowsPerPage) {
         List<Book> bookList = new ArrayList<>();
         try {
-            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(GET_BOOKS_BY_DATE);
+            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(String.format(GET_BOOKS_BY_DATE, sort));
             preparedStatement.setString(1, date);
             preparedStatement.setInt(2, start);
             preparedStatement.setInt(3, rowsPerPage);
             ResultSet resultSet = preparedStatement.executeQuery();
             bookList = putValuesFromRSToBookEntity(resultSet);
-            getBookNumberOfTaken(bookList);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return bookList;
     }
 
-    public List<Book> getAllBooks(int start, int rowsPerPage) {
+    public List<Book> getAllBooks(String sort, int start, int rowsPerPage) {
         List<Book> bookList = new ArrayList<>();
         try {
-            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(GET_ALL_BOOKS);
+            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(String.format(GET_ALL_BOOKS, sort));
             preparedStatement.setInt(1, start);
             preparedStatement.setInt(2, rowsPerPage);
             ResultSet resultSet = preparedStatement.executeQuery();
             bookList = putValuesFromRSToBookEntity(resultSet);
-            getBookNumberOfTaken(bookList);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return bookList;
     }
 
-    private void prepareBeforeBookDatePeriodSearch(String startYear, String endYear, int start, int rowsPerPage) {
+    private void prepareBeforeBookDatePeriodSearch(String startYear, String endYear, String sort, int start, int rowsPerPage) {
         try{
             if (endYear.equals("")){
-                preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(GET_BOOKS_BIGGER_THAN_DATE);
+                preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(String.format(GET_BOOKS_BIGGER_THAN_DATE, sort));
                 preparedStatement.setString(1, startYear);
                 preparedStatement.setInt(2, start);
                 preparedStatement.setInt(3, rowsPerPage);
             } else if(startYear.equals("")) {
-                preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(GET_BOOKS_LESS_THAN_DATE);
+                preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(String.format(GET_BOOKS_LESS_THAN_DATE, sort));
                 preparedStatement.setString(1, endYear);
                 preparedStatement.setInt(2, start);
                 preparedStatement.setInt(3, rowsPerPage);
             } else {
-                preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(GET_BOOKS_BETWEEN_DATE);
+                preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(String.format(GET_BOOKS_BETWEEN_DATE, sort));
                 preparedStatement.setString(1, startYear);
                 preparedStatement.setString(2, endYear);
                 preparedStatement.setInt(3, start);
@@ -313,8 +265,9 @@ public class BookDao {
             String name = resultSet.getString("name");
             String publication_date = resultSet.getString("publication_date");
             int available = resultSet.getInt("available");
+            int number = resultSet.getInt("number");
             List<Author> authorList = authorToBookDao.getAuthorsByBookId(String.valueOf(id));
-            bookList.add(new Book(id, name, publication_date, available, authorList));
+            bookList.add(new Book(id, name, publication_date, available, authorList, number));
         }
         return bookList;
     }

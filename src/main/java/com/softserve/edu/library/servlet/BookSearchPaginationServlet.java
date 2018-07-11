@@ -25,7 +25,7 @@ public class BookSearchPaginationServlet extends HttpServlet {
         BookSearchDto bookSearchDto = new BookSearchDto(
                 Integer.parseInt(req.getParameter("rowsPerPage")),
                 req.getParameter("checkBy"), req.getParameter("searchKey"),
-                Integer.parseInt(req.getParameter("currentPage")));
+                Integer.parseInt(req.getParameter("currentPage")), req.getParameter("sort"));
 
         List<BookDto> bookList = bookService.executeBookSearch(bookSearchDto);
 
@@ -48,6 +48,7 @@ public class BookSearchPaginationServlet extends HttpServlet {
         req.setAttribute("currentPage", bookSearchDto.getCurrentPage());
         req.setAttribute("rowsPerPage", bookSearchDto.getRowsPerPage());
         req.setAttribute("checkBy", bookSearchDto.getCheckBy());
+        req.setAttribute("sort", bookSearchDto.getSort());
     }
 
     private void putInSessionLastSearchURL(HttpServletRequest req, HttpSession session) {

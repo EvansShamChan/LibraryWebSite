@@ -5,12 +5,14 @@ public class BookSearchDto {
     private String checkBy;
     private String searchKey;
     private int currentPage;
+    private String sort;
 
-    public BookSearchDto(int rowsPerPage, String checkBy, String searchKey, int currentPage) {
+    public BookSearchDto(int rowsPerPage, String checkBy, String searchKey, int currentPage, String sort) {
         this.rowsPerPage = rowsPerPage;
         this.checkBy = checkBy;
         this.searchKey = searchKey;
         this.currentPage = currentPage;
+        this.sort = sort;
     }
 
     public int getRowsPerPage() {
@@ -43,5 +45,13 @@ public class BookSearchDto {
 
     public void setCurrentPage(int currentPage) {
         this.currentPage = currentPage;
+    }
+
+    public String getSort() {
+        return sort;
+    }
+
+    public void setSort(String sortBy) {
+        this.sort = sortBy;
     }
 }

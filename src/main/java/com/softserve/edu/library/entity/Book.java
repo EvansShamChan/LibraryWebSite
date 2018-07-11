@@ -12,12 +12,13 @@ public class Book {
     private List<Author> authors;
     private int numberOfTaken;
 
-    public Book(long id, String name, String publicationDate, long available, List<Author> authors) {
+    public Book(long id, String name, String publicationDate, long available, List<Author> authors, int numberOfTaken) {
         this.id = id;
         this.name = name;
         this.publicationDate = publicationDate;
         this.available = available;
         this.authors = authors;
+        this.numberOfTaken = numberOfTaken;
     }
 
     public Book() {

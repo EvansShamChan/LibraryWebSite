@@ -30,22 +30,33 @@
     <form action="/searchPag" method="get">
         <table border="1" cellpadding="5">
             <input type="text" id="searchKey" name="searchKey" placeholder="Search" value="${searchKey}">
-            <input type="submit" value="Search"><br><br>
-            <label>Rows per page</label>
-            
+            <input type="submit" value="Search"><br>
+
+            <c:choose>
+                <c:when test="${sort == 'desc'}"><c:set var="sortDesc" value="selected"></c:set></c:when>
+                <c:when test="${sort == 'asc'}"><c:set var="sortAsc" value="selected"></c:set></c:when>
+            </c:choose>
+
             <c:choose>
                 <c:when test="${checkBy == 'bookName'}"><c:set var="checkByBook" value="checked"/></c:when>
                 <c:when test="${checkBy == 'author'}"><c:set var="checkByAuthor" value="checked"/></c:when>
                 <c:when test="${checkBy == 'publicationDate'}"><c:set var="checkByDate" value="checked"/></c:when>
             </c:choose>
-            
+
             <c:choose>
                 <c:when test="${rowsPerPage == 5}"><c:set var="rows5" value="selected"/></c:when>
                 <c:when test="${rowsPerPage == 10}"><c:set var="rows10" value="selected"/></c:when>
                 <c:when test="${rowsPerPage == 15}"><c:set var="rows15" value="selected"/></c:when>
                 <c:when test="${rowsPerPage == 20}"><c:set var="rows20" value="selected"/></c:when>
             </c:choose>
-            
+
+            <label>Sort by popularity: </label>
+            <select name="sort" id="sortBy">
+                <option value="desc" ${sortDesc}>descending</option>
+                <option value="asc" ${sortAsc}>ascending</option>
+            </select><br>
+
+            <label>Rows per page:</label>
             <select name="rowsPerPage" id="rowsPerPage">
                 <option value="5" ${rows5}>5</option>
                 <option value="10" ${rows10}>10</option>
@@ -57,6 +68,7 @@
             <input type="radio" id="bookName" value="bookName" name="checkBy" ${checkByBook}>By Book name
             <input type="radio" id="publicationDate" value="publicationDate" name="checkBy" ${checkByDate}>By publication date
             <input type="hidden" name="currentPage" value="1">
+
             <c:if test="${listBook != null}">
                 <tr>
                     <th>Title</th>
@@ -67,6 +79,7 @@
                     <th>Action</th>
                 </tr>
             </c:if>
+
             <c:forEach var="book" items="${listBook}">
                 <tr>
                     <td><c:out value="${book.name}"/></td>
@@ -83,12 +96,13 @@
             </c:forEach>
         </table>
         <br>
+
         <c:if test="${listBook != null}">
             <nav aria-label="Navigation">
                 <ul class="pagination">
                     <c:if test="${currentPage != 1}">
                         <a method="post" class="page-link"
-                           href="searchPag?rowsPerPage=${rowsPerPage}&currentPage=${currentPage-1}&checkBy=<%= request.getParameter("checkBy")%>&searchKey=<%= request.getParameter("searchKey")%>">Previous</a>
+                           href="searchPag?rowsPerPage=${rowsPerPage}&currentPage=${currentPage-1}&checkBy=<%= request.getParameter("checkBy")%>&searchKey=<%= request.getParameter("searchKey")%>&sort=<%= request.getParameter("sort")%>">Previous</a>
                     </c:if>
 
                     <c:forEach begin="1" end="${nOfPages}" var="i">
@@ -98,13 +112,13 @@
                             </c:when>
                             <c:otherwise>
                                 <a method="post" class="page-link"
-                                   href="searchPag?rowsPerPage=${rowsPerPage}&currentPage=${i}&checkBy=<%= request.getParameter("checkBy")%>&searchKey=<%= request.getParameter("searchKey")%>">${i}</a>
+                                   href="searchPag?rowsPerPage=${rowsPerPage}&currentPage=${i}&checkBy=<%= request.getParameter("checkBy")%>&searchKey=<%= request.getParameter("searchKey")%>&sort=<%= request.getParameter("sort")%>">${i}</a>
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>
                     <c:if test="${currentPage lt nOfPages}">
                         <a method="post" class="page-link"
-                           href="searchPag?rowsPerPage=${rowsPerPage}&currentPage=${currentPage+1}&checkBy=<%= request.getParameter("checkBy")%>&searchKey=<%= request.getParameter("searchKey")%>">Next</a>
+                           href="searchPag?rowsPerPage=${rowsPerPage}&currentPage=${currentPage+1}&checkBy=<%= request.getParameter("checkBy")%>&searchKey=<%= request.getParameter("searchKey")%>&sort=<%= request.getParameter("sort")%>">Next</a>
                     </c:if>
                 </ul>
             </nav>
