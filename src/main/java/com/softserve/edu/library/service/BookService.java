@@ -8,23 +8,11 @@ import com.softserve.edu.library.entity.Author;
 import com.softserve.edu.library.entity.Book;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class BookService {
 
     private BookDao bookDao = new BookDao();
-
-    public List<BookDto> getBooks() {
-        List<Book> list = bookDao.getAllBooks();
-
-        List<BookDto> dtoList = new ArrayList<>();
-        for (Book book : list) {
-            dtoList.add(convert(book));
-        }
-        return dtoList;
-    }
 
     private BookDto convert(Book book) {
         List<AuthorDto> authorDtos = new ArrayList<>();
@@ -62,20 +50,21 @@ public class BookService {
         String searchKey = bookSearchDto.getSearchKey();
         int rowsPerPage = bookSearchDto.getRowsPerPage();
         int currentPage = bookSearchDto.getCurrentPage();
+        String sort = bookSearchDto.getSort();
         int start = currentPage * rowsPerPage - rowsPerPage;
 
         if (checkBy.equals("bookName")) {
-            bookList = searchByBookName(searchKey, start, rowsPerPage);
+            bookList = searchByBookName(searchKey, sort, start, rowsPerPage);
         } else if (checkBy.equals("author")) {
-            bookList = searchByAuthor(searchKey, start, rowsPerPage);
+            bookList = searchByAuthor(searchKey, sort, start, rowsPerPage);
         } else if(checkBy.equals("publicationDate")) {
-            bookList = searchByPublicationDate(searchKey, start, rowsPerPage);
+            bookList = searchByPublicationDate(searchKey, sort, start, rowsPerPage);
         }
         return bookList;
     }
 
-    private List<BookDto> searchByBookName(String searchKey, int start, int rowsPerPage) {
-        List<Book> bookByKey = bookDao.getBookByKey(searchKey, start, rowsPerPage);
+    private List<BookDto> searchByBookName(String searchKey, String sort, int start, int rowsPerPage) {
+        List<Book> bookByKey = bookDao.getBookByKey(searchKey, sort, start, rowsPerPage);
         List<BookDto> dtoList = new ArrayList<>();
         for (Book book : bookByKey) {
             dtoList.add(convert(book));
@@ -83,11 +72,11 @@ public class BookService {
         return dtoList;
     }
 
-    private List<BookDto> searchByAuthor(String author, int start, int rowsPerPage) {
+    private List<BookDto> searchByAuthor(String author, String sort, int start, int rowsPerPage) {
         List<BookDto> dtoList = new ArrayList<>();
         String[] split;
         if(author.equals("")){
-            dtoList = searchByBookName("", start, rowsPerPage);
+            dtoList = searchByBookName("", sort, start, rowsPerPage);
             return dtoList;
         } else {
             split = author.split(" ");
@@ -95,11 +84,11 @@ public class BookService {
 
         List<Book> bookByKey;
         if (split.length == 1) {
-            List<Book> firstNameList = bookDao.getBooksByAuthor(split[0], "", start, rowsPerPage);
-            List<Book> lastNameList = bookDao.getBooksByAuthor("", split[0], start, rowsPerPage);
+            List<Book> firstNameList = bookDao.getBooksByAuthor(split[0], "", sort,  start, rowsPerPage);
+            List<Book> lastNameList = bookDao.getBooksByAuthor("", split[0], sort, start, rowsPerPage);
             bookByKey = mergeListBooks(firstNameList, lastNameList);
         } else {
-            bookByKey = bookDao.getBooksByAuthor(split[0], split[1], start, rowsPerPage);
+            bookByKey = bookDao.getBooksByAuthor(split[0], split[1], sort, start, rowsPerPage);
         }
 
         for (Book book : bookByKey) {
@@ -108,19 +97,19 @@ public class BookService {
         return dtoList;
     }
 
-    private List<BookDto> searchByPublicationDate(String key, int start, int rowsPerPage) {
+    private List<BookDto> searchByPublicationDate(String key, String sort, int start, int rowsPerPage) {
         List<BookDto> dtoList = new ArrayList<>();
         List<Book> bookList = new ArrayList<>();
         String[] dates = key.split("-");
         if(key.isEmpty()) {
-            bookList = bookDao.getAllBooks(start, rowsPerPage);
+            bookList = bookDao.getAllBooks(sort, start, rowsPerPage);
         } else if(dates.length == 1 && !key.contains("-")) {
-            bookList = bookDao.getBooksByDate(key, start, rowsPerPage);
+            bookList = bookDao.getBooksByDate(key, sort, start, rowsPerPage);
         } else if(dates.length == 1 && key.contains("-")) {
             dates = new String[]{dates[0], ""};
         } else if (dates.length == 0) dates = new String[] {"", ""};
         if(key.contains("-")) {
-            bookList = bookDao.getBooksByDatePeriod(dates[0], dates[1], start, rowsPerPage);
+            bookList = bookDao.getBooksByDatePeriod(dates[0], dates[1], sort, start, rowsPerPage);
         }
         for (Book book : bookList) {
             dtoList.add(convert(book));
