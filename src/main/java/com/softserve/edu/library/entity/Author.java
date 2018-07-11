@@ -2,7 +2,7 @@ package com.softserve.edu.library.entity;
 
 import java.util.Objects;
 
-public class Author {
+public class Author implements Comparable {
 
     private long id;
     private String firstName;
@@ -63,5 +63,14 @@ public class Author {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if (o instanceof Author) {
+            Author o1 = (Author) o;
+            return lastName.compareTo(o1.lastName);
+        }
+        return 0;
     }
 }

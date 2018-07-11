@@ -20,28 +20,36 @@
 </style>
 <script>
     $(document).ready(function () {
-        $(".add-author").keyup(function () {
-            var path = "/author/add?bookName=" + $("#BookName").text().trim();
+        $(".add-author").change(function () {
+            var path = "/author/add?bookName=" + $('input[name=name]').val();
             $(".add-author").each(function () {
                 path += "&" + $(this).attr("name") + "=" + $(this).val()
             })
 
             $('#AddBook').attr("href", path);
         });
-        // console.log("success" + resp)
-        // $("#lastName").val("text from resp")
         $(function () {
-            $("#firstName").autocomplete({
+            $("#lastName").autocomplete({
                 source: function (request, response) {
                     $.ajax({
                         url: "/auto",
-                        data: {query: request.term},
                         dataType: "json",
-                        success: response,
-                        error: function () {
-                            response([]);
+                        data: {query: request.term},
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return {
+                                    label: item.lastName + ', ' + item.firstName,
+                                    value: item.lastName,
+                                    firstName: item.firstName
+                                }
+
+                            }))
                         }
                     });
+                },
+                select: function (event, ui) {
+                    $("#lastName").val(ui.item.label);
+                    $("#firstName").val(ui.item.firstName);
                 }
             });
         });
@@ -73,8 +81,8 @@
                                    value="<c:out value='${book.name}'/>"/>
                         </c:if>
                         <c:if test="${book != null}">
-                            <h6 id="BookName" style="border:none" type="text" name="name" size="45">
-                                <c:out value='${book.name}'/></h6>
+                            <input style="border:none" type="text" name="name" size="45" readonly
+                                   value="<c:out value='${book.name}'/>"/>
                         </c:if>
                     </td>
                 </tr>
@@ -100,8 +108,8 @@
                     </tr>
                     <c:forEach var="author" items="${book.authors}">
                         <tr class="classname">
-                            <td><c:out value="${author.firstName}"/></td>
                             <td><c:out value="${author.lastName}"/></td>
+                            <td><c:out value="${author.firstName}"/></td>
                             <td>
                                 <a href="/author/delete?firstName=<c:out value='${author.firstName}' />&lastName=<c:out value='${author.lastName}' />&bookName=<c:out value='${book.name}'/>">Delete</a>
                             </td>
@@ -109,12 +117,12 @@
                     </c:forEach>
                     <tr>
                         <td>
-                            <input id="firstName" class="add-author" style="border:none" type="text" name="firstName"
-                                   size="25"/>
-                        </td>
-                        <td>
                             <input id="lastName" class="add-author" style="border:none" type="text" name="lastName"
                                    size="45"/>
+                        </td>
+                        <td>
+                            <input id="firstName" class="add-author" style="border:none" type="text" name="firstName"
+                                   size="25"/>
                         </td>
                         <td>
                             <a href="" id="AddBook">Add</a>
