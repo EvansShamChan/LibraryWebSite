@@ -30,8 +30,6 @@
     <form action="/searchPag" method="get">
         <table border="1" cellpadding="5">
             <input type="text" id="searchKey" name="searchKey" placeholder="Search" value="${searchKey}">
-            <input type="submit" value="Search"><br><br>
-            <label>Rows per page</label>
             <input type="submit" value="Search"><br>
             <c:choose>
                 <c:when test="${sort == 'desc'}"><c:set var="sortDesc" value="selected"></c:set></c:when>
@@ -65,8 +63,7 @@
 
             <input type="radio" id="author" value="author" name="checkBy" ${checkByAuthor}>By Author
             <input type="radio" id="bookName" value="bookName" name="checkBy" ${checkByBook}>By Book name
-            <input type="radio" id="publicationDate" value="publicationDate" name="checkBy" ${checkByDate}>By
-            publication date
+            <input type="radio" id="publicationDate" value="publicationDate" name="checkBy" ${checkByDate}>By publication date
             <input type="hidden" name="currentPage" value="1">
             <c:if test="${listBook != null}">
                 <tr>
