@@ -3,6 +3,8 @@ package com.softserve.edu.library.servlet;
 import com.softserve.edu.library.dao.AuthorDao;
 import com.softserve.edu.library.dao.BookDao;
 import com.softserve.edu.library.db.ConnectionManager;
+import com.softserve.edu.library.entity.Author;
+import com.softserve.edu.library.service.AuthorService;
 import org.json.simple.JSONArray;
 
 import javax.servlet.annotation.WebServlet;
@@ -21,27 +23,16 @@ import java.util.TreeSet;
 public class AutoCompleteServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        AuthorDao authorDao = new AuthorDao();
+        AuthorService authorService = new AuthorService();
 
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         String query = request.getParameter("query");
 
-        JSONArray json = new JSONArray();
-
-        try {
-            json.addAll(authorDao.getAllByFirstName(query));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        JSONArray json = authorService.getAuthorsByQuery(query);
 
         response.setContentType("application/json");
         response.getWriter().print(json);
         System.out.println(json);
     }
 }
-
-
-
-
-
