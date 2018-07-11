@@ -44,9 +44,9 @@ public class BookService {
     }
 
     public int getNumberOfBooks(BookSearchDto bookSearchDto) {
-        if(bookSearchDto.getCheckBy().equals("publicationDate") && !bookSearchDto.getSearchKey().equals("")) {
+        if (bookSearchDto.getCheckBy().equals("publicationDate") && !bookSearchDto.getSearchKey().equals("")) {
             String[] dates = bookSearchDto.getSearchKey().split("-");
-            if(dates.length == 1){
+            if (dates.length == 1) {
                 return bookDao.getNumberOfBooksByDate(dates[0], "2020");
             }
             return bookDao.getNumberOfBooksByDate(dates[0], dates[1]);
@@ -68,7 +68,7 @@ public class BookService {
             bookList = searchByBookName(searchKey, start, rowsPerPage);
         } else if (checkBy.equals("author")) {
             bookList = searchByAuthor(searchKey, start, rowsPerPage);
-        } else if(checkBy.equals("publicationDate")) {
+        } else if (checkBy.equals("publicationDate")) {
             bookList = searchByPublicationDate(searchKey, start, rowsPerPage);
         }
         return bookList;
@@ -86,7 +86,7 @@ public class BookService {
     private List<BookDto> searchByAuthor(String author, int start, int rowsPerPage) {
         List<BookDto> dtoList = new ArrayList<>();
         String[] split;
-        if(author.equals("")){
+        if (author.equals("")) {
             dtoList = searchByBookName("", start, rowsPerPage);
             return dtoList;
         } else {
@@ -116,10 +116,10 @@ public class BookService {
             bookList = bookDao.getAllBooks(start, rowsPerPage);
         } else if(dates.length == 1 && !key.contains("-")) {
             bookList = bookDao.getBooksByDate(key, start, rowsPerPage);
-        } else if(dates.length == 1 && key.contains("-")) {
+        } else if (dates.length == 1 && key.contains("-")) {
             dates = new String[]{dates[0], ""};
-        } else if (dates.length == 0) dates = new String[] {"", ""};
-        if(key.contains("-")) {
+        } else if (dates.length == 0) dates = new String[]{"", ""};
+        if (key.contains("-")) {
             bookList = bookDao.getBooksByDatePeriod(dates[0], dates[1], start, rowsPerPage);
         }
         for (Book book : bookList) {

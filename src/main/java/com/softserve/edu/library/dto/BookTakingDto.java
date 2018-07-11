@@ -30,16 +30,8 @@ public class BookTakingDto {
         return idUser;
     }
 
-    public void setIdUser(long idUser) {
-        this.idUser = idUser;
-    }
-
     public long getIdBook() {
         return idBook;
-    }
-
-    public void setIdBook(long idBook) {
-        this.idBook = idBook;
     }
 
     public Date getTakingBookDate() {

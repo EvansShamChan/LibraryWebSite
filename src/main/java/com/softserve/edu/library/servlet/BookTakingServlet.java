@@ -32,7 +32,7 @@ public class BookTakingServlet extends HttpServlet {
         } else if (resultString.equals("book was successfully added")) {
             req.setAttribute("bookWasSuccessfullyAdded", "display: block");
         }
-        req.setAttribute("searchFieldWithMessage", "margin-left: 500px;");
+        req.setAttribute("searchFieldWithMessage", "margin-left: 300px;");
         req.getRequestDispatcher(String.valueOf(session.getAttribute("lastSearchUrl"))).forward(req, resp);
 
 

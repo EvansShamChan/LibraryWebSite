@@ -19,7 +19,6 @@
         <%@include file="../css/searchPageStyle.css"%>
         <%@include file="../css/userSearchBookPageStyle.css"%>
     </style>
-
 </head>
 <body>
 <div align="center">
@@ -28,18 +27,8 @@
 <div align="center">
     <form action="/searchPag" method="get">
         <table border="1" cellpadding="5">
-            <input class="inputClass" style="${searchFieldWithMessage}" type="text" id="searchKey" name="searchKey" placeholder="Search" value="${searchKey}">
-            <a class="alreadyTakenBooks" method="get"
-               href="/takenBooks?searchKey=&rowsPerPage=10&checkBy=bookName&currentPage=1&userID=${sessionScope.userID}">Already taken books</a>
-            <div class="successText" style="${bookWasSuccessfullyAdded}"><p>Book was successfully added</p></div>
-            <div class="errorTextMessage" style="${thisBookCannotBeTaken}"><p>This book cannot be taken</p></div>
-            <input type="submit" value="Search"><br><br>
+            <br><br>
             <label class="rowsPerPage">Rows per page</label>
-            <c:choose>
-                <c:when test="${checkBy == 'bookName'}"><c:set var="checkByBook" value="checked"/></c:when>
-                <c:when test="${checkBy == 'author'}"><c:set var="checkByAuthor" value="checked"/></c:when>
-                <c:when test="${checkBy == 'publicationDate'}"><c:set var="checkByDate" value="checked"/></c:when>
-            </c:choose>
 
             <c:choose>
                 <c:when test="${rowsPerPage == 5}"><c:set var="rows5" value="selected"/></c:when>
@@ -54,33 +43,25 @@
                 <option value="15" ${rows15}>15</option>
                 <option value="20" ${rows20}>20</option>
             </select><br>
-
-            <input type="radio" id= "author" value="author" name="checkBy" ${checkByAuthor}>By Author
-            <input type="radio" id="bookName" value="bookName" name="checkBy" ${checkByBook}>By Book name
-            <input type="radio" id="publicationDate" value="publicationDate" name="checkBy" ${checkByDate}>By publication date
             <input type="hidden" name="currentPage" value="1">
-            <c:if test="${listBook != null}">
+            <c:if test="${allBooksByUserId != null}">
                 <tr>
-                    <%--<th>Id</th>--%>
-                    <th>Title</th>
-                    <th>Authors</th>
-                    <th>Publication date</th>
-                    <th>Availability</th>
-                    <th>Number of taken</th>
-                    <th>Action</th>
+                    <th>bookName</th>
+                    <th>takeDate</th>
+                    <th>returnDate</th>
+                    <th>returned date</th>
+                    <th>return book</th>
                 </tr>
             </c:if>
-            <c:forEach var="book" items="${listBook}">
+            <c:forEach var="book" items="${allBooksByUserId}">
                 <tr>
-                    <%--<td><c:out value="${book.id}"/></td>--%>
-                    <td><c:out value="${book.name}"/></td>
-                    <td><c:out value="${book.authors}"/></td>
-                    <td><c:out value="${book.publicationDate}"/></td>
-                    <td><c:out value="${book.available}"/></td>
-                    <td><c:out value="${book.numberOfTaken}"/></td>
+                    <td><c:out value="${book.bookName}"/></td>
+                    <td><c:out value="${book.takeDate}"/></td>
+                    <td><c:out value="${book.returnDate}"/></td>
+                    <td><c:out value="${book.returned}"/></td>
                     <td>
                         <a method="get"
-                           href="/takeTheBook?bookId=${book.id}&userID=${sessionScope.userID}&available=${book.available}">Take</a>
+                           href="/takeTheBook?bookId=${book.idBook}&userID=${book.idUser}">Return book</a>
                         &nbsp;&nbsp;&nbsp;&nbsp;
                     </td>
                 </tr>
@@ -88,7 +69,7 @@
         </table>
         <br>
         <c:if test="${listBook != null}">
-            <nav aria-label="Navigation">
+            <nav aria-label="Navigation for countries">
                 <ul class="pagination">
                     <c:if test="${currentPage != 1}">
                         <a method="post" class="page-link"
@@ -115,8 +96,5 @@
         </c:if>
     </form>
 </div>
-<script src="../js/bookSearchScript.js" charset="utf-8">
-    <%@include file="../js/bookSearchScript.js"%>
-</script>
 </body>
 </html>
