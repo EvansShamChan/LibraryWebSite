@@ -20,14 +20,36 @@
 </style>
 <script>
     $(document).ready(function () {
-        $(".add-author").change(function () {
+        $('#AddBook').click(function (event) {
             var path = "/author/add?bookName=" + $('input[name=name]').val();
             $(".add-author").each(function () {
                 path += "&" + $(this).attr("name") + "=" + $(this).val()
-            })
+            });
+            var row='<tr class="classname">' +
+                '<td>'+$("#lastName").val()+'</td>'+
+                '<td>'+$("#firstName").val()+'</td>'+
+                '<td>'+
+                '<a href="/author/delete?firstName='+$("#firstName").val()+'&lastName='+$("#lastName").val()+ '&bookName='+$('input[name=name]').val() + '">Delete</a>'+
+                '</td>'+
+                '</tr>';
 
-            $('#AddBook').attr("href", path);
-        });
+            event.preventDefault();
+            $.ajax({
+                url: path,
+                success: function (response) {
+                    $('.classname').last().after(row);
+                    $("#lastName").val("");
+                    $("#firstName").val("");
+                },
+                error: function (response) {
+                    alert('woops!');
+                    $("#lastName").val("");
+                    $("#firstName").val("");
+
+                }
+            });
+
+        })
         $(function () {
             $("#lastName").autocomplete({
                 source: function (request, response) {
@@ -44,6 +66,9 @@
                                 }
 
                             }))
+                        },
+                        error: function (data) {
+                            alert('то!');
                         }
                     });
                 },
@@ -110,8 +135,9 @@
                         <tr class="classname">
                             <td><c:out value="${author.lastName}"/></td>
                             <td><c:out value="${author.firstName}"/></td>
-                            <td>
-                                <a href="/author/delete?firstName=<c:out value='${author.firstName}' />&lastName=<c:out value='${author.lastName}' />&bookName=<c:out value='${book.name}'/>">Delete</a>
+                            <td style="border-right-style:hidden;border-top-style:hidden;border-bottom-style:hidden;">
+                                <a href="/author/delete?firstName=<c:out value='${author.firstName}' />&lastName=<c:out value='${author.lastName}' />&bookName=<c:out value='${book.name}'/>"
+                                   style='background:#8c210f;color:#ffffff;font-size:15px;padding:8px 12px;border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px;text-decoration:none;'>Delete</a>
                             </td>
                         </tr>
                     </c:forEach>
@@ -124,14 +150,18 @@
                             <input id="firstName" class="add-author" style="border:none" type="text" name="firstName"
                                    size="25"/>
                         </td>
-                        <td>
-                            <a href="" id="AddBook">Add</a>
+                        <td style="border-right-style:hidden;border-top-style:hidden;border-bottom-style:hidden;">
+                            <a href="" id="AddBook"
+                               style='background:#247c18;color:#ffffff;font-size:15px;padding:8px 20px;border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px;text-decoration:none;'>Add</a>
                         </td>
                     </tr>
                 </c:if>
                 <tr>
-                    <td colspan="4" align="center">
-                        <input class="btn btn-lg btn-primary btn-block " type="submit" value="Save"/>
+                    <td style="border-right-style:hidden;border-left-style:hidden;border-bottom-style:hidden;">
+
+                    </td>
+                    <td style="border-right-style:hidden;border-left-style:hidden;border-bottom-style:hidden;">
+                        <input class="btn  btn-primary btn-block btn pull-right" type="submit" value="Save"/>
                     </td>
                 </tr>
                 </tbody>

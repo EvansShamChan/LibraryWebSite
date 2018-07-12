@@ -31,12 +31,10 @@
         <table border="1" cellpadding="5">
             <input type="text" id="searchKey" name="searchKey" placeholder="Search" value="${searchKey}">
             <input type="submit" value="Search"><br>
-
             <c:choose>
                 <c:when test="${sort == 'desc'}"><c:set var="sortDesc" value="selected"></c:set></c:when>
                 <c:when test="${sort == 'asc'}"><c:set var="sortAsc" value="selected"></c:set></c:when>
             </c:choose>
-
             <c:choose>
                 <c:when test="${checkBy == 'bookName'}"><c:set var="checkByBook" value="checked"/></c:when>
                 <c:when test="${checkBy == 'author'}"><c:set var="checkByAuthor" value="checked"/></c:when>
@@ -55,7 +53,6 @@
                 <option value="desc" ${sortDesc}>descending</option>
                 <option value="asc" ${sortAsc}>ascending</option>
             </select><br>
-
             <label>Rows per page:</label>
             <select name="rowsPerPage" id="rowsPerPage">
                 <option value="5" ${rows5}>5</option>
@@ -64,11 +61,10 @@
                 <option value="20" ${rows20}>20</option>
             </select><br>
 
-            <input type="radio" id= "author" value="author" name="checkBy" ${checkByAuthor}>By Author
+            <input type="radio" id="author" value="author" name="checkBy" ${checkByAuthor}>By Author
             <input type="radio" id="bookName" value="bookName" name="checkBy" ${checkByBook}>By Book name
             <input type="radio" id="publicationDate" value="publicationDate" name="checkBy" ${checkByDate}>By publication date
             <input type="hidden" name="currentPage" value="1">
-
             <c:if test="${listBook != null}">
                 <tr>
                     <th>Title</th>
@@ -79,11 +75,15 @@
                     <th>Action</th>
                 </tr>
             </c:if>
-
             <c:forEach var="book" items="${listBook}">
                 <tr>
                     <td><c:out value="${book.name}"/></td>
-                    <td><c:out value="${book.authors}"/></td>
+                    <td>
+                        <c:forEach var="author" items="${book.authors}" varStatus="status">
+                            <c:out value="${author}"/>
+                            <c:if test="${not status.last}">,</c:if>
+                        </c:forEach>
+                    </td>
                     <td><c:out value="${book.publicationDate}"/></td>
                     <td><c:out value="${book.available}"/></td>
                     <td><c:out value="${book.numberOfTaken}"/></td>
@@ -96,7 +96,6 @@
             </c:forEach>
         </table>
         <br>
-
         <c:if test="${listBook != null}">
             <nav aria-label="Navigation">
                 <ul class="pagination">
