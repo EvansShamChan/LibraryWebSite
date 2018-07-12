@@ -73,7 +73,7 @@
 
             <c:if test="${listBook != null}">
                 <tr>
-                    <th>Id</th>
+                    <%--<th>Id</th>--%>
                     <th>Title</th>
                     <th>Authors</th>
                     <th>Publication date</th>
@@ -85,7 +85,7 @@
 
             <c:forEach var="book" items="${listBook}">
                 <tr>
-                    <td><c:out value="${book.id}"/></td>
+                    <%--<td><c:out value="${book.id}"/></td>--%>
                     <td><c:out value="${book.name}"/></td>
                     <td>
                         <c:forEach var="author" items="${book.authors}" varStatus="status">

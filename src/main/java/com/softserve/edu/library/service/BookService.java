@@ -32,9 +32,9 @@ public class BookService {
     }
 
     public int getNumberOfBooks(BookSearchDto bookSearchDto) {
-        if(bookSearchDto.getCheckBy().equals("publicationDate") && !bookSearchDto.getSearchKey().equals("")) {
+        if (bookSearchDto.getCheckBy().equals("publicationDate") && !bookSearchDto.getSearchKey().equals("")) {
             String[] dates = bookSearchDto.getSearchKey().split("-");
-            if(dates.length == 1){
+            if (dates.length == 1) {
                 return bookDao.getNumberOfBooksByDate(dates[0], "2020");
             }
             return bookDao.getNumberOfBooksByDate(dates[0], dates[1]);
