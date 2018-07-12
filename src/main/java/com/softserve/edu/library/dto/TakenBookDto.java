@@ -9,18 +9,28 @@ public class TakenBookDto {
     private boolean returned;
     private java.sql.Date takeDate;
     private java.sql.Date returnDate;
+    private java.sql.Date returnUntil;
     private String bookName;
 
     public TakenBookDto() {
     }
 
-    public TakenBookDto(long idUser, long idBook, boolean returned, Date takeDate, Date returnDate, String bookName) {
+    public TakenBookDto(long idUser, long idBook, boolean returned, Date takeDate, Date returnDate, java.sql.Date returnUntil, String bookName) {
         this.idUser = idUser;
         this.idBook = idBook;
         this.returned = returned;
         this.takeDate = takeDate;
         this.returnDate = returnDate;
+        this.returnUntil = returnUntil;
         this.bookName = bookName;
+    }
+
+    public Date getReturnUntil() {
+        return returnUntil;
+    }
+
+    public void setReturnUntil(Date returnUntil) {
+        this.returnUntil = returnUntil;
     }
 
     public long getIdUser() {

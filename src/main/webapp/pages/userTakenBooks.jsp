@@ -46,19 +46,25 @@
             <input type="hidden" name="currentPage" value="1">
             <c:if test="${allBooksByUserId != null}">
                 <tr>
-                    <th>bookName</th>
-                    <th>takeDate</th>
-                    <th>returnDate</th>
-                    <th>returned date</th>
-                    <th>return book</th>
+                    <th>Book name</th>
+                    <th>Taking date</th>
+                    <th>Return until</th>
+                    <th>Status</th>
+                    <th>Action</th>
                 </tr>
             </c:if>
             <c:forEach var="book" items="${allBooksByUserId}">
                 <tr>
                     <td><c:out value="${book.bookName}"/></td>
                     <td><c:out value="${book.takeDate}"/></td>
-                    <td><c:out value="${book.returnDate}"/></td>
-                    <td><c:out value="${book.returned}"/></td>
+                    <td><c:out value="${book.returnUntil}"/></td>
+                    <c:if test="${book.returned == true}">
+                        <td>returned</td>
+                    </c:if>
+
+                    <c:if test="${book.returned == false}">
+                        <td>on hands</td>
+                    </c:if>
                     <td>
                         <a method="get"
                            href="/takeTheBook?bookId=${book.idBook}&userID=${book.idUser}">Return book</a>
