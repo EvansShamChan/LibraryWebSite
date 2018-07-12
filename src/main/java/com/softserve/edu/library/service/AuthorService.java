@@ -5,6 +5,7 @@ import com.softserve.edu.library.dao.AuthorToBookDao;
 import com.softserve.edu.library.dao.BookDao;
 import com.softserve.edu.library.entity.Author;
 import com.softserve.edu.library.entity.Book;
+import com.softserve.edu.library.exception.DuplicateAuthorException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -30,7 +31,7 @@ public class AuthorService {
         return false;
     }
 
-    public boolean addAuthorToBook(String bookName, String firstName, String lastName) throws SQLException {
+    public boolean addAuthorToBook(String bookName, String firstName, String lastName) throws  Exception {
         Book book = bookDao.getByName(bookName);
         if (book == null) {
             return false;
@@ -43,7 +44,12 @@ public class AuthorService {
             author = new Author(firstName, lastName);
             authorId = authorDao.addAuthor(author);
         }
-        authorToBookDao.addAuthorToBook(book.getId(), authorId);
+
+        if (book.getAuthors().contains(author)) {
+            throw new DuplicateAuthorException("Such author already exist");
+        } else {
+            authorToBookDao.addAuthorToBook(book.getId(), authorId);
+        }
 
         return true;
     }

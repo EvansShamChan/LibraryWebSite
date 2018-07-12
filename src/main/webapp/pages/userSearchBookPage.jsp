@@ -88,7 +88,12 @@
                 <tr>
                     <td><c:out value="${book.id}"/></td>
                     <td><c:out value="${book.name}"/></td>
-                    <td><c:out value="${book.authors}"/></td>
+                    <td>
+                        <c:forEach var="author" items="${book.authors}" varStatus="status">
+                            <c:out value="${author}"/>
+                            <c:if test="${not status.last}">,</c:if>
+                        </c:forEach>
+                    </td>
                     <td><c:out value="${book.publicationDate}"/></td>
                     <td><c:out value="${book.available}"/></td>
                     <td><c:out value="${book.numberOfTaken}"/></td>
