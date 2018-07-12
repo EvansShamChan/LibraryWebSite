@@ -22,21 +22,12 @@ public class BookTakingServlet extends HttpServlet {
                 Long.valueOf(req.getParameter("available")));
         BookTakingService bookTakingService = new BookTakingService();
         String resultString = bookTakingService.takeBook(bookTakingDto);
-//        req.setAttribute("bookWasSuccessfullyAdded", "display: block");
-//        req.getRequestDispatcher("/pages/userSearchBookPage.jsp").forward(req, resp);
-
 
         HttpSession session = req.getSession();
-        if (resultString.equals("This book cannot be taken")) {
-            req.setAttribute("thisBookCannotBeTaken", "display: block");
-        } else if (resultString.equals("book was successfully added")) {
-            req.setAttribute("bookWasSuccessfullyAdded", "display: block");
-        }
-        req.setAttribute("searchFieldWithMessage", "margin-left: 500px;");
+        req.setAttribute("bookTakeResultMessage", resultString);
+        req.setAttribute("bookMessageStyle", "display: block");
+
         req.getRequestDispatcher(String.valueOf(session.getAttribute("lastSearchUrl"))).forward(req, resp);
-
-
-//        resp.sendRedirect(String.valueOf(session.getAttribute("lastSearchUrl")));
 
     }
 

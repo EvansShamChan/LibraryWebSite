@@ -31,8 +31,7 @@
             <input class="inputClass" style="${searchFieldWithMessage}" type="text" id="searchKey" name="searchKey" placeholder="Search" value="${searchKey}">
             <a class="alreadyTakenBooks" method="get"
                href="/takenBooks?userID=${sessionScope.userID}">Already taken books</a>
-            <div class="successText" style="${bookWasSuccessfullyAdded}"><p>Book was successfully added</p></div>
-            <div class="errorTextMessage" style="${thisBookCannotBeTaken}"><p>This book cannot be taken</p></div>
+            <div class="errorTextMessage" style="${bookMessageStyle}"><p>${bookTakeResultMessage}</p></div>
             <input type="submit" value="Search"><br>
 
             <c:choose>

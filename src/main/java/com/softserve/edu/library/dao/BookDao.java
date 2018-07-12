@@ -13,7 +13,6 @@ import java.util.*;
 public class BookDao {
     private AuthorToBookDao authorToBookDao = new AuthorToBookDao();
     PreparedStatement preparedStatement = null;
-
     private String GET_BOOKS_BY_BOOK_NAME = "select books.*, count(*) as number from books, records where name like ? and books.id = records.id_book group by books.name order by number %s limit ?, ?;";
     private final String GET_BOOKS_BY_AUTHOR =
             "select b.*, count(*) as number from authors_to_books ab join books b join authors a on b.id = ab.id_book and a.id = ab.id_author join records r on b.id = r.id_book where first_name like ? and last_name like ? group by b.name order by number %s limit ?, ?;";
