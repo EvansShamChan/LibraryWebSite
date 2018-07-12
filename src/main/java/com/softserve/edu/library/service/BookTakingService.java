@@ -1,7 +1,12 @@
 package com.softserve.edu.library.service;
 
 import com.softserve.edu.library.dao.RecordsDao;
-import com.softserve.edu.library.dto.BookTakingDto;
+import com.softserve.edu.library.dto.*;
+import com.softserve.edu.library.entity.Author;
+import com.softserve.edu.library.entity.Book;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BookTakingService {
 
@@ -22,4 +27,8 @@ public class BookTakingService {
         }
     }
 
+    public List<TakenBookDto> getAllTakenBooksByUserId(long idUser) {
+        RecordsDao recordsDao = new RecordsDao();
+        return recordsDao.getAllBooksByUserId(idUser);
+    }
 }

@@ -4,13 +4,16 @@
     float: right;
     padding-right: 300px;
 }
-.inputClass {
 
+.inputClass {
+    margin-left: 300px;
 }
+
 .alreadyTakenBooks {
     float: right;
-    padding-right: 300px;
+    padding-right: 150px;
 }
+
 .errorTextMessage {
     display: none;
     color: red;

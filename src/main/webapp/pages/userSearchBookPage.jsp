@@ -30,7 +30,7 @@
         <table border="1" cellpadding="5">
             <input class="inputClass" style="${searchFieldWithMessage}" type="text" id="searchKey" name="searchKey" placeholder="Search" value="${searchKey}">
             <a class="alreadyTakenBooks" method="get"
-               href="/takenBooks?userID=${sessionScope.userID}">Already taken books</a>
+               href="/takenBooks?searchKey=&rowsPerPage=10&checkBy=bookName&currentPage=1&userID=${sessionScope.userID}">Already taken books</a>
             <div class="successText" style="${bookWasSuccessfullyAdded}"><p>Book was successfully added</p></div>
             <div class="errorTextMessage" style="${thisBookCannotBeTaken}"><p>This book cannot be taken</p></div>
             <input type="submit" value="Search"><br>
@@ -74,7 +74,7 @@
 
             <c:if test="${listBook != null}">
                 <tr>
-                    <th>Id</th>
+                    <%--<th>Id</th>--%>
                     <th>Title</th>
                     <th>Authors</th>
                     <th>Publication date</th>
@@ -86,7 +86,7 @@
 
             <c:forEach var="book" items="${listBook}">
                 <tr>
-                    <td><c:out value="${book.id}"/></td>
+                    <%--<td><c:out value="${book.id}"/></td>--%>
                     <td><c:out value="${book.name}"/></td>
                     <td>
                         <c:forEach var="author" items="${book.authors}" varStatus="status">
