@@ -17,6 +17,9 @@ public class BookTakingService {
         long available = bookTakingDto.getAvailable();
 
         RecordsDao recordsDao = new RecordsDao();
+        if(recordsDao.isUserAlreadyTakeThisBook(idUser, idBook)) {
+            return "You already take this book";
+        }
         if(!recordsDao.isDecrementAvailable(idBook)) {
             return "This book cannot be taken";
         }
