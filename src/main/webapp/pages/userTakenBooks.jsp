@@ -23,47 +23,61 @@
 <body>
 <div align="center">
     <h1>Library</h1>
+    <a class="back" href="javascript:history.back()" title="back to previos page" > Back to previous page </a>
 </div>
 <div align="center">
     <form action="/searchPag" method="get">
         <table border="1" cellpadding="5">
             <br><br>
-            <label class="rowsPerPage">Rows per page</label>
+            <%--<label class="rowsPerPage">Rows per page</label>--%>
 
-            <c:choose>
-                <c:when test="${rowsPerPage == 5}"><c:set var="rows5" value="selected"/></c:when>
-                <c:when test="${rowsPerPage == 10}"><c:set var="rows10" value="selected"/></c:when>
-                <c:when test="${rowsPerPage == 15}"><c:set var="rows15" value="selected"/></c:when>
-                <c:when test="${rowsPerPage == 20}"><c:set var="rows20" value="selected"/></c:when>
-            </c:choose>
+            <%--<c:choose>--%>
+            <%--<c:when test="${rowsPerPage == 5}"><c:set var="rows5" value="selected"/></c:when>--%>
+            <%--<c:when test="${rowsPerPage == 10}"><c:set var="rows10" value="selected"/></c:when>--%>
+            <%--<c:when test="${rowsPerPage == 15}"><c:set var="rows15" value="selected"/></c:when>--%>
+            <%--<c:when test="${rowsPerPage == 20}"><c:set var="rows20" value="selected"/></c:when>--%>
+            <%--</c:choose>--%>
 
-            <select name="rowsPerPage" id="rowsPerPage">
-                <option value="5" ${rows5}>5</option>
-                <option value="10" ${rows10}>10</option>
-                <option value="15" ${rows15}>15</option>
-                <option value="20" ${rows20}>20</option>
-            </select><br>
-            <input type="hidden" name="currentPage" value="1">
+            <%--<select name="rowsPerPage" id="rowsPerPage">--%>
+                <%--<option value="5" ${rows5}>5</option>--%>
+                <%--<option value="10" ${rows10}>10</option>--%>
+                <%--<option value="15" ${rows15}>15</option>--%>
+                <%--<option value="20" ${rows20}>20</option>--%>
+            <%--</select><br>--%>
+            <%--<input type="hidden" name="currentPage" value="1">--%>
             <c:if test="${allBooksByUserId != null}">
                 <tr>
-                    <th>bookName</th>
-                    <th>takeDate</th>
-                    <th>returnDate</th>
-                    <th>returned date</th>
-                    <th>return book</th>
+                    <th>Book name</th>
+                    <th>Taking date</th>
+                    <th>Return until</th>
+                    <th>Status</th>
+                    <th>Action</th>
                 </tr>
             </c:if>
             <c:forEach var="book" items="${allBooksByUserId}">
                 <tr>
                     <td><c:out value="${book.bookName}"/></td>
                     <td><c:out value="${book.takeDate}"/></td>
-                    <td><c:out value="${book.returnDate}"/></td>
-                    <td><c:out value="${book.returned}"/></td>
-                    <td>
-                        <a method="get"
-                           href="/takeTheBook?bookId=${book.idBook}&userID=${book.idUser}">Return book</a>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                    </td>
+                    <td><c:out value="${book.returnUntil}"/></td>
+                    <c:if test="${book.returned == true}">
+                        <td>returned</td>
+                    </c:if>
+
+                    <c:if test="${book.returned == false}">
+                        <td>on hands</td>
+                    </c:if>
+
+                    <c:if test="${book.returned == true}">
+                        <td>Book is already returned</td>
+                    </c:if>
+
+                    <c:if test="${book.returned == false}">
+                        <td>
+                            <a method="get"
+                               href="/returnBook?bookId=${book.idBook}&userID=${book.idUser}">Return book</a>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                        </td>
+                    </c:if>
                 </tr>
             </c:forEach>
         </table>
