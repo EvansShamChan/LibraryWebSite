@@ -29,7 +29,7 @@ public class RegisterServlet extends HttpServlet {
             request.getRequestDispatcher("/pages/registerPage.jsp").forward(request, response);
             return;
         }
-        request.getRequestDispatcher("/pages/SignIn.jsp").forward(request, response);
+        request.getRequestDispatcher("/pages/signIn.jsp").forward(request, response);
     }
 
     private void fillUpRegisterDto(HttpServletRequest request, RegisterDto registerDto) {

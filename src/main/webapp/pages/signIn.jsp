@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: vitalii
-  Date: 29.06.2018
-  Time: 12:25
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -20,21 +13,27 @@
 </head>
 <body>
 <div align="center">
-    <form method="post" action="SignIn">
+    <img class="mb-4"
+         src="/images/signInPage.jpg"
+         alt="" width="200" height="200">
+    <form method="post" action="signIn">
         <table>
             <tr>
-                <td>User name</td>
-                <td><input type="text" name="username" required></td>
+                <td><input type="text" name="username" required placeholder="User name"></td>
             </tr>
             <tr>
-                <td>Password</td>
-                <td><input type="password" name="password" required></td>
+
+                <td><input type="password" name="password" required placeholder="Password"></td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" value="Sign in">
+                    <div class="errorText" style="${errorStyle}"><p>Wrong user name or password</p></div>
+                    <br>
+                    <a href="/pages/registerPage.jsp" style="margin:auto; text-align:center; display:block;">Register</a>
+                </td>
             </tr>
         </table>
-        <input type="submit" value="Sign in">
-        <div class="errorText" style="${errorStyle}"><p>Wrong user name or password</p></div>
-        <br>
-        <a href="/pages/registerPage.jsp">Register</a>
     </form>
 </div>
 </body>

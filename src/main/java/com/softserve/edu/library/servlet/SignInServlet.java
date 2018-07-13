@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 
-@WebServlet("/SignIn")
+@WebServlet("/signIn")
 public class SignInServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -29,7 +29,7 @@ public class SignInServlet extends HttpServlet {
                 response.sendRedirect("/searchPag?searchKey=&rowsPerPage=10&checkBy=bookName&currentPage=1&sort=desc");
             } else {
                 request.setAttribute("errorStyle", "display: block");
-                request.getRequestDispatcher("pages/SignIn.jsp").forward(request, response);
+                request.getRequestDispatcher("pages/signIn.jsp").forward(request, response);
             }
         }
     }
