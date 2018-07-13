@@ -19,12 +19,8 @@ public class RecordsDao {
     private final String TAKE_BOOK = "INSERT INTO records (id_user, id_book, take_date) VALUES (?, ?, ?)";
     private final String DECREMENT_DO = "UPDATE books SET available = ? WHERE id = ?";
     private final String DECREMENT_AVAILABLE = "select available from books where id = ?;";
-<<<<<<< HEAD
     private final String CHECK_USER_BOOK_TAKEN = "select count(*) as number from users u join records r on u.id = r.id_user where u.id = ? and id_book = ? and return_date is null;";
-=======
     private final String GET_ALL_TAKEN_BOOKS_BY_USER_ID = "select id_user, id_book, returned, take_date, return_date, `name` from records, books where id_user = ? and records.id_book = books.id";
->>>>>>> 836ca821d3d725d8f725f640404e7db5b20f24d7
-
     public boolean takeBook(long idUser, long idBook, java.sql.Date takeDate) {
         PreparedStatement statement = null;
         boolean rowInserted;
