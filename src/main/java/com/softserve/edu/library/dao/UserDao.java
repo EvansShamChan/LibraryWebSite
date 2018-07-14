@@ -10,6 +10,9 @@ public class UserDao {
     private static final String ADD_USER = "insert into " +
             "users(first_name, last_name, date_of_birth, registration_date, username, password) " +
             "values (?, ?, ? ,?, ?, ?)";
+    private final String GET_AVG_AGE = "select avg(year(curdate()) - year(date_of_birth)) as avgAge from users;";
+    private final String GET_AVG_LIBRARY_USAGE = "select avg(datediff(curdate(), registration_date)) as avgUsage from users;";
+    private final String GET_AVG_COUNT_OF_APPEAL = "select count(*) as avgCount from records group by id_user;";
 
     PreparedStatement preparedStatement = null;
 
@@ -90,5 +93,50 @@ public class UserDao {
             e.printStackTrace();
         }
         return resultUser;
+    }
+
+    public int getAvgAge() {
+        int result = 0;
+        try {
+            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(GET_AVG_AGE);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                result = resultSet.getInt("avgAge");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public int getAvgLibraryUsage() {
+        int result = 0;
+        try {
+            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(GET_AVG_LIBRARY_USAGE);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                result = resultSet.getInt("avgUsage");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public int getAvgCountOfAppeal() {
+        int result = 0;
+        try {
+            int rowCount = 0;
+            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(GET_AVG_COUNT_OF_APPEAL);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()) {
+                result += resultSet.getInt("avgCount");
+                rowCount++;
+            }
+            result = result / rowCount;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }

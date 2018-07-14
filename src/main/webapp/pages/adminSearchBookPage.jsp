@@ -20,6 +20,9 @@
     </style>
 </head>
 <body>
+<div align="right">
+    <a id="userOptions" href="/options">User options</a>
+</div>
 <div align="center">
     <h1>Library</h1>
     <h2>

@@ -1,13 +1,13 @@
-ul {
-    width: 10%;
-    margin: auto;
+.optionButton{
+    border: 1px black solid;
+    width: 100px;
+    padding: 20px;
+    font-size: 20px;
 }
-h1{
 
-    padding-top: 100px;
-}
-tbody {
-    padding-top: 200px;
+.buttons{
+    margin-top: 150px;
+    position: absolute;
 }
 
 body {
@@ -15,14 +15,10 @@ body {
     background-repeat: no-repeat;
     background-position: right bottom;
 }
-tr{
-    height: 37px;
-}
 
-#searchKey{
-    width: 310px;
-}
-
-#userOptions{
-    text-align: right;
+#userStatistic{
+    margin-top: 150px;
+    margin-left: 500px;
+    font-size: 30px;
+    position: absolute;
 }
