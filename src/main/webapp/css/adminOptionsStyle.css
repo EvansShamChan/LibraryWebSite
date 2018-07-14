@@ -22,3 +22,11 @@ body {
     font-size: 30px;
     position: absolute;
 }
+
+#deptorsTable{
+    position: absolute;
+    margin-left: 500px;
+    margin-top: 150px;
+    font-size: 20px;
+    margin-bottom: 100px;
+}

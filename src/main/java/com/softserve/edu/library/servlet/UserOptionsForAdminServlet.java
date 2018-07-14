@@ -36,7 +36,7 @@ public class UserOptionsForAdminServlet extends HttpServlet {
             case "/options/deptors":
                 List<DeptorsDto> deptors = optionsService.getDeptors();
                 req.setAttribute("deptors", deptors);
-                req.getRequestDispatcher("pages/userOptionsForAdminPage.jsp").forward(req, resp);
+                req.getRequestDispatcher("/options").forward(req, resp);
                 break;
         }
     }

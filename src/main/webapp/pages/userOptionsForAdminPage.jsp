@@ -31,5 +31,23 @@
             <p>Average count of appeal: ${statistic.avgCountOfAppeal} times.</p>
         </div>
     </c:if>
+    <c:if test="${deptors != null}">
+        <table id="deptorsTable" border="1" cellpadding="4">
+            <tr>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Book name</th>
+                <th>Take date</th>
+            </tr>
+            <c:forEach items="${deptors}" var="deptor">
+                <tr>
+                    <th>${deptor.firstName}</th>
+                    <th>${deptor.lastName}</th>
+                    <th>${deptor.bookName}</th>
+                    <th>${deptor.takeDate}</th>
+                </tr>
+            </c:forEach>
+        </table>
+    </c:if>
 </body>
 </html>
