@@ -13,16 +13,34 @@ import java.util.*;
 public class BookDao {
     private AuthorToBookDao authorToBookDao = new AuthorToBookDao();
     PreparedStatement preparedStatement = null;
-    private String GET_BOOKS_BY_BOOK_NAME = "select books.*, if(count(*) = (select count(*) from records), 0, count(*)) as number from books, records where name like ? and books.id = records.id_book or books.id not in (select id_book from records) and name like ? group by books.name order by number %s limit ?, ?;";
+    private String GET_BOOKS_BY_BOOK_NAME = "select books.*, if(count(*) = (select count(*) from records), 0, count(*)) " +
+            "as number from books, records where name like ? and books.id = records.id_book " +
+            "or books.id not in (select id_book from records) and name like ? group by books.name " +
+            "order by number %s limit ?, ?;";
     private final String GET_BOOKS_BY_AUTHOR =
-            "select b.*, if(count(*) = (select count(*) from records), 0, count(*)) as number from authors_to_books ab join books b join authors a on b.id = ab.id_book and a.id = ab.id_author join records r on b.id = r.id_book or b.id not in(select id_book from records) where first_name like ? and last_name like ? group by b.name order by number %s limit ?, ?;";
+            "select b.*, if(count(*) = (select count(*) from records), 0, count(*)) as number " +
+                    "from authors_to_books ab join books b join authors a " +
+                    "on b.id = ab.id_book and a.id = ab.id_author join records r on b.id = r.id_book " +
+                    "or b.id not in(select id_book from records) where first_name like ? and last_name like ? " +
+                    "group by b.name order by number %s limit ?, ?;";
     private final String GET_NUMBER_OF_BOOKS_BY_NAME = "select count(*) as number from books where name like ?;";
     private final String GET_NUMBER_OF_BOOKS_BY_DATE = "select count(*) as number from books where publication_date between ? and ?;;";
-    private final String GET_BOOKS_BETWEEN_DATE = "select b.*, if(count(*) = (select count(*) from records), 0, count(*)) as number from books b join records r on b.id = r.id_book or b.id not in(select id_book from records) where publication_date between ? and ? group by b.name order by number %s limit ?, ?;";
-    private final String GET_BOOKS_LESS_THAN_DATE = "select b.*, if(count(*) = (select count(*) from records), 0, count(*)) as number from books b join records r on b.id = r.id_book or b.id not in(select id_book from records) where publication_date <= ? group by b.name order by number %s limit ?, ?;";
-    private final String GET_BOOKS_BIGGER_THAN_DATE = "select b.*, if(count(*) = (select count(*) from records), 0, count(*)) as number from books b join records r on b.id = r.id_book or b.id not in(select id_book from records) where publication_date >= ? group by b.name order by number %s limit ?, ?;";
-    private final String GET_BOOKS_BY_DATE = "select b.*, if(count(*) = (select count(*) from records), 0, count(*)) as number from books b join records r on b.id = r.id_book or b.id not in(select id_book from records) where publication_date = ? group by b.name order by number %s limit ?, ?;";
-    private final String GET_ALL_BOOKS = "select b.*, if(count(*) = (select count(*) from records), 0, count(*)) as number from books b join records r on b.id = r.id_book or b.id not in(select id_book from records) group by b.name order by number %s limit ?, ?;";
+    private final String GET_BOOKS_BETWEEN_DATE = "select b.*, if(count(*) = (select count(*) from records), 0, count(*)) " +
+            "as number from books b join records r on b.id = r.id_book " +
+            "or b.id not in(select id_book from records) where publication_date between ? and ? group by b.name " +
+            "order by number %s limit ?, ?;";
+    private final String GET_BOOKS_LESS_THAN_DATE = "select b.*, if(count(*) = (select count(*) from records), 0, count(*)) " +
+            "as number from books b join records r on b.id = r.id_book or b.id not in(select id_book from records) " +
+            "where publication_date <= ? group by b.name order by number %s limit ?, ?;";
+    private final String GET_BOOKS_BIGGER_THAN_DATE = "select b.*, if(count(*) = (select count(*) from records), 0, count(*)) " +
+            "as number from books b join records r on b.id = r.id_book or b.id not in(select id_book from records) " +
+            "where publication_date >= ? group by b.name order by number %s limit ?, ?;";
+    private final String GET_BOOKS_BY_DATE = "select b.*, if(count(*) = (select count(*) from records), 0, count(*)) " +
+            "as number from books b join records r on b.id = r.id_book or b.id not in(select id_book from records) " +
+            "where publication_date = ? group by b.name order by number %s limit ?, ?;";
+    private final String GET_ALL_BOOKS = "select b.*, if(count(*) = (select count(*) from records), 0, count(*)) " +
+            "as number from books b join records r on b.id = r.id_book or b.id not in(select id_book from records) " +
+            "group by b.name order by number %s limit ?, ?;";
 
     public Book getByName(String name) {
         PreparedStatement statement = null;
@@ -164,8 +182,8 @@ public class BookDao {
         List<Book> bookList = new ArrayList<>();
         try {
             preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(String.format(GET_BOOKS_BY_BOOK_NAME, sort));
-            preparedStatement.setString(1, "%" + searchKey + "%");
             preparedStatement.setString(2, "%" + searchKey + "%");
+            preparedStatement.setString(1, "%" + searchKey + "%");
             preparedStatement.setInt(3, start);
             preparedStatement.setInt(4, rowsPerPage);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -182,8 +200,8 @@ public class BookDao {
             preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(String.format(GET_BOOKS_BY_AUTHOR, sort));
             preparedStatement.setString(1, "%" + firstname + "%");
             preparedStatement.setString(2, "%" + lastname + "%");
-            preparedStatement.setInt(3, start);
             preparedStatement.setInt(4, rowsPerPage);
+            preparedStatement.setInt(3, start);
             ResultSet resultSet = preparedStatement.executeQuery();
             bookList = putValuesFromRSToBookEntity(resultSet);
         } catch (SQLException e) {

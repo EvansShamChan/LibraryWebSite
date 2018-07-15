@@ -22,3 +22,7 @@ tr{
 #searchKey{
     width: 310px;
 }
+
+#userOptions{
+    text-align: right;
+}
