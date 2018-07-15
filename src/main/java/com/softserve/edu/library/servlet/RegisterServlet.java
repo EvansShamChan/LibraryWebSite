@@ -18,7 +18,7 @@ public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RegisterDto registerDto = new RegisterDto();
         UserService userService = new UserService();
-
+        request.setCharacterEncoding("UTF-8");
         fillUpRegisterDto(request, registerDto);
 
         boolean isUserPresent = userService.isUserPresent(registerDto);
