@@ -20,7 +20,7 @@ public class RegisterServlet extends HttpServlet {
         UserService userService = new UserService();
         request.setCharacterEncoding("UTF-8");
         fillUpRegisterDto(request, registerDto);
-
+        System.out.println(registerDto.getDate());
         boolean isUserPresent = userService.isUserPresent(registerDto);
         if (!isUserPresent) {
             userService.addNewUser(registerDto);

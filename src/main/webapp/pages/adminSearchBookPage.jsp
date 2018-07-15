@@ -21,6 +21,9 @@
     </style>
 </head>
 <body>
+<div align="right">
+    <a id="userOptions" href="/options">User options</a>
+</div>
 <div align="center">
     <h1><img src="/images/sova.png" width="100" alt="book clipart transparent background"/>Library</h1>
     <form action="/searchPag" method="get">

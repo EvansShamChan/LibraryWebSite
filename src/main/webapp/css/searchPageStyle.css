@@ -83,6 +83,7 @@ input[type=text]:focus {
 #left{
     padding-left: 100px;
 }
+
 select {
     padding:3px;
     margin: 2px;
@@ -90,4 +91,8 @@ select {
     background: #4CAF50;
     color:white;
     border:none;
-   }
+}
+
+#userOptions{
+    text-align: right;
+}
