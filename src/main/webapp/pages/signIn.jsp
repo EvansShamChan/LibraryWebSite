@@ -16,7 +16,7 @@
     <img class="mb-4"
          src="/images/signInPage.jpg"
          alt="" width="200" height="200">
-    <form method="post" action="signIn">
+    <form method="post" action="/signIn">
         <table>
             <tr>
                 <td><input type="text" name="username" required placeholder="User name"></td>

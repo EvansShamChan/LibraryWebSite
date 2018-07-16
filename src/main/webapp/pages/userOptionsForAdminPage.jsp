@@ -10,6 +10,8 @@
 <html>
 <head>
     <title>Library</title>
+    <link rel="icon" href="http://icons.iconarchive.com/icons/pixelkit/swanky-outlines/256/05-Bookmark-Book-icon.png"
+          type="image/png">
     <style>
         <%@ include file="../css/adminOptionsStyle.css"%>
     </style>
@@ -20,7 +22,7 @@
             <a id="userStatisticButton" href="/options/userStatistic">User Statistic</a>
         </div>
         <div class="optionButton">
-            <a id="getDeptorsButton" href="/options/deptors">Get Deptors</a>
+            <a id="getDeptorsButton" href="/options/deptors">Get Debtors</a>
         </div>
     </div>
 
