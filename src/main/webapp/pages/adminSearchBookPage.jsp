@@ -19,12 +19,15 @@
     <style>
         <%@include file="../css/searchPageStyle.css"%>
     </style>
+    <script src="../js/bookSearchScript.js" charset="utf-8">
+        <%@include file="../js/bookSearchScript.js"%>
+    </script>
 </head>
 <body>
 <div align="center">
     <h1><img src="/images/sova.png" width="100" alt="book clipart transparent background"/>Library
         <a id="logOut" href="/pages/signIn.jsp">Log out</a>
-        <a id="userOptions" href="/options">User options</a>
+        <a id="userOptions" href="/options">Statistic</a>
         <a id="addNewBook" href="/search/new">Add new book</a></h1>
     <form action="/searchPag" method="get">
         <input type="text" align="left" id="searchKey" name="searchKey" placeholder="Search.." value="${searchKey}">
@@ -86,9 +89,6 @@
         </div>
         <input type="hidden" name="currentPage" value="1">
     </form>
-
-
-    <br>
     <table border="1" cellpadding="5">
         <col style="width:18%">
         <col style="width:36%">
@@ -159,9 +159,7 @@
             </ul>
         </nav>
     </c:if>
+    <br>
 </div>
-<script src="../js/bookSearchScript.js" charset="utf-8">
-    <%@include file="../js/bookSearchScript.js"%>
-</script>
 </body>
 </html>

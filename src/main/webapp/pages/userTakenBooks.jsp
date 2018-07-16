@@ -15,15 +15,18 @@
           integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link rel="icon" href="http://icons.iconarchive.com/icons/pixelkit/swanky-outlines/256/05-Bookmark-Book-icon.png"
           type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         <%@include file="../css/searchPageStyle.css"%>
-        <%@include file="../css/userSearchBookPageStyle.css"%>
     </style>
 </head>
 <body>
 <div align="center">
-    <h1>Library</h1>
-    <a class="back" href="javascript:history.back()" title="back to previos page" > Back to previous page </a>
+    <h1><img src="/images/sova.png" width="100" alt="book clipart transparent background"/>Library
+
+        <a id="logOut" href="/pages/signIn.jsp">Log out</a>
+        <a id="back" href="/searchPag?searchKey=&rowsPerPage=10&checkBy=bookName&currentPage=1&sort=desc" title="back to search page"> Back to previous page </a>
+    </h1>
 </div>
 <div align="center">
     <form action="/searchPag" method="get">
@@ -36,42 +39,42 @@
                     <th>Return until</th>
                     <th>Status</th>
                     <c:if test="${sessionScope.userOrAdmin != 'admin'}">
-                    <th>Action</th>
+                        <th>Action</th>
                     </c:if>
                 </tr>
             </c:if>
             <c:forEach var="book" items="${allBooksByUserId}">
                 <tr>
-                    <td><c:out value="${book.bookName}"/></td>
-                    <td><c:out value="${book.takeDate}"/></td>
-                    <td><c:out value="${book.returnUntil}"/></td>
+                    <td>"<c:out value="${book.bookName}"/>"</td>
+                    <td align="middle"><c:out value="${book.takeDate}"/></td>
+                    <td align="middle"><c:out value="${book.returnUntil}"/></td>
                     <c:if test="${book.returned == true}">
-                        <td>returned</td>
+                        <td align="middle">Returned</td>
                     </c:if>
 
                     <c:if test="${book.returned == false}">
-                        <td>on hands</td>
+                        <td align="middle">On hands</td>
                     </c:if>
 
                     <c:if test="${sessionScope.userOrAdmin != 'admin'}">
-                    <c:if test="${book.returned == true}">
-                        <td>Book is already returned</td>
-                    </c:if>
+                        <c:if test="${book.returned == true}">
+                            <td align="middle">Book is already returned</td>
+                        </c:if>
 
-                    <c:if test="${book.returned == false}">
-                        <td>
-                            <a method="get"
-                               href="/returnBook?bookId=${book.idBook}&userID=${book.idUser}">Return book</a>
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                        </td>
-                    </c:if>
+                        <c:if test="${book.returned == false}">
+                            <td align="middle">
+                                <a id="return" method="get"
+                                   href="/returnBook?bookId=${book.idBook}&userID=${book.idUser}">Return book</a>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                            </td>
+                        </c:if>
                     </c:if>
                 </tr>
             </c:forEach>
         </table>
         <br>
         <c:if test="${listBook != null}">
-            <nav aria-label="Navigation for countries">
+            <nav aria-label="Navigation">
                 <ul class="pagination">
                     <c:if test="${currentPage != 1}">
                         <a method="post" class="page-link"
