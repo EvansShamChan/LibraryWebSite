@@ -3,7 +3,6 @@ package com.softserve.edu.library.dao;
 import com.softserve.edu.library.db.ConnectionManager;
 import com.softserve.edu.library.entity.Author;
 import com.softserve.edu.library.entity.AuthorToBook;
-import com.softserve.edu.library.entity.Book;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

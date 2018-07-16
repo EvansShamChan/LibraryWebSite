@@ -138,7 +138,7 @@ public class UserDao {
             int rowCount = 0;
             preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(GET_AVG_COUNT_OF_APPEAL);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 result += resultSet.getInt("avgCount");
                 rowCount++;
             }
@@ -154,7 +154,7 @@ public class UserDao {
         try {
             preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(GET_DEPTORS);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 dtoList.add(new DeptorsDto(resultSet.getString("first_name"),
                         resultSet.getString("last_name"),
                         resultSet.getString("name"),
@@ -171,7 +171,7 @@ public class UserDao {
         try {
             preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(GET_USERS);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 userInfoDtoList.add(new EachUserInfoDto(resultSet.getLong("id"),
                         resultSet.getString("first_name"),
                         resultSet.getString("last_name")));

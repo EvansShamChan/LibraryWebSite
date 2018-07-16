@@ -12,10 +12,7 @@ public class BookDto {
     private String available;
     private int numberOfTaken;
 
-    public BookDto() {
-    }
-
-    public BookDto(long id ,String name, List<AuthorDto> authors, String publicationDate, String available, int numberOfTaken) {
+    public BookDto(long id, String name, List<AuthorDto> authors, String publicationDate, String available, int numberOfTaken) {
         this.id = id;
         this.name = name;
         this.authors = authors;
@@ -99,4 +96,3 @@ public class BookDto {
                 '}';
     }
 }
-

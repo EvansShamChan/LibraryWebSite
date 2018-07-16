@@ -5,9 +5,6 @@ import com.softserve.edu.library.dto.LoginDto;
 import com.softserve.edu.library.dto.RegisterDto;
 import com.softserve.edu.library.entity.User;
 
-import java.util.LinkedList;
-import java.util.List;
-
 public class UserService {
     public String[] isUserPresent(LoginDto loginDto) {
         UserDao userDao = new UserDao();

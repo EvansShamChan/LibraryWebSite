@@ -68,32 +68,6 @@ public class BookDao {
         return result;
     }
 
-    public Book getById(String id) {
-        Statement statement = null;
-        Book result;
-        try {
-            statement = ConnectionManager.getInstance().getConnection().createStatement();
-            // TODO CHECK!
-            statement.executeQuery("SELECT * FROM books WHERE id = " + id + ";");
-            ResultSet resultSet = statement.getResultSet();
-            result = new Book();
-            while (resultSet.next()) {
-                result = parseBooks(resultSet);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (Exception ex) {
-                    throw new RuntimeException(ex.getMessage());
-                }
-            }
-        }
-        return result;
-    }
-
     public boolean insertBook(Book book) throws SQLException {
         String sql = "INSERT INTO books (name, publication_date, available) VALUES (?, ?, ?)";
         PreparedStatement statement = ConnectionManager.getInstance().getConnection().prepareStatement(sql);
@@ -169,7 +143,7 @@ public class BookDao {
             preparedStatement.setString(1, startDate);
             preparedStatement.setString(2, endDate);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 resultNumber = resultSet.getInt("number");
             }
         } catch (SQLException e) {
@@ -253,13 +227,13 @@ public class BookDao {
     }
 
     private void prepareBeforeBookDatePeriodSearch(String startYear, String endYear, String sort, int start, int rowsPerPage) {
-        try{
-            if (endYear.equals("")){
+        try {
+            if (endYear.equals("")) {
                 preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(String.format(GET_BOOKS_BIGGER_THAN_DATE, sort));
                 preparedStatement.setString(1, startYear);
                 preparedStatement.setInt(2, start);
                 preparedStatement.setInt(3, rowsPerPage);
-            } else if(startYear.equals("")) {
+            } else if (startYear.equals("")) {
                 preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(String.format(GET_BOOKS_LESS_THAN_DATE, sort));
                 preparedStatement.setString(1, endYear);
                 preparedStatement.setInt(2, start);
@@ -278,7 +252,7 @@ public class BookDao {
 
     private List<Book> putValuesFromRSToBookEntity(ResultSet resultSet) throws SQLException {
         List<Book> bookList = new ArrayList<>();
-        while(resultSet.next()) {
+        while (resultSet.next()) {
             int id = resultSet.getInt("id");
             String name = resultSet.getString("name");
             String publication_date = resultSet.getString("publication_date");
@@ -290,5 +264,3 @@ public class BookDao {
         return bookList;
     }
 }
-
-

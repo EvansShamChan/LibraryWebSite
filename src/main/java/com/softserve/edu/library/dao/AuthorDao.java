@@ -36,7 +36,6 @@ public class AuthorDao {
             }
         }
         return result;
-
     }
 
     public Author getByName(String firstName, String lastName) throws SQLException {

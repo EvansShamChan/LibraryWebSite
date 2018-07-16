@@ -17,7 +17,6 @@ public class AlreadyTakenBooksServlet extends HttpServlet {
         BookTakingService bookTakingService = new BookTakingService();
         List<TakenBookDto> allBooksByUserId = bookTakingService.getAllTakenBooksByUserId(Long.valueOf(req.getParameter("userID")));
 
-//        HttpSession session = req.getSession();
         req.setAttribute("allBooksByUserId", allBooksByUserId);
         req.getRequestDispatcher("/pages/userTakenBooks.jsp").forward(req, resp);
     }

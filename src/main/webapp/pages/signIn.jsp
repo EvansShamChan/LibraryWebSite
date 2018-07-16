@@ -30,7 +30,8 @@
                     <input type="submit" value="Sign in">
                     <div class="errorText" style="${errorStyle}"><p>Wrong user name or password</p></div>
                     <br>
-                    <a href="/pages/registerPage.jsp" style="margin:auto; text-align:center; display:block;">Register</a>
+                    <a href="/pages/registerPage.jsp"
+                       style="margin:auto; text-align:center; display:block;">Register</a>
                 </td>
             </tr>
         </table>

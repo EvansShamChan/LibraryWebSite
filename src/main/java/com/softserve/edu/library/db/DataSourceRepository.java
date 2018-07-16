@@ -25,8 +25,8 @@ public final class DataSourceRepository {
                 "jdbc:mysql://localhost:3306/library" +
                         "?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&" +
                         "characterEncoding=UTF-8&useLegacyDatetimeCode=false&serverTimezone=UTC",
-                     "root", "root");
-        //"khrystyna", "123456");
+//                     "root", "root");
+        "khrystyna", "123456");
      //           "root", "12345");
     }
 }

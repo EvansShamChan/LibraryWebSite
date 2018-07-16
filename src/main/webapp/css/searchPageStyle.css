@@ -14,6 +14,11 @@ table {
     width: 1200px;
 }
 
+#usertable {
+    table-layout: auto;
+    width: 800px;
+}
+
 th, td {
     height: 37px;
 }
@@ -98,7 +103,7 @@ select {
     border: none;
 }
 
-#userOptions, #logOut, #addNewBook, #back, #alreadyTakenBooks {
+#userOptions, #logOut, #addNewBook, #back, #alreadyTakenBooks, #userstatistic {
     font-size: 18px;
     float: right;
     color: #ffffff;
@@ -118,12 +123,12 @@ select {
     margin-top: 40px;
 }
 
-#addNewBook, #back, #alreadyTakenBooks {
+#addNewBook, #back, #alreadyTakenBooks, #userstatistic {
     margin-top: 40px;
     margin-right: 50px;
 }
 
-#return, #take {
+#return, #take, #check {
 
     color: #ffffff;
     font-size: 15px;
@@ -134,12 +139,16 @@ select {
     text-decoration: none;
 }
 
-#return{
+#return {
     background: #8c210f;
 }
 
-#take{
+#take {
     background: #169919;
+}
+
+#check {
+    background: #0008ff;
 }
 
 .successText {
@@ -163,4 +172,11 @@ select {
 .back {
     float: right;
     padding-right: 300px;
+}
+
+#average {
+    font-weight: lighter;
+    font-size: 30px;
+    color: #439247;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }

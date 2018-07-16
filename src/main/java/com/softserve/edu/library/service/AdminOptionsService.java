@@ -4,13 +4,13 @@ import com.softserve.edu.library.dao.UserDao;
 import com.softserve.edu.library.dto.DeptorsDto;
 import com.softserve.edu.library.dto.EachUserInfoDto;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class AdminOptionsService {
     UserDao dao = new UserDao();
+
     public Map<String, Integer> getUserAvgStatistic() {
         Map<String, Integer> avgStatistic = new HashMap<>();
         avgStatistic.put("avgAge", dao.getAvgAge());

@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: khrystyna
-  Date: 28.06.18
-  Time: 14:45
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -25,7 +18,11 @@
     <h1><img src="/images/sova.png" width="100" alt="book clipart transparent background"/>Library
 
         <a id="logOut" href="/pages/signIn.jsp">Log out</a>
-        <a id="back" href="/searchPag?searchKey=&rowsPerPage=10&checkBy=bookName&currentPage=1&sort=desc" title="back to search page"> Back to previous page </a>
+        <c:if test="${sessionScope.userOrAdmin == 'admin'}">
+            <a id="userOptions" href="/options">Statistic</a>
+        </c:if>
+        <a id="back" href="/searchPag?searchKey=&rowsPerPage=10&checkBy=bookName&currentPage=1&sort=desc"
+           title="back to search page"> Back to search page </a>
     </h1>
 </div>
 <div align="center">

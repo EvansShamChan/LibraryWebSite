@@ -18,12 +18,11 @@ public class UserOptionsForAdminServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String uri = req.getRequestURI();
-        if(uri.equals("/options")) {
+        if (uri.equals("/options")) {
             req.getRequestDispatcher("pages/userOptionsForAdminPage.jsp").forward(req, resp);
         } else {
             executeOptions(uri, req, resp);
         }
-
     }
 
     private void executeOptions(String uri, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

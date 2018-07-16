@@ -10,8 +10,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.sql.SQLException;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class AuthorService {
     private BookDao bookDao = new BookDao();
@@ -31,7 +29,7 @@ public class AuthorService {
         return false;
     }
 
-    public boolean addAuthorToBook(String bookName, String firstName, String lastName) throws  Exception {
+    public boolean addAuthorToBook(String bookName, String firstName, String lastName) throws Exception {
         Book book = bookDao.getByName(bookName);
         if (book == null) {
             return false;

@@ -10,7 +10,6 @@ public class ConnectionManager {
     private final static String FAILED_REGISTER_DRIVER = "Failed to Register JDBC Driver";
     private final static String FAILED_CREATE_CONNECTION = "Failed to Create Connection";
     private final static String FAILED_CLOSE_CONNECTION = "Failed to Close Connection";
-//	private final static String FAILED_CONNECTION = "Connection Failed";
 
     private static volatile ConnectionManager instance = null;
 
@@ -94,33 +93,6 @@ public class ConnectionManager {
         }
         return connection;
     }
-
-//	public void beginTransaction() {
-//		try {
-//			getConnection().setAutoCommit(false);
-//		} catch (SQLException e) {
-//			// TODO Develop Custom Exceptions
-//			throw new RuntimeException(FAILED_CONNECTION, e);
-//		}
-//	}
-//
-//	public void commitTransaction() {
-//		try {
-//			getConnection().commit();
-//		} catch (SQLException e) {
-//			// TODO Develop Custom Exceptions
-//			throw new RuntimeException(FAILED_CONNECTION, e);
-//		}
-//	}
-//
-//	public void rollbackTransaction() {
-//		try {
-//			getConnection().rollback();
-//		} catch (SQLException e) {
-//			// TODO Develop Custom Exceptions
-//			throw new RuntimeException(FAILED_CONNECTION, e);
-//		}
-//	}
 
     public static void closeAllConnections() {
         if (instance != null) {
