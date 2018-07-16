@@ -83,7 +83,7 @@
 <body>
 <div align="center">
     <h1><img src="/images/sova.png" width="100" alt="book clipart transparent background"/>Library <a id="logOut" href="/signIn">Log out</a>
-        <a id="userOptions" href="/options">User options</a>
+        <a id="userOptions" href="/options">Statistic</a>
         <a id="addNewBook" href="/search/new">Add new book</a></h1></div>
 <br><br><br>
 <div align="center">

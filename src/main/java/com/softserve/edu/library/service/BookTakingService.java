@@ -17,13 +17,13 @@ public class BookTakingService {
 
         RecordsDao recordsDao = new RecordsDao();
         if(recordsDao.isUserAlreadyTakeThisBook(idUser, idBook)) {
-            return "You already take this book";
+            return "You already take this book!";
         }
         if(!recordsDao.isDecrementAvailable(idBook)) {
-            return "This book cannot be taken";
+            return "This book cannot be taken!";
         }
         if (recordsDao.doDecrement(idBook,available) && recordsDao.takeBook(idUser, idBook, takeDate, returnUntil)) {
-            return "book was successfully added";
+            return "Book was successfully added!";
         } else {
             throw new RuntimeException("query did not work");
         }

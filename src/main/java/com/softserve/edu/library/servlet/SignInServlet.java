@@ -16,6 +16,8 @@ import java.io.IOException;
 public class SignInServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         LoginDto loginDto = new LoginDto(request.getParameter("username"), request.getParameter("password"));
         UserService userService = new UserService();
 

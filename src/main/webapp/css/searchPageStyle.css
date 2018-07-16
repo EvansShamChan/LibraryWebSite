@@ -98,7 +98,7 @@ select {
     border: none;
 }
 
-#userOptions, #logOut, #addNewBook {
+#userOptions, #logOut, #addNewBook, #back, #alreadyTakenBooks {
     font-size: 18px;
     float: right;
     color: #ffffff;
@@ -118,7 +118,49 @@ select {
     margin-top: 40px;
 }
 
-#addNewBook {
+#addNewBook, #back, #alreadyTakenBooks {
     margin-top: 40px;
     margin-right: 50px;
+}
+
+#return, #take {
+
+    color: #ffffff;
+    font-size: 15px;
+    padding: 8px 12px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    text-decoration: none;
+}
+
+#return{
+    background: #8c210f;
+}
+
+#take{
+    background: #169919;
+}
+
+.successText {
+    display: none;
+    color: green;
+    float: right;
+    padding-right: 300px;
+}
+
+.inputClass {
+    margin-left: 300px;
+}
+
+.errorTextMessage {
+    display: none;
+    color: red;
+    float: right;
+    padding-right: 300px;
+}
+
+.back {
+    float: right;
+    padding-right: 300px;
 }
