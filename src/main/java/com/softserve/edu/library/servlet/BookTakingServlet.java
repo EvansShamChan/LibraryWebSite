@@ -28,7 +28,5 @@ public class BookTakingServlet extends HttpServlet {
         req.setAttribute("bookMessageStyle", "display: block");
 
         req.getRequestDispatcher(String.valueOf(session.getAttribute("lastSearchUrl"))).forward(req, resp);
-
     }
-
 }

@@ -2,10 +2,6 @@ package com.softserve.edu.library.service;
 
 import com.softserve.edu.library.dao.RecordsDao;
 import com.softserve.edu.library.dto.BookReturningDto;
-import com.softserve.edu.library.dto.BookTakingDto;
-import com.softserve.edu.library.dto.TakenBookDto;
-
-import java.util.List;
 
 public class BookReturningService {
 
@@ -23,9 +19,4 @@ public class BookReturningService {
             throw new RuntimeException("query did not work");
         }
     }
-
-//    public List<TakenBookDto> getAllTakenBooksByUserId(long idUser) {
-//        RecordsDao recordsDao = new RecordsDao();
-//        return recordsDao.getAllBooksByUserId(idUser);
-//    }
 }

@@ -11,7 +11,7 @@ public class DateService {
         return sqlDate;
     }
 
-    public static Date parseStringToSqlDate(String stringDate){
+    public static Date parseStringToSqlDate(String stringDate) {
         try {
             Date sqlDate;
             java.util.Date utilDate = new SimpleDateFormat("dd/MM/yyyy").parse(stringDate);

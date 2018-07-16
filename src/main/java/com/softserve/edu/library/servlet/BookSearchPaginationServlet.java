@@ -31,8 +31,8 @@ public class BookSearchPaginationServlet extends HttpServlet {
 
         int numberOfRows = bookService.getNumberOfBooks(bookSearchDto);
         int nOfPages = numberOfRows / bookSearchDto.getRowsPerPage();
-        if(numberOfRows == 10) {
-            //nop
+        if (numberOfRows == 10) {
+
         } else if (nOfPages % bookSearchDto.getRowsPerPage() > 0) {
             ++nOfPages;
         }
@@ -69,4 +69,3 @@ public class BookSearchPaginationServlet extends HttpServlet {
         doPost(req, resp);
     }
 }
-

@@ -20,7 +20,6 @@ public class BookTakingDto {
         this.returnUntil = returnUntilMethod();
     }
 
-
     private java.sql.Date returnUntilMethod() {
         java.util.Date date = new java.util.Date();
         return new java.sql.Date(date.getTime() + (86_400_000 * 10));
@@ -29,7 +28,6 @@ public class BookTakingDto {
     public Date getReturnUntil() {
         return returnUntil;
     }
-
 
     public long getAvailable() {
         return available;

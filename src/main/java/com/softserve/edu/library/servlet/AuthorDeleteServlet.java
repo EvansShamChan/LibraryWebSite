@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-
 @WebServlet("/author/delete")
 public class AuthorDeleteServlet extends HttpServlet {
     @Override
@@ -23,7 +22,7 @@ public class AuthorDeleteServlet extends HttpServlet {
         String lastName = request.getParameter("lastName");
 
         try {
-            authorService.deleteAuthorFromBook(bookName, firstName, lastName) ;
+            authorService.deleteAuthorFromBook(bookName, firstName, lastName);
             request.getRequestDispatcher("/search/edit?name=" + bookName).forward(request, response);
         } catch (SQLException e) {
             e.printStackTrace();

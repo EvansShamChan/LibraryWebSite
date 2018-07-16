@@ -25,12 +25,12 @@
             $(".add-author").each(function () {
                 path += "&" + $(this).attr("name") + "=" + $(this).val()
             });
-            var row='<tr class="classname">' +
-                '<td>'+$("#lastName").val()+'</td>'+
-                '<td>'+$("#firstName").val()+'</td>'+
-                '<td id="td-delete">'+
-                '<a id="delete" href="/author/delete?firstName='+$("#firstName").val()+'&lastName='+$("#lastName").val()+ '&bookName='+$('input[name=name]').val() + '">Delete</a>'+
-                '</td>'+
+            var row = '<tr class="classname">' +
+                '<td>' + $("#lastName").val() + '</td>' +
+                '<td>' + $("#firstName").val() + '</td>' +
+                '<td id="td-delete">' +
+                '<a id="delete" href="/author/delete?firstName=' + $("#firstName").val() + '&lastName=' + $("#lastName").val() + '&bookName=' + $('input[name=name]').val() + '">Delete</a>' +
+                '</td>' +
                 '</tr>';
 
             event.preventDefault();
@@ -45,10 +45,8 @@
                     alert('This author already exists!');
                     $("#lastName").val("");
                     $("#firstName").val("");
-
                 }
             });
-
         })
         $(function () {
             $("#lastName").autocomplete({
@@ -64,7 +62,6 @@
                                     value: item.lastName,
                                     firstName: item.firstName
                                 }
-
                             }))
                         },
                         error: function (data) {
@@ -82,7 +79,9 @@
 </script>
 <body>
 <div align="center">
-    <h1><img src="/images/sova.png" width="100" alt="book clipart transparent background"/>Library <a id="logOut" href="/signIn">Log out</a>
+    <h1><img src="/images/sova.png" width="100" alt="book clipart transparent background"/>Library <a id="logOut"
+                                                                                                      href="/pages/signIn.jsp">Log
+        out</a>
         <a id="userOptions" href="/options">Statistic</a>
         <a id="addNewBook" href="/search/new">Add new book</a></h1></div>
 <br><br><br>

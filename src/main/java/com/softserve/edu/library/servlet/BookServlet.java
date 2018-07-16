@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-
 public class BookServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -40,7 +39,6 @@ public class BookServlet extends HttpServlet {
                 break;
         }
     }
-
 
     private void showNewForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -71,7 +69,7 @@ public class BookServlet extends HttpServlet {
         Book newBook = new Book(name, publicationDate, available);
         boolean result = bookService.insertBook(newBook);
         request.setAttribute("success", result);//TODO add message on frontend
-            response.sendRedirect(String.valueOf(session.getAttribute("lastSearchUrl")));
+        response.sendRedirect(String.valueOf(session.getAttribute("lastSearchUrl")));
     }
 
     private void updateBook(HttpServletRequest request, HttpServletResponse response)
@@ -100,7 +98,4 @@ public class BookServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req, resp);
     }
-
 }
-
-
