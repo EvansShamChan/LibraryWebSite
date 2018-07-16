@@ -23,7 +23,7 @@
 <body>
 <div align="center">
     <h1><img src="/images/sova.png" width="100" alt="book clipart transparent background"/>Library
-        <a id="logOut" href="/signIn">Log out</a>
+        <a id="logOut" href="/pages/signIn.jsp">Log out</a>
         <a id="userOptions" href="/options">User options</a>
         <a id="addNewBook" href="/search/new">Add new book</a></h1>
     <form action="/searchPag" method="get">
@@ -32,10 +32,10 @@
         <br>
         <c:choose>
             <c:when test="${sort == 'desc'}">
-                <c:set var="sortDesc" value="selected"></c:set>
+                <c:set var="sortDesc" value="checked"></c:set>
             </c:when>
             <c:when test="${sort == 'asc'}">
-                <c:set var="sortAsc" value="selected"></c:set>
+                <c:set var="sortAsc" value="checked"></c:set>
             </c:when>
         </c:choose>
         <c:choose>
@@ -79,7 +79,7 @@
             </div>
             <div class="col-md-6" id="right">
 
-                <input type="radio" id="sortBy1" value="desc" name="sort" ${sortDesc} checked="checked"> Popular
+                <input type="radio" id="sortBy1" value="desc" name="sort" ${sortDesc}> Popular
                 <input type="radio" id="sortBy2" value="asc" name="sort" ${sortAsc}> Unpopular
 
             </div>
