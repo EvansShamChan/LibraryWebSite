@@ -1,6 +1,7 @@
 package com.softserve.edu.library.servlet;
 
 import com.softserve.edu.library.dto.DeptorsDto;
+import com.softserve.edu.library.dto.EachUserInfoDto;
 import com.softserve.edu.library.service.AdminOptionsService;
 
 import javax.servlet.ServletException;
@@ -36,6 +37,11 @@ public class UserOptionsForAdminServlet extends HttpServlet {
             case "/options/deptors":
                 List<DeptorsDto> deptors = optionsService.getDeptors();
                 req.setAttribute("deptors", deptors);
+                req.getRequestDispatcher("/options").forward(req, resp);
+                break;
+            case "/options/eachUserStatistic":
+                List<EachUserInfoDto> eachUserInfoDto = optionsService.getUserInfo();
+                req.setAttribute("allUsers", eachUserInfoDto);
                 req.getRequestDispatcher("/options").forward(req, resp);
                 break;
         }

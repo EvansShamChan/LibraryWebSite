@@ -2,6 +2,7 @@ package com.softserve.edu.library.dao;
 
 import com.softserve.edu.library.db.ConnectionManager;
 import com.softserve.edu.library.dto.DeptorsDto;
+import com.softserve.edu.library.dto.EachUserInfoDto;
 import com.softserve.edu.library.entity.User;
 
 import java.sql.*;
@@ -20,6 +21,7 @@ public class UserDao {
     private final String GET_DEPTORS = "select u.first_name, u.last_name, b.name, r.take_date from " +
             "records r join users u on r.id_user = u.id join books b on b.id = r.id_book " +
             "where curdate() - take_date >= 10 and return_date is null;";
+    private final String GET_USERS = "select id, first_name, last_name from users;";
 
     PreparedStatement preparedStatement = null;
 
@@ -162,5 +164,21 @@ public class UserDao {
             e.printStackTrace();
         }
         return dtoList;
+    }
+
+    public List<EachUserInfoDto> userInfo() {
+        List<EachUserInfoDto> userInfoDtoList = new ArrayList<>();
+        try {
+            preparedStatement = ConnectionManager.getInstance().getConnection().prepareStatement(GET_USERS);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()) {
+                userInfoDtoList.add(new EachUserInfoDto(resultSet.getLong("id"),
+                        resultSet.getString("first_name"),
+                        resultSet.getString("last_name")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return userInfoDtoList;
     }
 }

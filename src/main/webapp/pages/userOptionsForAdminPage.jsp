@@ -19,10 +19,13 @@
 <body>
     <div class="buttons">
         <div class="optionButton">
-            <a id="userStatisticButton" href="/options/userStatistic">User Statistic</a>
+            <a id="userStatisticButton" href="/options/userStatistic">All User Statistic</a>
         </div>
         <div class="optionButton">
             <a id="getDeptorsButton" href="/options/deptors">Get Debtors</a>
+        </div>
+        <div class="optionButton">
+            <a href="/options/eachUserStatistic">User Statistic</a>
         </div>
     </div>
 
@@ -47,6 +50,24 @@
                     <th>${deptor.lastName}</th>
                     <th>${deptor.bookName}</th>
                     <th>${deptor.takeDate}</th>
+                </tr>
+            </c:forEach>
+        </table>
+    </c:if>
+    <c:if  test="${allUsers != null}">
+        <table class="deptorsTable" border="1" cellpadding="4">
+            <tr>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Check user info</th>
+            </tr>
+            <c:forEach items="${allUsers}" var="user">
+                <tr>
+                    <th>${user.firstName}</th>
+                    <th>${user.lastName}</th>
+                    <th><a method="get"
+                           href="/takenBooks?&userID=${user.userId}">Check info</a>
+                        &nbsp;&nbsp;&nbsp;&nbsp;</th>
                 </tr>
             </c:forEach>
         </table>
