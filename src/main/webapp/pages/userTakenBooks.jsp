@@ -29,29 +29,15 @@
     <form action="/searchPag" method="get">
         <table border="1" cellpadding="5">
             <br><br>
-            <%--<label class="rowsPerPage">Rows per page</label>--%>
-
-            <%--<c:choose>--%>
-            <%--<c:when test="${rowsPerPage == 5}"><c:set var="rows5" value="selected"/></c:when>--%>
-            <%--<c:when test="${rowsPerPage == 10}"><c:set var="rows10" value="selected"/></c:when>--%>
-            <%--<c:when test="${rowsPerPage == 15}"><c:set var="rows15" value="selected"/></c:when>--%>
-            <%--<c:when test="${rowsPerPage == 20}"><c:set var="rows20" value="selected"/></c:when>--%>
-            <%--</c:choose>--%>
-
-            <%--<select name="rowsPerPage" id="rowsPerPage">--%>
-                <%--<option value="5" ${rows5}>5</option>--%>
-                <%--<option value="10" ${rows10}>10</option>--%>
-                <%--<option value="15" ${rows15}>15</option>--%>
-                <%--<option value="20" ${rows20}>20</option>--%>
-            <%--</select><br>--%>
-            <%--<input type="hidden" name="currentPage" value="1">--%>
             <c:if test="${allBooksByUserId != null}">
                 <tr>
                     <th>Book name</th>
                     <th>Taking date</th>
                     <th>Return until</th>
                     <th>Status</th>
+                    <c:if test="${sessionScope.userOrAdmin != 'admin'}">
                     <th>Action</th>
+                    </c:if>
                 </tr>
             </c:if>
             <c:forEach var="book" items="${allBooksByUserId}">
@@ -67,6 +53,7 @@
                         <td>on hands</td>
                     </c:if>
 
+                    <c:if test="${sessionScope.userOrAdmin != 'admin'}">
                     <c:if test="${book.returned == true}">
                         <td>Book is already returned</td>
                     </c:if>
@@ -77,6 +64,7 @@
                                href="/returnBook?bookId=${book.idBook}&userID=${book.idUser}">Return book</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;
                         </td>
+                    </c:if>
                     </c:if>
                 </tr>
             </c:forEach>

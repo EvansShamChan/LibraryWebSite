@@ -2,6 +2,7 @@ package com.softserve.edu.library.service;
 
 import com.softserve.edu.library.dao.UserDao;
 import com.softserve.edu.library.dto.DeptorsDto;
+import com.softserve.edu.library.dto.EachUserInfoDto;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,5 +22,10 @@ public class AdminOptionsService {
     public List<DeptorsDto> getDeptors() {
         List<DeptorsDto> deptorsDtoList = dao.getDeptors();
         return deptorsDtoList;
+    }
+
+    public List<EachUserInfoDto> getUserInfo() {
+        List<EachUserInfoDto> userInfoDtoList = dao.userInfo();
+        return userInfoDtoList;
     }
 }
