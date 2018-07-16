@@ -28,8 +28,8 @@
             var row='<tr class="classname">' +
                 '<td>'+$("#lastName").val()+'</td>'+
                 '<td>'+$("#firstName").val()+'</td>'+
-                '<td>'+
-                '<a href="/author/delete?firstName='+$("#firstName").val()+'&lastName='+$("#lastName").val()+ '&bookName='+$('input[name=name]').val() + '">Delete</a>'+
+                '<td id="td-delete">'+
+                '<a id="delete" href="/author/delete?firstName='+$("#firstName").val()+'&lastName='+$("#lastName").val()+ '&bookName='+$('input[name=name]').val() + '">Delete</a>'+
                 '</td>'+
                 '</tr>';
 
@@ -37,12 +37,12 @@
             $.ajax({
                 url: path,
                 success: function (response) {
-                    $('.classname').last().after(row);
+                    $('#lastName').parent().parent().before(row);
                     $("#lastName").val("");
                     $("#firstName").val("");
                 },
                 error: function (response) {
-                    alert('woops!');
+                    alert('This author already exists!');
                     $("#lastName").val("");
                     $("#firstName").val("");
 
@@ -81,6 +81,11 @@
     });
 </script>
 <body>
+<div align="center">
+    <h1><img src="/images/sova.png" width="100" alt="book clipart transparent background"/>Library <a id="logOut" href="/signIn">Log out</a>
+        <a id="userOptions" href="/options">User options</a>
+        <a id="addNewBook" href="/search/new">Add new book</a></h1></div>
+<br><br><br>
 <div align="center">
     <c:if test="${book != null}">
     <form action="/search/update" method="post">
@@ -135,9 +140,9 @@
                         <tr class="classname">
                             <td><c:out value="${author.lastName}"/></td>
                             <td><c:out value="${author.firstName}"/></td>
-                            <td style="border-right-style:hidden;border-top-style:hidden;border-bottom-style:hidden;">
+                            <td id="td-delete">
                                 <a href="/author/delete?firstName=<c:out value='${author.firstName}' />&lastName=<c:out value='${author.lastName}' />&bookName=<c:out value='${book.name}'/>"
-                                   style='background:#8c210f;color:#ffffff;font-size:15px;padding:8px 12px;border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px;text-decoration:none;'>Delete</a>
+                                   id="delete">Delete</a>
                             </td>
                         </tr>
                     </c:forEach>

@@ -1,19 +1,59 @@
-h1{
-    padding-top: 100px;
-}
-h2 {
-    padding-top: 100px;
-}
-
-tbody {
-    padding-top: 200px;
-}
 
 body {
-    background-image: url("http://topcleaning.info/wp-content/uploads/2018/04/book-powerpoint-background-powerpoint-background-book-books-and-apple-powerpoint-templates-download.jpg");
-    background-repeat: no-repeat;
-    background-position: right bottom;
+    overflow-x: hidden;
 }
-tr{
+
+h1 {
+    padding: 10px 100px 10px 320px;
+    color: white;
+    text-align: left;
+    background-color: #169919;
+}
+
+tr {
     height: 37px;
+}
+
+
+#userOptions, #logOut, #addNewBook {
+    font-size: 18px;
+    float: right;
+    color: #ffffff;
+    padding: 8px 12px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    text-decoration: none;
+}
+
+#userOptions{
+    margin-top: 40px;
+    margin-right: 50px;
+    /*background: #3e5adc;*/
+}
+
+#logOut{
+    margin-top: 40px;
+    /*margin-right: 50px;*/
+    /*background: #d4dc51;*/
+}
+#addNewBook{
+    margin-top: 40px;
+    margin-right: 50px;
+}
+#delete {
+    background: #8c210f;
+    color: #ffffff;
+    font-size: 15px;
+    padding: 8px 12px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    text-decoration: none;
+}
+
+#td-delete {
+    border-right-style: hidden;
+    border-top-style: hidden;
+    border-bottom-style: hidden;
 }
