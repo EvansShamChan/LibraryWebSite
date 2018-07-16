@@ -21,11 +21,11 @@
     </style>
 </head>
 <body>
-<div align="right">
-    <a id="userOptions" href="/options">User options</a>
-</div>
 <div align="center">
-    <h1><img src="/images/sova.png" width="100" alt="book clipart transparent background"/>Library</h1>
+    <h1><img src="/images/sova.png" width="100" alt="book clipart transparent background"/>Library
+        <a id="logOut" href="/signIn">Log out</a>
+        <a id="userOptions" href="/options">User options</a>
+        <a id="addNewBook" href="/search/new">Add new book</a></h1>
     <form action="/searchPag" method="get">
         <input type="text" align="left" id="searchKey" name="searchKey" placeholder="Search.." value="${searchKey}">
         <br>
@@ -72,16 +72,17 @@
         </select>
         <div class="row">
             <div class="col-md-6" id="left">
-            <input type="radio" id="author" value="author" name="checkBy" ${checkByAuthor}> Author
-            <input type="radio" id="bookName" value="bookName" name="checkBy" ${checkByBook}> Book name
-            <input type="radio" id="publicationDate" value="publicationDate" name="checkBy" ${checkByDate}> Publication date
-        </div>
-        <div class="col-md-6" id="right">
+                <input type="radio" id="author" value="author" name="checkBy" ${checkByAuthor}> Author
+                <input type="radio" id="bookName" value="bookName" name="checkBy" ${checkByBook}> Book name
+                <input type="radio" id="publicationDate" value="publicationDate" name="checkBy" ${checkByDate}>
+                Publication date
+            </div>
+            <div class="col-md-6" id="right">
 
-            <input type="radio" id="sortBy1" value="desc" name="sort" ${sortDesc} checked="checked"> Popular
-            <input type="radio" id="sortBy2" value="asc" name="sort" ${sortAsc}> Unpopular
+                <input type="radio" id="sortBy1" value="desc" name="sort" ${sortDesc} checked="checked"> Popular
+                <input type="radio" id="sortBy2" value="asc" name="sort" ${sortAsc}> Unpopular
 
-        </div>
+            </div>
         </div>
         <input type="hidden" name="currentPage" value="1">
     </form>
